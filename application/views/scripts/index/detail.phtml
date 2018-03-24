@@ -1,0 +1,209 @@
+<script>
+	document.title = '<?php echo addslashes($this->entries[0]->topic); ?>';
+</script>
+<?php 
+	$this->doctype(Zend_View_Helper_Doctype::XHTML1_RDFA);
+	$this->headMeta()->setProperty('og:title', addslashes($this->entries[0]->topic))
+				 	 ->setProperty('og:description', strip_tags($this->description));
+	
+	if(Eaglet_Utils_Bilingual::isThaiLang()){
+		$topic = $this->escape($this->entries[0]->topic);
+		$detail = $this->entries[0]->detail;
+		if($this->entries[0]->topic == '')
+			$topic = 'เนื้อหาส่วนนี้มีแต่ภาษาอังกฤษเท่านั้น';
+		else
+			$topic = $this->escape($this->entries[0]->topic);
+		if($this->entries[0]->detail == '')
+			$detail = 'เนื้อหาส่วนนี้มีแต่ภาษาอังกฤษเท่านั้น';
+		else
+			$detail = $this->entries[0]->detail;
+	}
+	else{
+		if($this->entries[0]->topicEN == '')
+			$topic = 'This content is available in Thai only.';
+		else
+			$topic = $this->escape($this->entries[0]->topicEN);
+		if($this->entries[0]->detailEN == '')
+			$detail = 'This content is available in Thai only.';
+		else
+			$detail = $this->entries[0]->detailEN;
+	}
+?>
+<div style="margin-top:40px;"></div>
+<div class="divLeft">
+	<div class = "headerNews"></div>
+	<div class="maincontent">
+		<div class="divNews">
+			<div class = "topicNews" style="color:#9C3021;">
+				<?php echo $topic; ?>
+			</div>
+			<div class = "bodyNews">
+				<div style="margin:0px 0px 20px 0px;">
+					<div style="float:left;margin-right:30px;">
+						<?php echo date('F d, Y', strtotime($this->entries[0]->date)). ' - '.$this->entries[0]->steamName;?>
+					</div>
+					<?php if(sizeof($this->tagArray) > 0) {?>
+						<div style="float:left;">
+							Tags:
+							<?php for($j = 0; $j < sizeof($this->tagArray); $j++) {?>
+								<a style="color:#CC3300;" href="<? echo $this->url(array(
+									'controller'=>'index', 
+									'action'=>'index', 
+									'tagId'=>$this->tagArray[$j]['tagId']),
+									'default',true); ?>"><span><?php echo $this->tagArray[$j]['tagName']; ?></span></a>
+								&nbsp;
+							<?php }?>
+						</div>
+					<?php } ?>
+					<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId != 2) {?>
+						<?php if(Zend_Auth::getInstance()->getStorage()->read()->rankId == 1){?>
+							<div style="float:right;">
+								<a style="color:#363636;" onclick="return confirm('คุณต้องการ ลบข่าวนี้?')" href="<? echo $this->url(array(
+									'controller'=>'index', 
+									'action'=>'deletenews', 
+									'id'=>$this->escape($this->newsId),
+									'page'=>$this->page),
+									'default',true); ?>">
+									<img src="/images/close.gif" width="18" height="18" />
+								</a>
+							</div>
+							<?php if (Eaglet_Utils_Auth::isAdminMode()) {?>
+								<div style="float:right;padding-right:25px;">
+									<a style="color:#363636;" onclick="return confirm('คุณต้องการ ให้ข่าวนี้ Online?')" href="<? echo $this->url(array(
+										'controller'=>'index', 
+										'action'=>'processonlinenews', 
+										'id'=>$this->escape($this->newsId),
+										'active'=>'1',
+										'page'=>$this->page),
+										'default',true); ?>">
+										Online
+									</a>
+								</div>
+							<?php } 
+							else{ ?>
+								<div style="float:right;padding-right:25px;">
+									<a style="color:#363636;" onclick="return confirm('คุณต้องการ ให้ข่าวนี้ Offine?')" href="<? echo $this->url(array(
+										'controller'=>'index', 
+										'action'=>'processonlinenews', 
+										'id'=>$this->escape($this->newsId),
+										'active'=>'0',
+										'page'=>$this->page),
+										'default',true); ?>">
+										Offine
+									</a>
+								</div>
+							<?php } ?>
+						<?php } ?>
+						<?php if(Zend_Auth::getInstance()->getStorage()->read()->rankId == 1 || (Zend_Auth::getInstance()->getStorage()->read()->rankId == 3 && Eaglet_Utils_Auth::isAdminMode() && $this->escape($this->entries[0]->userId) == Zend_Auth::getInstance()->getStorage()->read()->userId)){?>
+							<div style="float:right;padding-right:25px;">
+								<a style="color:#363636;" href="<? echo $this->url(array(
+									'controller'=>'index', 
+									'action'=>'edittopic', 
+									'id'=>$this->escape($this->newsId),
+									'page'=>$this->page),
+									'default',true); ?>">
+									E2
+								</a>
+							</div>
+							<div style="float:right;padding-right:25px;">
+								<a style="color:#363636;" href="<? echo $this->url(array(
+									'controller'=>'index', 
+									'action'=>'editnews', 
+									'id'=>$this->escape($this->newsId),
+									'page'=>$this->page),
+									'default',true); ?>">
+									E1
+								</a>
+							</div>
+							
+						<?php } ?>
+						<?php 
+							if($this->entries[0]->stick == 0){
+								$addStick = true;
+							}
+							else{
+								$addStick = false;
+							}
+						?>
+						<?php if(Zend_Auth::getInstance()->getStorage()->read()->rankId == 1){?>
+							<div style="float:right;padding-right:25px;">
+								<a style="color:#363636;" href="<? echo $this->url(array(
+									'controller'=>'index', 
+									'action'=>'addstick', 
+									'id'=>$this->escape($this->entries[0]->newsId),
+									'page'=>$this->page,
+									'addStick'=>$addStick),
+									'default',true); ?>">
+									<img src="/images/pin.png" width="18" height="18" />
+								</a>
+							</div>
+						<?php } ?>
+					<?php } ?>
+					<div style="clear:both;"></div>
+				</div>
+				<?php if($this->entries[0]->picture != ''){?>
+					<img class="node-image" src="<?php echo $this->escape($this->entries[0]->picture)?>" />
+					<div class="postContent" style="padding:0px 10px 10px 10px;line-height: inherit;">
+						<?php echo $detail ?>
+					</div>
+				<?php } 
+				else {?>
+					<div class="postContent" style="float:left;padding:0px 10px 10px 10px;width:720px;word-wrap:break-word;overflow:hidden;">
+						<?php echo $detail ?>
+					</div>
+				<?php } ?>
+				<div style="clear:both;"></div>
+				<?php if(!empty($this->entries[0]->creditName)){?>
+					<div style="padding-left:5px;margin:30px 0px 10px 0px;">
+						<?= $this->translate('INDEX_CREDIT_TEXT'); ?> - 
+						<a href="<?php echo $this->entries[0]->creditLink;?>">
+							<?= $this->entries[0]->creditName;?>
+						</a>
+					</div>
+				<?php } ?>
+				<div style="margin: 10px 0px 10px 2px;float:left;">
+					<div id="fb-root"></div><fb:like href="http://lendota.com/index/detail/id/<?php echo $this->newsId;?>" send="false" layout="button_count" width="50" show_faces="true" colorscheme="dark"></fb:like>
+				</div>
+				<div style="margin: 10px 0px 10px 2px;float:left;">
+					<a href="http://twitter.com/share" class="twitter-share-button" data-text="@lendotacom" data-count="horizontal" data-via="Lendotacom">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+				</div>
+				<div style="margin: 10px 0px 10px 2px;float:left;">
+					<!-- Place this tag in your head or just before your close body tag -->
+					<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+					  {lang: 'th'}
+					</script>
+					<div class="g-plusone" data-size="medium" data-annotation="none"></div>
+				</div>
+				<div style="clear:both;"></div>
+				<?php if($this->haveRelate) {?>
+					<div style="margin:0 5px 10px 5px;border: 1px gray solid;">
+						<div style="font-size:18px;color:#9C3021;margin:5px;"><?= $this->translate('INDEX_RELATENEWS_TEXT'); ?></div>
+						<ul class="circle">
+						<?php foreach($this->newRelateData as $news):?>
+							<?php if(Eaglet_Utils_Bilingual::isThaiLang()){
+								$topic = $news->topic;
+							}
+							else{
+								$topic = $news->topicEN;
+							}
+							?>
+							<li style="margin:10px 20px; 10px 0px;">
+								<a href="/index/detail/id/<?= $news->newsId;?>" style="color:#363636;">
+									<?php if($news->picture != '') {?>
+										<img width="36" height="28" style="margin-right:5px;" src="<?php echo $news->picture; ?>" />
+									<?php } ?>
+									<span><?php echo $topic;?></span>
+								</a>
+							</li>
+						<?php endforeach?>
+						</ul>
+					</div>
+				<?php } ?>
+				<hr style="margin: 20px 0px 0px 0px;color:#CCCCCC;"/>
+			</div>
+		</div>
+	</div>
+	<div class="fbCommentNews">
+		<div class="fb-comments" data-href="http://lendota.com/index/detail/id/<?=$this->newsId;?>" data-num-posts="10" data-width="650" data-colorscheme="light"></div>
+	</div>
+</div>

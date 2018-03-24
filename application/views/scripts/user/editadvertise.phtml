@@ -1,0 +1,47 @@
+<h1 class="header">
+	แก้ไขข้อมูล Advertising
+</h1>
+<div class="RoundBlack" style="width: 550px;padding:20px;margin:30px auto;">
+	<form method="POST" action="/user/updateadvertise" enctype="multipart/form-data">
+		<input type="hidden" name="data[advertiseId]" value="<?=$this->advertise->advertiseId;?>"/>
+		<table>
+			<tr height="30px">
+				<td>Position : </td>
+				<td>
+					<select name="data[position]">
+						<option value="1" <?php if($this->advertise->position == 1) echo 'selected'?>>Top</option>
+						<option value="2" <?php if($this->advertise->position == 2) echo 'selected'?>>Bottom Right</option>
+						<option value="3" <?php if($this->advertise->position == 3) echo 'selected'?>>Top Right</option>
+					</select>
+				</td>
+			</tr>
+			<tr height="30px">
+				<td width="150">Image : </td>
+				<td><input type="file" name="data[image]" /></td>
+			</tr>
+			<tr height="30px">
+				<td>Detail : </td>
+				<td><input type="text" name="data[detail]" value="<?=$this->advertise->detail;?>" style="width:300px;"/></td>
+			</tr>
+			<tr height="30px">
+				<td>Detail EN : </td>
+				<td><input type="text" name="data[detailEN]" value="<?=$this->advertise->detailEN;?>" style="width:300px;"/></td>
+			</tr>
+			<tr height="30px">
+				<td>Link : </td>
+				<td><input type="text" name="data[link]" value="<?=$this->advertise->link;?>" style="width:300px;"/></td>
+			</tr>
+			<tr height="30px">
+				<td>Active : </td>
+				<td><input type="checkbox" name="data[active]" value="1" <?php if($this->advertise->active == 1) echo 'checked'?>/></td>
+			</tr>
+			<tr height="30px">
+				<td>Delete Click : </td>
+				<td><input type="checkbox" name="deleteClick" value="1" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" class="submitBtn" value="submit" style="margin-left:210px;"/></td>
+			</tr>
+		</table>
+	</form>
+</div>

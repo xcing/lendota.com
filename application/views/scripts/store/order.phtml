@@ -1,0 +1,48 @@
+<script>
+	document.title = '<?=$this->translate('STORE_CART_TITLE'); ?>';
+</script>
+<h1 class="header">
+	Order ทั้งหมด
+</h1>
+<div>
+	<?php include("login.phtml")?>
+</div>
+<div id="review_tab" class="checkout_tab">
+  	<div id="Cart">
+		<table class="cart_table" cellpadding="0" cellspacing="0" style="border:1px solid #5E5E5E;">
+			<thead>
+				<tr>
+					<th width="96">Order</th>
+					<th style="text-align: center;">สถานะ</th>
+					<th width="80">ราคา</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if(count($this->orders) != '0'){?>
+					<?php foreach ($this->orders as $idxOrder => $order) {?>
+						<tr>
+							<td>
+								<a href="/store/paymentinform/orderId/<?=$order->orderId;?>"><img width="100" src="<?=$this->detailorders[$idxOrder][0]->image;?>" /></a>
+							</td>
+							<td>
+								<a href="/store/paymentinform/orderId/<?=$order->orderId;?>" style="text-decoration: none;"><?=Eaglet_Utils_Store::getStatus($order->status);?></a>
+							</td>
+							<td><?=$order->totalPrice;?></td>
+						</tr>
+					<?php } ?>
+				<?php } 
+				else{ ?>
+					<tr>
+						<td>
+							ไม่มีสินค้า
+						</td>
+						<td>
+							
+						</td>
+						<td>0</td>
+					</tr>
+				<?php } ?>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,114 @@
+<script>
+	document.title = '<?=$this->translate('STRATEGY_CHANGELOG_TITLE'); ?>';
+</script>
+<a name="top"></a>
+<h1 class="header">
+	Changelog By Hero
+</h1>
+
+<div style="text-align:center;margin:10px;">
+	<input class="submitBtnStateSelect" type="button" value="by Hero" style="margin-right:20px;" />
+	<input class="submitBtnStateNormal" type="button" value="by Map" onclick="document.location='<?=$this->url(array('controller'=>'strategy','action'=>'changelogmap'))?>'; return false;"/>
+</div>
+
+<?php $type = 0; $j = 1;?>
+<div style="width:780px;margin:auto;border:1px solid gray;">
+	<div style="width:740px;margin:auto;">
+		<?php for($i=0; $i<$this->sizeHeroData; $i++){?>
+			<?php if($type != $this->heroData[$i]->type){?>
+				<?php 
+					$type = $this->heroData[$i]->type; 
+					switch($j){
+						case 1:
+							$imageNameHome = '/images/guide/senStr.gif';
+							break;
+						case 2:
+							$imageNameHome = '/images/guide/senAgi.gif';
+							break;
+						case 3:
+							$imageNameHome = '/images/guide/senInt.gif';
+							break;
+						case 4:
+							$imageNameHome = '/images/guide/scoStr.gif';
+							break;
+						case 5:
+							$imageNameHome = '/images/guide/scoAgi.gif';
+							break;
+						case 6:
+							$imageNameHome = '/images/guide/scoInt.gif';
+							break;
+					}
+				?>
+				<div style="width:200px;float:left;margin:20px;text-align:center;">
+					<img src="<?php echo $imageNameHome;?>" />
+					<ul style="list-style-type: none !important;">
+			<?php } ?>
+						<li style="float:left;width:40px;margin:5px;">
+							<a href="#<?php echo $this->heroData[$i]->name;?>">
+								<img style="width:40px;" src="<?php echo $this->heroData[$i]->picIcon;?>" alt="<?php echo $this->heroData[$i]->name;?>" />
+							</a>
+						</li>
+			<?php 
+			if($i == $this->sizeHeroData-1 || $type != $this->heroData[$i+1]->type){?>
+					</ul>
+					<div style="clear:both;"></div>
+				</div>
+				<?php $j++;?>
+			<?php } ?>
+		<?php }?>
+	</div>
+	<div style="clear:both;"></div>
+</div>
+
+<div style="width:880px;margin:auto;border:1px solid gray;margin-top:30px;padding:20px;">
+	<div><font color="#298A08"><?php echo $this->translate('STRATEGY_GREEN_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_GREEN_DETAIL_TEXT');?></div>
+	<div><font color="#B40404"><?php echo $this->translate('STRATEGY_RED_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_RED_DETAIL_TEXT');?></div>
+	<div><font color="#3399FF"><?php echo $this->translate('STRATEGY_YELLOW_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_YELLOW_DETAIL_TEXT');?></div>
+	<div><font color="#AEB404"><?php echo $this->translate('STRATEGY_BLUE_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_BLUE_DETAIL_TEXT');?></div>
+	<?php if(Eaglet_Utils_Bilingual::isThaiLang()){?>
+		<div style="margin-top:5px;"><?php echo $this->translate('STRATEGY_NOTE_TEXT');?></div>
+	<?php } ?>
+</div>
+
+<?php $heroId = 0;?>
+<div style="width:880px;margin:auto;margin-top:30px;padding:20px;">
+	<?php for($i=0; $i<$this->sizeData; $i++){?>
+		<?php if($heroId != $this->data[$i]['heroId']){?>
+			<a name="<?php echo $this->data[$i]['name'];?>"></a>
+			<div style="text-align:center;">
+				<img style="margin-right:5px;" src="<?php echo $this->data[$i]['picIcon'];?>" alt="<?php echo $this->data[$i]['name'];?>" />
+				<div style="color:#FFC300;"><?php echo $this->data[$i]['name'].' the '.$this->data[$i]['lastname'];?></div>
+			</div>
+			<div style="border:1px solid gray;padding:20px;margin-bottom:30px;">
+		<?php } ?>
+		<?php $heroId = $this->data[$i]['heroId'];?>
+		<div>
+			<?php
+				if($this->data[$i]['type'] == 1){
+					$color = '#298A08';
+				}
+				else if($this->data[$i]['type'] == 2){
+					$color = '#B40404';
+				}
+				else if($this->data[$i]['type'] == 3){
+					$color = '#3399FF';
+				}
+				else if($this->data[$i]['type'] == 4){
+					$color = '#AEB404';
+				}
+				else{
+					$color = 'white';
+				}
+			?>
+			<span><?php echo 'v'.$this->data[$i]['mapName'].':';?></span>
+			<span style="color:<?php echo $color;?>;"><?php echo $this->data[$i]['detailEN'];?></span>
+		</div>
+		<?php if($i == $this->sizeData-1 || $heroId != $this->data[$i+1]['heroId']){ ?>
+				<div class="goToTop" style="text-align:center;padding:5px;color:black;margin-top:5px;">
+					<a href="#top" >Go To Top</a>
+				</div>
+			</div>
+		<?php } ?>
+	<?php }?>
+	</div>
+</div>

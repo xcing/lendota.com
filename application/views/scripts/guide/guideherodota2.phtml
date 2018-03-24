@@ -1,0 +1,476 @@
+<?php 
+	$i = 1;
+	$j = 0;
+	$k = 0;
+	$m = 0;
+	$n = 0;
+?>
+<style type='text/css'>
+    .callout {
+	    position: absolute;
+	    margin: 18px 0;    
+	    padding: 5px;
+	    z-index:99;
+	    /*width:300px;*/
+	    text-align:center;
+	    border: 1px solid #7992B0;
+	    background-color: #8F8F8F;
+	    color:#FFFFFF;
+	    border-radius: 8px;
+	    -webkit-border-radius: 8px;
+	    -moz-border-radius: 8px;
+	    box-shadow:         5px 5px 10px rgba(0, 0, 0, 0.6);
+	    -moz-box-shadow:    5px 5px 10px rgba(0, 0, 0, 0.6);
+	    -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.6);
+	}
+	
+	
+	
+	.callout .notch_top{
+	    position: absolute;
+	    top: 0px;
+	    left: 20px;
+	    margin: 0;
+	    border-bottom: 0;
+	    border-left: 10px solid transparent;
+	    border-right: 10px solid transparent;
+	    border-top: 10px solid #8F8F8F;
+	    padding: 0;
+	    width: 0;
+	    height: 0;     /* ie6 height fix */
+	    font-size: 0;
+	    line-height: 0;      /* ie6 transparent fix */
+	    _border-right-color: pink;
+	    _border-left-color: pink;
+	    _filter: chroma(color=pink);
+	    z-index:99;
+	}
+</style>
+				
+<script type='text/javascript'>
+document.title = '<?= Eaglet_Utils_PageTitle::getGuideHeroTitle($this->entries[0]->name2, '').' '.$this->translate('GUIDE_TYPE_TEXT').' '.$this->entriesGuideHeroDetail[0]->name;?>';
+
+	$(window).load(function(){
+		(function($) {
+		  var methods = {
+		      init: function(options) {
+		          var defaults = {
+		              message: "no message given",
+		              position: 'top',
+		              backgroundColor: '#4F4F4F',
+		              borderColor: '#7992B0',
+		              textColor: '#fff',
+		          };
+		
+		          var options = $.extend(defaults, options);
+		
+		          return this.each(function() {
+		              var o = options;
+		              var obj = $(this);
+		              var msg = o.message;
+		              var obj_position = obj.position();
+		
+		              var containerDiv = $('<div class="callout">').append('<b class="notch"></b>' + msg);
+		              containerDiv.css({
+		                  'background-color': o.backgroundColor,
+		                  'border-color': o.borderColor,
+		                  'color': o.textColor
+		              });
+		
+		              //var items = $("li", obj);
+		              switch (o.position) {
+		              
+			              case "top":
+			                  obj.before(containerDiv);
+			                  $("b.notch", containerDiv).addClass('notch_top').removeClass('notch');
+			                  var setLeft = obj_position.left + (obj.width() / 2) - (containerDiv.width() / 2) - 10;
+			                  var setTop = obj_position.top - (containerDiv.height()) - 45;
+			                  containerDiv.css({
+			                      'left': setLeft,
+			                      'top': setTop
+			                  });
+			                  $(".notch_top", containerDiv).css({
+			                      'left': (containerDiv.width() / 2) - 5,
+			                      'top': containerDiv.height() + 10,
+			                      'border-top-color': o.backgroundColor
+			                  });
+			             break;
+		              
+		              }
+		              containerDiv.hide();
+		              //containerDiv.fadeIn(3000);
+		          });
+		      },
+		      hide: function() {
+		          return this.each(function(){
+		             $(this).prev('.callout').fadeOut(0);
+		          })
+		      },
+		      show: function() {
+		          return this.each(function(){
+		             $(this).prev('.callout').fadeIn(200);
+		          })            
+		      },        
+		      update: function(content) {}
+		  };
+		
+		  $.fn.jCallout = function(method) {
+		
+		      // Method calling logic
+		      if (methods[method]) {
+		          return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+		      } else if (typeof method === 'object' || !method) {
+		          return methods.init.apply(this, arguments);
+		      } else {
+		          $.error('Method ' + method + ' does not exist on jQuery.jCallout');
+		      }
+		
+		  };
+		
+		})(jQuery);
+		var message;
+		var itemImg = new Array();
+		var itemName = new Array();
+		var itemPrice = new Array();
+		var sizeRecipe = new Array(); 
+		var recipeItemImg = new Array();
+		var recipeItemName = new Array();
+		var recipeItemPrice = new Array();
+		var isMoreRecipe = new Array();
+		var i = 0;
+		var j = 0;
+		var k = 0;
+		var l = 0;
+		<?php foreach($this->item as $item):?>
+			itemImg[i] = '<?php echo $this->entriesItem[$item-1]->picture2;?>';
+			itemName[i] = '<?php echo str_replace("'", "\'",$this->entriesItem[$item-1]->name);?>';
+			itemPrice[i] = '<?php echo $this->entriesItem[$item-1]->price;?>';
+			sizeRecipe[i] = '<?php echo sizeof($this->recipe[$item-1]);?>';
+			<?php $sizeRecipe = sizeof($this->recipe[$item-1]);?>
+			<?php if($sizeRecipe != 0){?>
+				j = 0;
+				isMoreRecipe[i] = new Array();
+				recipeItemImg[i] = new Array();
+				recipeItemName[i] = new Array();
+				recipeItemPrice[i] = new Array();
+				<?php for($l=0; $l<$sizeRecipe; $l++){?>
+					<?php if(($item-1) == 56 && $l == 2){?>
+						isMoreRecipe[i][j] = '1';
+					<?php } 
+					else{ ?>
+						isMoreRecipe[i][j] = '0';
+					<?php } ?>
+					recipeItemImg[i][j] = '<?php echo $this->entriesItem[($this->recipe[$item-1][$l]['materialId']-1)]->picture2;?>';
+					<?php if($this->recipe[$item-1][$l]['amount'] > 1){?>
+						recipeItemName[i][j] = '<?php echo str_replace("'", "\'",$this->recipe[$item-1][$l]['amount'].' X '.$this->entriesItem[($this->recipe[$item-1][$l]['materialId']-1)]->name);?>';
+					<?php } 
+					else{ ?>
+						recipeItemName[i][j] = '<?php echo str_replace("'", "\'",$this->entriesItem[($this->recipe[$item-1][$l]['materialId']-1)]->name);?>';
+					<?php } ?>
+					recipeItemPrice[i][j] = '<?php echo $this->recipe[$item-1][$l]['price'];?>';
+					j++;
+				<?php } ?>
+			<?php } ?>
+			i++;
+		<?php endforeach?>
+
+		var messageHero;
+		var heroImg = new Array();
+		var heroName = new Array();
+		var sizeSkill = new Array();
+		var skillImg = new Array();
+		var skillName = new Array();
+		i = 0;
+		j = 0;
+		<?php foreach($this->heroComboHero as $heroComboHero):?>
+			heroImg[i] = '<?php echo $this->entriesHeroImg[$heroComboHero-1]['picIcon2'];?>';
+			heroName[i] = '<?php echo str_replace("'", "\'",$this->entriesHeroImg[$heroComboHero-1]['name2']);?>';
+			sizeSkill[i] = '<?php echo $this->sizeSkill[$n];?>';
+			j = 0;
+			skillImg[i] = new Array();
+			skillName[i] = new Array();
+			<?php for($l=0; $l<$this->sizeSkill[$n]; $l++){?>
+				skillImg[i][j] = '<?php echo $this->entriesSkill[$this->heroComboSkill[$n][$l]-1]['picture2'];?>';
+				skillName[i][j] = '<?php echo str_replace("'", "\'",$this->entriesSkill[$this->heroComboSkill[$n][$l]-1]['name']);?>';
+				j++;
+			<?php } ?>
+			i++;
+			<?php $n++;?>
+		<?php endforeach?>
+		
+		$(document).ready(function() {
+			$('#callout').mouseover(function() {
+				$('#' + this.id).jCallout('show');
+		    });
+			
+			$('img[id^="item"]').map(function() {
+				
+				message = "<div style=margin:5px;>";
+				message += 		"<div style=float:left;padding:0px 5px 0px 5px;><img src="+itemImg[l]+" alt="+itemName[l]+" width=64 height=64 /></div>";
+				message += 		"<div style=float:left;>";
+				message += 			"<div style=color:#FFC300;padding-left:5px;width:170px; align=left>"+itemName[l]+"</div>";
+				message += 			"<div style=color:white;padding-left:5px;width:170px; align=left>";
+				message += 				"<img src=/images/guide/coin.png alt=dota />";
+				message += 				"<span style=margin-left:5px;color:#83B9FF;>"+itemPrice[l]+"</span>";
+				message += 			"</div>";
+				message += 		"</div>";
+				message += "</div>";
+				message += "<div style=clear:both;></div>";
+				if(sizeRecipe[l] != 0){
+					for(k=0; k < sizeRecipe[l]; k++){
+						if(isMoreRecipe[l][k] == '1'){
+							message += "<div style=margin:10px 0px 14px -30px;>1 of following:</div>";
+						}
+						message += "<div style=margin:5px 5px 5px 10px;>";
+						message += 		"<div style=float:left;margin-right:5px;><img width=37 height=37 src="+recipeItemImg[l][k]+" alt="+recipeItemName[l][k]+" /></div>";
+						message += 		"<div style=float:left;margin-left:5px; align=left>"+recipeItemName[l][k]+"<font style=padding-left:5px;color:#83B9FF;>"+recipeItemPrice[l][k]+"</font></div>";
+						message += 		"<div style=clear:both;></div>";
+						message += "</div>";
+					}
+				}
+				l++;
+				//console.log(this.alt);
+				$('#' + this.id).jCallout({
+			        message: message
+			    }).mouseout(function() {
+					$('#' + this.id).jCallout('hide');
+			    }).mouseover(function() {
+					$('#' + this.id).jCallout('show');
+			    });
+			})
+			l = 0;
+			$('img[id^="hero"]').map(function() {
+				messageHero = "<div style=margin:5px;>";
+				messageHero += 		"<div style=float:left;padding:0px 5px 0px 5px;><img src="+heroImg[l]+" alt="+heroName[l]+" width=64 height=64 /></div>";
+				messageHero += 		"<div style=float:left;>";
+				messageHero += 			"<div style=color:#FFC300;padding-left:5px;width:170px; align=left>"+heroName[l]+"</div>";
+				messageHero += 		"</div>";
+				messageHero += "</div>";
+				messageHero += "<div style=clear:both;></div>";
+				for(k=0; k < sizeSkill[l]; k++){
+					messageHero += "<div style=margin:5px 5px 5px 10px;>";
+					messageHero += 		"<div style=float:left;margin-right:5px;><img width=37 height=37 src="+skillImg[l][k]+" alt="+skillName[l][k]+" /></div>";
+					messageHero += 		"<div style=float:left;margin-left:5px; align=left>"+skillName[l][k]+"</div>";
+					messageHero += 		"<div style=clear:both;></div>";
+					messageHero += "</div>";
+				}
+				l++;
+
+				
+				$('#' + this.id).jCallout({
+			        message: messageHero
+			    }).mouseout(function() {
+					$('#' + this.id).jCallout('hide');
+			    }).mouseover(function() {
+					$('#' + this.id).jCallout('show');
+			    });
+			})
+		});
+	});
+</script>
+<h1 class="header" style="color:#FFC300;">
+	<img src="<?=$this->entries[0]->picCartoon2;?>" />&nbsp;<?php echo $this->entries[0]->fullname2;?>
+</h1>
+<div style="text-align:center;margin:10px 0px;">
+	<a href="<?=$this->url(array('controller'=>'guide','action'=>'guidehero', 'heroId' => $this->entries[0]->id, 'guideheroId'=>$this->entriesGuideHeroDetail[0]->id))?>" style="margin-right:40px;" class="iconDota"></a>
+	<div class="iconDota2Normal"></div>
+</div>
+<div style="margin:20px 5px 0px 5px;">
+	<div style="margin-bottom:15px;color:#898989;">
+		<a href="/guide/indexdota2">Hero Dota 2</a> > <?php echo $this->escape($this->entries[0]->name2)?>
+	</div>
+	<div style="float:left;">
+		<div style="float:left;padding:0px 5px 0px 5px;"><img src="<?php echo $this->escape($this->entries[0]->picIcon2)?>" /></div>
+		<div style="float:left;">
+			<div style="color:#FFC300;padding-left:5px;" align="left"><?php echo $this->escape($this->entries[0]->name2)?></div>
+		</div>
+		<div style="float:left;margin:-10px 0px 0px 5px;">
+			<img src="<?php echo $this->escape($this->entries[0]->picTitle) ?>" />
+		</div>
+		<div style="clear:both;"></div>
+		
+		<table>
+			<tr>
+				<td align="center" style="color:#FFC300;">Str</td>
+				<td align="center" style="color:#FFC300;">Agi</td>
+				<td align="center" style="color:#FFC300;">Int</td>
+			</tr>
+			<tr>
+				<?php if($this->escape($this->entries[0]->type) == 1) {?>
+					<td align="center"><img src="/images/guide/strength-c.jpg" /></td>
+				<?php } 
+				else {?>
+					<td align="center"><img src="/images/guide/strength.jpg" /></td>
+				<?php } ?>
+				<?php if($this->escape($this->entries[0]->type) == 2) {?>
+					<td align="center"><img src="/images/guide/agility-c.jpg" /></td>
+				<?php } 
+				else {?>
+					<td align="center"><img src="/images/guide/agility.jpg" /></td>
+				<?php } ?>
+				<?php if($this->escape($this->entries[0]->type) == 3) {?>
+					<td align="center"><img src="/images/guide/intelligence-c.jpg" /></td>
+				<?php } 
+				else {?>
+					<td align="center"><img src="/images/guide/intelligence.jpg" /></td>
+				<?php } ?>
+			</tr>
+			<tr>
+				<td align="center" width="75"><?php echo $this->escape($this->entries[0]->str)?></td>
+				<td align="center" width="75"><?php echo $this->escape($this->entries[0]->agi)?></td>
+				<td align="center" width="75"><?php echo $this->escape($this->entries[0]->int)?></td>
+			</tr>
+		</table>
+	</div>
+	<div style="float:left;margin-left:20px;">
+		<table>
+			<tr>
+				<td style="color:#82BDFF;">Hp :</td>
+				<td><?php echo $this->escape($this->entries[0]->hp)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Mp :</td>
+				<td><?php echo $this->escape($this->entries[0]->mp)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Atk :</td>
+				<td><?php echo $this->escape($this->entries[0]->atk)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Armor :</td>
+				<td><?php echo $this->escape($this->entries[0]->armor)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Movespeed :&nbsp;</td>
+				<td><?php echo $this->escape($this->entries[0]->movespeed)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Atk Range :</td>
+				<td><?php echo $this->escape($this->entries[0]->range)?></td>
+			</tr>
+		</table>
+	</div>
+	
+	<div style="float:left;margin-left:150px;" >
+		<div style="margin:0px 0px 10px 10px;color:#82BDFF;"><?php echo $this->translate('GUIDE_DETAIL_SKILL_ITEM_TEXT'); ?></div>
+		<div class="RoundBlack" style="width:260px;padding:10px 10px 15px 10px;">
+			<ul class="circle">
+				<li style="margin:5px 0px 0px 10px;">
+					<a href="/guide/herodota2/heroId/<?=$this->heroId . '/' . Eaglet_Utils_Url::getGuideHeroSkillSlugUrl($this->entries[0]->name, '');?>">
+						<?php echo $this->translate('GUIDE_DETAIL_SKILL_TEXT');?>
+					</a>
+				</li>
+				<?php foreach($this->entriesGuideHero as $guidehero):?>
+					<li style="margin:5px 0px 0px 10px;">
+						<?php if($this->guideHeroId == $guidehero['guideHeroId']){?>
+							<?php echo $this->translate('GUIDE_TYPE_TEXT').' '.$guidehero['name'];?>
+						<?php }
+						else{ ?>
+							<a href="/guide/guideherodota2/heroId/<?= $this->heroId . '/guideHeroId/' . 
+								        $guidehero['guideHeroId'] . '/' . 
+								        Eaglet_Utils_Url::getGuideHeroSlugUrl($this->entries[0]->name, '');?>">
+								<?php echo $this->translate('GUIDE_TYPE_TEXT').' '.$guidehero['name'];?>
+							</a>
+						<?php } ?>
+					</li>
+				<?php endforeach?>
+			</ul>
+		</div>
+	</div>
+	<div style="clear:both;"></div>
+	<div style="text-align:center;margin:10px 0px 20px 0px;font-size:20px;color:#FFC300;"><?php echo $this->translate('GUIDE_TYPE_TEXT').' '.$this->entriesGuideHeroDetail[0]->name;?></div>
+	
+	<!-- up skill -->
+	<div style="text-align:center;margin:10px 0px 10px 0px;font-size:16px;color:#82BDFF;"><?php echo $this->translate('GUIDE_DETAIL_SKILL_TEXT');?></div>
+	<div class="RoundBlack" style="margin:10px 20px;width:95%;">
+		<?php foreach($this->skill as $skill):?>
+			<div style="float:left;margin:9px;">
+				<div style="text-align:center;">Lv. <?php echo $i;?></div>
+				<img width="55" height="55" src="<?php echo $this->entriesSkillImg[$skill-1]['picture2'];?>" alt="<?php echo $this->entriesSkillImg[$skill-1]['name'];?>" />
+			</div>
+			<?php $i++;?>
+		<?php endforeach?>
+		<div style="clear:both;"></div>
+	</div>
+	
+	<br />
+	<!-- buy item -->
+	<div style="text-align:center;margin:10px 0px 10px 0px;font-size:16px;color:#82BDFF;"><?php echo $this->translate('GUIDE_BUYITEM_TEXT');?></div>
+	<div class="RoundBlack" style="margin:10px 20px;width:95%;padding:5px;text-align:center;">
+		<div style="position:relative;">
+			<?php foreach($this->item as $item):?>
+				<img id="item<?php echo $k;?>" width="64" style="margin:9px;" src="<?php echo $this->entriesItemImg[$item-1]['picture2'];?>" alt="<?php echo $this->entriesItemImg[$item-1]['name'];?>" />
+				<?php $k++;?>
+			<?php endforeach?>
+		</div>
+	</div>
+	
+	<div style="text-align:left;margin:10px 0px 0px 20px;font-size:14px;color:#82BDFF;">
+		<?php echo $this->translate('GUIDE_NOTE_TEXT');?>
+		<span style="font-size:12px;color:white;">
+			<?php echo $this->translate('GUIDE_NOTEDETAIL_TEXT');?>
+		</span>
+	</div>
+	
+	<?php if($this->entriesGuideHeroDetail[0]->heroCombo != ''){?>
+		<br />
+		<!-- hero combo -->
+		<div style="text-align:center;margin:10px 0px 10px 0px;font-size:16px;color:#82BDFF;"><?php echo $this->translate('GUIDE_HEROCOMBO_TEXT');?></div>
+		<div class="RoundBlack" style="margin:10px 20px;width:95%;padding:5px;text-align:center;">
+			<?php foreach($this->heroComboHero as $heroComboHero):?>
+				<?php if($this->entriesHeroImg[$heroComboHero-1]['picIcon2'] != '') {?>
+					<a style="text-decoration: none;" href="<? echo $this->url(array('controller'=>'guide', 'action'=>'herodota2', 'heroId'=>$heroComboHero), 'default', true); ?>">
+						<img id="hero<?php echo $m;?>" style="margin:9px;" src="<?php echo $this->entriesHeroImg[$heroComboHero-1]['picIcon2'];?>" alt="<?php echo $this->entriesHeroImg[$heroComboHero-1]['name2'];?>" />
+					</a>
+					<?php $m++;?>
+				<?php } ?>
+			<?php endforeach?>
+		</div>
+	<?php } ?>
+	
+	<?php if($this->entriesGuideHeroDetail[0]->heroWeak != ''){?>
+		<br />
+		<!-- hero weak -->
+		<div style="text-align:center;margin:10px 0px 10px 0px;font-size:16px;color:#82BDFF;"><?php echo $this->translate('GUIDE_HEROWEAK_TEXT');?></div>
+		<div class="RoundBlack" style="margin:10px 20px;width:95%;padding:5px;text-align:center;">
+			<?php foreach($this->heroWeak as $heroWeak):?>
+				<?php if($this->entriesHeroImg[$heroWeak-1]['picIcon2'] != '') {?>
+					<a style="text-decoration: none;" href="<? echo $this->url(array('controller'=>'guide', 'action'=>'herodota2', 'heroId'=>$heroWeak), 'default', true); ?>">
+						<img style="margin:9px;" src="<?php echo $this->entriesHeroImg[$heroWeak-1]['picIcon2'];?>" alt="<?php echo $this->entriesHeroImg[$heroWeak-1]['name2'];?>" />
+					</a>
+				<?php } ?>
+			<?php endforeach?>
+		</div>
+	<?php } ?>
+	
+	<?php if($this->entriesGuideHeroDetail[0]->detail != ''){?>
+		<br />
+		<!-- detail -->
+		<div style="text-align:center;margin:10px 0px 10px 0px;font-size:16px;color:#82BDFF;"><?php echo $this->translate('GUIDE_DETAIL_TEXT');?></div>
+		<div class="RoundBlack" style="margin:10px 20px;width:95%;padding:5px;text-align:center;">
+			<div style="margin:10px 0px;">
+				<?php echo $this->entriesGuideHeroDetail[0]->detail;?>
+			</div>
+		</div>
+	<?php } ?>
+	
+	<?php /*if($this->entriesGuideHeroDetail[0]->replayId != ''){?>
+		<br />
+		<!-- replay -->
+		<div style="text-align:center;margin:10px 0px 10px 0px;font-size:16px;color:#82BDFF;"><?php echo $this->translate('GUIDE_REPLAY_TEXT');?></div>
+		<div class="RoundBlack" style="margin:10px 20px;width:95%;padding:5px;text-align:center;">
+			<?php foreach($this->replay as $replay):?>
+				<div style="margin:10px 0px;">
+					<a href="/replay/view/replayId/<?=$replay . '/' . Eaglet_Utils_Url::getReplaySlugUrl(
+                                                    				     $this->replayDetail[$j][0]['matchContest'],
+                                                    				     $this->replayDetail[$j][0]['sentinelTeamName'],
+                                                    				     $this->replayDetail[$j][0]['scourgeTeamName']
+                                                    			     );?>">
+						<?php echo $this->replayDetail[$j][0]['matchContest'].' -> '.$this->replayDetail[$j][0]['sentinelTeamName'].' vs '.$this->replayDetail[$j][0]['scourgeTeamName'];?>
+					</a>
+				</div>
+				<?php $j++;?>
+			<?php endforeach?>
+		</div>
+	<?php } */?>
+</div>

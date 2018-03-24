@@ -1,0 +1,2 @@
+Congratulations! Aeva was installed successfully.
+<br />You will now be taken to its settings page, where you can disable it if needed.

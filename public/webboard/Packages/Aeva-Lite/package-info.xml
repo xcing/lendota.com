@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!DOCTYPE package-info SYSTEM "http://www.simplemachines.org/xml/package-info">
+<package-info xmlns="http://www.simplemachines.org/xml/package-info" xmlns:smf="http://www.simplemachines.org/">
+	<name>Aeva ~ Auto-Embed Video &amp; Audio</name>
+	<id>Nao:Aeva</id>
+	<version>7.1</version>
+	<homepage>http://aeva.noisen.com</homepage>
+	<type>modification</type>
+
+	<!--// Install for SMF 1.1.x //-->
+	<install for="1.1 - 1.99.99">
+		<!--// No upgrade available //-->
+		<readme type="inline" parsebbc="true">All earlier versions of Aeva <b>must</b> be uninstalled prior to installing this version!</readme>
+
+		<!--// Adds db settings //-->
+		<code>aeva_install.php</code>
+
+		<!--// Common Edits - No differences between 1.1.x and 2.x edits so do these for both versions //-->
+		<modification>install-both.xml</modification>
+
+		<!--// 1.1.x Only Edits //-->
+		<modification>install-1.1.x.xml</modification>
+
+		<!--// Install Source Files //-->
+		<require-file name="Subs-Aeva.php" destination="$sourcedir" />
+		<require-file name="Subs-Aeva-Admin.php" destination="$sourcedir" />
+		<require-file name="Subs-Aeva-Sites.php" destination="$sourcedir" />
+		<require-file name="Subs-Aeva-Custom-Example.php" destination="$sourcedir" />
+
+		<!--// Install Language Files //-->
+		<require-file name="Aeva.english.php" destination="$languagedir" />
+
+		<!--// Install Language Files - Translations //-->
+		<require-file name="languages/Aeva.french.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.french-utf8.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.english-utf8.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.english_british.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.english_british-utf8.php" destination="$languagedir" />
+
+		<!--// Install SWFObject //-->
+		<require-file name="expressInstall.swf" destination="$boarddir" />
+
+		<!--// Finally redirect to our configuration page //-->
+		<redirect url="?action=featuresettings;sa=aeva">redirect.txt</redirect>
+	</install>
+
+	<!--// Uninstall For SMF 1.1.x //-->
+	<uninstall for="1.1 - 1.99.99">
+		<modification reverse="true">install-1.1.x.xml</modification>
+		<modification reverse="true">install-both.xml</modification>
+
+		<!--// Uninstall Source Files //-->
+		<remove-file name="$sourcedir/Subs-Aeva.php" />
+		<remove-file name="$sourcedir/Subs-Aeva-Admin.php" />
+		<remove-file name="$sourcedir/Subs-Aeva-Sites.php" />
+		<remove-file name="$sourcedir/Subs-Aeva-Custom-Example.php" />
+
+		<!--// Uninstall Language Files //-->
+		<remove-file name="$languagedir/Aeva.english.php" />
+
+		<!--// Uninstall Language Files - Translations //-->
+		<remove-file name="$languagedir/Aeva.french.php" />
+		<remove-file name="$languagedir/Aeva.french-utf8.php" />
+		<remove-file name="$languagedir/Aeva.english-utf8.php" />
+		<remove-file name="$languagedir/Aeva.english_british.php" />
+		<remove-file name="$languagedir/Aeva.english_british-utf8.php" />
+
+		<!--// Uninstall SWFObject //-->
+		<remove-file name="$boarddir/expressInstall.swf" />
+	</uninstall>
+
+	<!--// Install for SMF 2.x //-->
+	<install for="2.0 - 2.99.99, 2.0 RC2">
+		<!--// No upgrade available //-->
+		<readme type="inline" parsebbc="true">All earlier versions of Aeva <b>must</b> be uninstalled prior to installing this version!</readme>
+
+		<!--// Adds db settings //-->
+		<code>aeva_install.php</code>
+
+		<!--// Common Edits - No differences between 1.1.x and 2.x edits so do these for both versions //-->
+		<modification>install-both.xml</modification>
+
+		<!--// 2.x Only Edits //-->
+		<modification>install-2.x.xml</modification>
+
+		<!--// Install Source Files //-->
+		<require-file name="Subs-Aeva.php" destination="$sourcedir" />
+		<require-file name="Subs-Aeva-Admin.php" destination="$sourcedir" />
+		<require-file name="Subs-Aeva-Sites.php" destination="$sourcedir" />
+		<require-file name="Subs-Aeva-Custom-Example.php" destination="$sourcedir" />
+
+		<!--// Install Language Files //-->
+		<require-file name="Aeva.english.php" destination="$languagedir" />
+
+		<!--// Install Language Files - Translations //-->
+		<require-file name="languages/Aeva.french.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.french-utf8.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.english-utf8.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.english_british.php" destination="$languagedir" />
+		<require-file name="languages/Aeva.english_british-utf8.php" destination="$languagedir" />
+
+		<!--// Install SWFObject //-->
+		<require-file name="expressInstall.swf" destination="$boarddir" />
+
+		<!--// Finally redirect to our configuration page //-->
+		<redirect url="?action=admin;area=modsettings;sa=aeva">redirect.txt</redirect>
+	</install>
+
+	<!--// Install For SMF 2.x //-->
+	<uninstall for="2.0 - 2.99.99, 2.0 RC2">
+		<modification reverse="true">install-both.xml</modification>
+		<modification reverse="true">install-2.x.xml</modification>
+
+		<!--// Uninstall Source Files //-->
+		<remove-file name="$sourcedir/Subs-Aeva.php" />
+		<remove-file name="$sourcedir/Subs-Aeva-Admin.php" />
+		<remove-file name="$sourcedir/Subs-Aeva-Sites.php" />
+		<remove-file name="$sourcedir/Subs-Aeva-Custom-Example.php" />
+
+		<!--// Uninstall Language Files //-->
+		<remove-file name="$languagedir/Aeva.english.php" />
+
+		<!--// Uninstall Language Files - Translations //-->
+		<remove-file name="$languagedir/Aeva.french.php" />
+		<remove-file name="$languagedir/Aeva.french-utf8.php" />
+		<remove-file name="$languagedir/Aeva.english-utf8.php" />
+		<remove-file name="$languagedir/Aeva.english_british.php" />
+		<remove-file name="$languagedir/Aeva.english_british-utf8.php" />
+
+		<!--// Uninstall SWFObject //-->
+		<remove-file name="$boarddir/expressInstall.swf" />
+	</uninstall>
+</package-info>

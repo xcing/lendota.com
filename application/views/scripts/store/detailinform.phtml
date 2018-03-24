@@ -1,0 +1,14 @@
+<h1 class="header">
+	การสั่งซื้อเสร็จสิ้น
+</h1>
+<div style="margin-bottom:20px;">
+	<?php include("login.phtml")?>
+</div>
+<div class="RoundBlack" style="margin:auto;padding:10px;text-align:center;font-size:18px;">
+	สินค้าทั้งหมดราคา <span style="font-size:22px;color:#6495ED;font-style:italic;"><?=$this->totalPrice;?></span> บาท (Truemoney <span style="font-size:22px;color:#6495ED;font-style:italic;"><?=$this->totalPriceTruemoney;?></span> บาท)<br /><br />
+	โอนเงินมาที่บัญชี นาย ปวันวิทย์ สุวัฒนภักดี (Pawanwit Suvadhamabhakdi)<br />
+	<img src="/images/kbank.jpg" /> ธนาคารกสิกรไทย 748-2-48830-1 <br />
+	<img src="/images/tmb.jpg" /> ธนาคารทหารไทย 212-2-14471-6 <br /><br />
+	บัญชีใดก็ได้จากนั้น <a href="/store/paymentinform/orderId/<?=$this->orderId;?>" style="color:#6495ED;font-size:22px;">แจ้งการชำระเงิน</a> ผ่านทางหน้าเว็บ<br />
+	หรือชำระด้วยบัตร Truemoney สามารถกดลิ้งแจ้งการชำระเงินได้เลย
+</div>

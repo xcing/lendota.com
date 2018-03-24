@@ -1,0 +1,155 @@
+<?php 
+	if($this->order->status == 2){
+		$header = 'แจ้งการชำระเงิน';
+	}
+	else if($this->order->status == 3){
+		$header = 'รอการติดต่อส่งมอบสินค้า';
+	}
+	else if($this->order->status == 4){
+		$header = 'ส่งมอบสินค้าเรียบร้อย';
+	}
+	else{
+		$header = '';
+	}
+?>
+
+<script>
+	$(document).ready(function() {
+		$('#transferDate').datetimepicker();
+		$('#submit').click(function() {
+			document.forms["submitpaymentForm"].submit();
+		});
+		$('[type=radio]').change(function() {
+			$('#bank').toggle();
+			$('#truemoney').toggle();
+		});
+	});
+</script>
+
+<h1 class="header">
+	<?=$header;?>
+</h1>
+<div style="margin-bottom:20px;">
+	<?php include("login.phtml")?>
+</div>
+<?php if($this->order->status == 2){?>
+	<form method="POST" action="/store/submitpaymentinform" id="submitpaymentForm">
+		<div style="text-align:center;font-size:20px;color:#6495ED;margin:10px 0px 10px 0px;">
+			<span style="color:#CCCCCC;">รูปแบบการชำระเงิน</span>
+			<input type="radio" name="data[paymentType]" value="1" style="margin-left:20px;" checked/> โอนเงิน
+			<input type="radio" name="data[paymentType]" value="2" style="margin-left:20px;"/> บัตร Truemoney
+		</div>
+		<input type="hidden" name="data[orderId]" value="<?=$this->detailorders[0]->orderId;?>" />
+		<input type="hidden" name="data[status]" value="3" />
+		<div class="RoundBlack" style="margin:auto;padding:10px;text-align:center;font-size:18px;">
+			<div id="bank">
+				<div>ธนาคารที่โอน
+					<select name="data[bank]">
+						<option value="1" >กสิกรไทย  748-2-48830-1</option>
+						<option value="2" >ทหารไทย 212-2-14471-6</option>
+					</select>
+				</div>
+				<div style="margin:10px 0px;">เวลาโดยประมาณ <input type="text" id="transferDate" name="data[transferDateTime]"/></div>
+			</div>
+			<div style="margin:10px 0px;display:none;" id="truemoney">
+				เลขบัตร Truemoney <input type="text" name="data[truemoney]" /><br />
+				<span style="font-size:16px;color:#828282;">*กรณีใช้หลายใบให้ใส่เครื่องหมาย , ขั้น เช่น 8412648,8412649</span>
+			</div>
+			<div style="margin-bottom:10px;">หมายเหตุ <textarea name="data[note]"></textarea></div>
+			<div class="GenericGreenButton" style="width:150px;margin:auto;" id="submit">
+				<div class="LeftCap"></div>
+				<div class="RightCap"></div>
+				<span>เสร็จสิ้น</span>
+			</div>
+		</div>
+	</form>
+<?php }
+else if($this->order->status == 3){ ?>
+	<div class="RoundBlack" style="margin:auto;padding:10px;text-align:center;font-size:18px;">
+		Add friend มาที่ชื่อ steam <a href="http://steamcommunity.com/id/xcing/" target="_blank" style="color:#6495ED;font-size:22px;">XCiNg</a> แล้วรอการติดต่อกลับ เพื่อส่งมอบสินค้า<br /><br />
+		หลังจากส่งมอบสินค้าเสร็จแล้ว Admin ขออนุญาติ <font color="red">Remove friend</font> เพื่อป้องกันปัญหา friend เต็มนะครับ
+	</div>
+<?php } ?>
+<div id="review_tab" class="checkout_tab">
+  <div id="Cart">
+    
+                    <div class="approvetxn_lineitem_container">
+						<div class="bg"></div>
+						
+						<table class="cart_table" cellpadding="0" cellspacing="0">
+							<thead>
+								<tr>
+									<th width="96">สินค้า</th>
+									<th></th>
+									<th width="55"></th>
+									<th style="text-align: center;" width="55">จำนวน</th>
+									<th width="80">ราคา</th>
+									<th width="80">Truemoney</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php $totalPrice = 0;?>
+								<?php foreach ($this->detailorders as $detailorder) {?>
+									<tr>
+										<td>
+											<a class="approvetxn_lineitem_description" href="/store/detail/equipmentId/<?=$detailorder->equipmentId;?>">
+												<img width="100" src="<?=$detailorder->image;?>" alt="<?=$detailorder->name;?>">
+											</a>
+										</td>
+										<td>
+											<a class="approvetxn_lineitem_description" href="/store/detail/equipmentId/<?=$detailorder->equipmentId;?>"><?=$detailorder->name;?></a>
+										</td>
+										<td>
+											
+										</td>
+										<td>
+											<div class="MiniSpinner" style="display: none;">
+												<img src="Cart_files/throbber.gif" height="100%" width="100%">
+											</div>
+											<div>
+												<input class="cart_qty" maxlength="2" size="2" disabled="disabled" value="<?=$detailorder->amount;?>" detailorderId="<?=$detailorder->detailorderId;?>" type="text">
+											</div>
+										</td>
+										<td>
+											<?php 
+												if($detailorder->priceSale != 0) { 
+													echo Eaglet_Utils_Store::getPrice($detailorder->priceSale)*$detailorder->amount;
+													$totalPrice += $detailorder->priceSale*$detailorder->amount;
+												}
+												else{
+													echo Eaglet_Utils_Store::getPrice($detailorder->price)*$detailorder->amount;
+													$totalPrice += $detailorder->price*$detailorder->amount;
+												}
+											?>
+										</td>
+										<td>
+											<?php 
+												if($detailorder->priceSale != 0) { 
+													echo Eaglet_Utils_Store::getPriceTruemoney($detailorder->priceSale)*$detailorder->amount;
+												}
+												else{
+													echo Eaglet_Utils_Store::getPriceTruemoney($detailorder->price)*$detailorder->amount;
+												}
+											?>
+										</td>
+									</tr>
+								<?php } ?>			
+								<tr class="subtotal">
+									<td style="text-align: right" colspan="4">ราคารวม :</td>
+									<td style="text-align: right" id="review_subtotal_value"><?=$this->order->totalPrice;?></td>
+									<td>
+										<?php if(Zend_Auth::getInstance()->getStorage()->read()->userId == 1) {
+											echo $totalPrice.'$';
+										} ?>
+									</td>
+								</tr>
+								<tr class="subtotal">
+									<td style="text-align: right" colspan="5">ราคารวม Truemoney :</td>
+									<td style="text-align: right" id="review_subtotal_value"><?=$this->order->totalPriceTruemoney;?></td>
+								</tr>
+							</tbody>
+						</table>
+						<div style="text-align:right;margin:10px 0px -10px 0px;" id="review_subtotal_value">* เลือกจ่ายอย่างใดอย่างหนึ่งระหว่างโอนเงิน หรือใช้บัตร Truemoney</div>
+                    </div>
+  </div>
+</div>

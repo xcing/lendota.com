@@ -1,0 +1,20 @@
+.itemlist {
+	float: left;
+	margin-bottom: 30px;
+	margin-right: 17px !important;
+	width: 155px;
+}
+
+.itemlist ul {
+	border: 0 none;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.itemlist ul li {
+	float: left;
+	height: 32px;
+	padding: 1px;
+	width: 32px;
+}

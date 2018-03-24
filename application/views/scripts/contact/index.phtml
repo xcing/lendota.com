@@ -1,0 +1,80 @@
+<script type="text/javascript">
+	function submitEmail() {	
+		var chkSubject = document.getElementById('txtSubject').value;
+		var chkEmail = document.getElementById('txtEmail').value;
+		var chkDetail = document.getElementById('txtDetail').value;
+		
+		var emailpat = /^([a-zA-Z0-9])+([\.a-zA-Z0-9_-])*@([a-zA-Z0-9])+(\.[a-zA-Z0-9_-]+)+$/;
+
+		if (chkSubject == '')
+			alert("กรุณากรอกเรื่องที่ต้องการติดต่อ");
+		else if (chkEmail == '')
+			alert("กรุณากรอก email");
+		else if (!emailpat.test(chkEmail))
+			alert("รูปแบบ email ไม่ถูกต้อง");
+		else if (chkDetail == "")
+			alert("กรุณากรอกคำแนะนำติชม");
+		else if (chkValidBot() == false)
+			alert("กรุณาตอบคำถามให้ถูกต้อง");
+		else
+			document.forms["sendEmailForm"].submit();
+	}
+</script>
+<script type="text/javascript">
+	var a = Math.ceil(Math.random() * 10);
+	var b = Math.ceil(Math.random() * 10);       
+	var c = a + b;
+	function drawCheckBot() {
+		document.write("<div align=right>"+ a + " + " + b +" =  ? </div><br />");
+		document.write("</td><td align=left colspan='2' ><input id='CheckBotInput' name='CheckBotInput' type='text' maxlength='2' size='30' />");
+	}    
+	function chkValidBot() {
+		var d = document.getElementById('CheckBotInput').value;
+		if (d == c) return true;        
+		return false;
+	}
+</script>
+<h1 class="header">
+	Contact Us
+</h1>
+<center>
+	<div class="RoundBlack" style="width:800px;">
+		<div style="margin: 20px 20px 20px 20px;color:#CCCCCC;font-size: 16px;">
+			<form method="post" id="sendEmailForm">
+				<table width="100%"border="0" cellspacing="5" cellpadding="5">
+					<tr>
+						<td align="right"><div>เรื่องที่ต้องการติดต่อ : </div><br /></td>
+						<td align="left">
+							<input type="text" id="txtSubject" name="txtSubject" size="60">
+						</td>
+					</tr>
+					<tr>
+						<td><div align="right">Email&nbsp;ของท่าน&nbsp;: </div><br /></td>
+						<td align="left">
+							<input type="text" id="txtEmail" name="txtEmail" size="60">
+						</td>
+					</tr>
+					<tr>
+						<td class="top"><div align="right">รายละเอียด&nbsp;: </div><br /></td>
+						<td align="left">
+							<textarea id="txtDetail" name="txtDetail" cols="55" rows="10"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<td align="right"><script type="text/javascript">drawCheckBot();</script></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td align="left"">
+							<input type="button" class="submitBtn" value="Submit" onClick="submitEmail()">
+							<input type="reset" class="submitBtn" value="Reset" name="Reset">
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</center>
+
+
+

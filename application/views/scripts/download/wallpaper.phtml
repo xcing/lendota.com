@@ -1,0 +1,110 @@
+<?php
+	$haveDotLeft = false;
+	$haveDotRight = false;
+	if($this->page < 4){
+		$start = 1;
+		$end = $this->totalPage;
+		if($end > 7){
+			$end = 7;
+			$haveDotRight = true;
+		}
+	}
+	else{
+		$start = $this->page-3;
+		if($start > 1){
+			$haveDotLeft = true;
+		}
+		$end = $this->page+3;
+		if($end >= $this->totalPage){
+			$end = $this->totalPage;
+		}
+		else{
+			$haveDotRight = true;
+		}
+	}
+?>
+<script>
+	document.title = '<?=$this->translate('DOWNLOAD_WALLPAPER_TITLE'); ?>';
+</script>
+<h1 class="header">
+	DotA Wallpaper
+</h1>
+<div style="width:900px;margin:0px auto;">
+	<div style="height:530px;">
+		<?php for($i=$this->start; $i<$this->end;$i++){ ?>
+			<a rel="lightbox[roadtrip]" href="/upload/wallpaper/<?php echo $this->wallpaper[$i];?>" target="_blank">
+				<img src="/upload/wallpaper/<?php echo $this->wallpaper[$i];?>" style="margin:10px 10px 10px 10px;" width="200" height="154" />
+			</a>
+		<?php } ?>
+	</div>
+	<center>
+		<table>
+			<tr>
+				<?php if($this->totalPage > 1) {?>
+					<?php if($this->page != 1){?>
+						<td>
+							<a class="fanartlinkpage" href="<? echo $this->url(array(
+								'controller'=>'download', 
+								'action'=>'wallpaper',
+								'page'=>1),
+								'default',true); ?>">
+								<div class="fanart"> << First </div>
+							</a>
+						</td>
+						<td>
+							<a class="fanartlinkpage" href="<? echo $this->url(array(
+								'controller'=>'download', 
+								'action'=>'wallpaper',
+								'page'=>$this->page-1),
+								'default',true); ?>">
+								<div class="fanart"> < Previous </div>
+							</a>
+						</td>
+					<?php } ?>
+					<?php if($haveDotLeft){?>
+						<td><div style="float:left;margin-top:13px;padding: 0px 5px 0px 5px;"> ... </div></td>
+					<?php } ?>
+					<?php for($i=$start; $i<=$end; $i++){?>
+						<?php if($this->page == $i){?>
+							<td><div class="fanartHightlight"> <?php echo $i; ?> </div></td>
+						<?php }
+						else{ ?>
+						<td>
+							<a class="fanartlinkpage" href="<? echo $this->url(array(
+								'controller'=>'download', 
+								'action'=>'wallpaper',
+								'page'=>$i),
+								'default',true); ?>">
+								<div class="fanart"> <?php echo $i; ?> </div>
+							</a>
+						</td>
+						<?php } ?>
+					<?php } ?>
+					<?php if($haveDotRight){?>
+						<td><div style="float:left;margin-top:13px;padding: 0px 5px 0px 5px;"> ... </div></td>
+					<?php } ?>
+					<?php if($this->page < $this->totalPage) {?>
+						<td>
+							<a class="fanartlinkpage" href="<? echo $this->url(array(
+								'controller'=>'download', 
+								'action'=>'wallpaper', 
+								'page'=>$this->page+1),
+								'default',true); ?>">
+								<div class="fanart">  Next > </div>
+							</a>
+						</td>
+						<td>
+							<a class="fanartlinkpage" href="<? echo $this->url(array(
+								'controller'=>'download', 
+								'action'=>'wallpaper',
+								'page'=>$this->totalPage),
+								'default',true); ?>">
+								<div class="fanart">  Last >> </div>
+							</a>
+						</td>
+					<?php } ?>
+				<?php } ?>
+			</tr>
+		</table>
+	</center>
+</div>

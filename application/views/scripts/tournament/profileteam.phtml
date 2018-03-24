@@ -1,0 +1,95 @@
+<script>
+	document.title = '<?=$this->translate('TOURNAMENT_PROFILETEAM_TITLE'); ?>';
+
+	function resetpassword(teamId){
+		var r=confirm("คุณแน่ใจว่าต้องการ reset password ทีมนี้");
+		if (r==true){
+			window.location = '/tournament/resetpassword/teamId/'+teamId;
+		}
+	}
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_PROFILETEAM_HEADER'); ?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:0px 35px 0px 35px;">
+	<div class="wrapper" style="width:600px;">
+		<div class="replay" style="width:598px;">
+			<table class="draftHeroTable" style="width:98%;">
+				<tr>
+	                <td class="draftHeroTableHeader draftTeamName" width="50%">
+	                	<img style="margin-right:5px;" width="16" height="11" class="flag-<?=strtolower($this->myTeam[0]->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($this->myTeam[0]->countryCode);?>">
+	                    <span style="font-weight: bold;line-height: 18px;font-size: 18px;letter-spacing: 2px;color: #FFC300;"><?=$this->myTeam[0]->shortName?></span>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td class="draftHeroTableHeader draftTeamName">
+	                    <img src="<?=$this->myTeam[0]->logo; ?>" width="120" />
+	                </td>
+	            </tr>
+	            <tr>
+	                <td class="draftHeroTableDetail">
+	                    <b><?=$this->translate('TOURNAMENT_CREATE_TEAM_NAME'); ?> :</b> <?=$this->myTeam[0]->name; ?>
+	                </td>
+	            </tr>
+	            <?php foreach($this->member as $index => $member):?>
+					<?php $index++;?>
+					<tr>
+						<td class="draftHeroTableDetail"><b><?=$index;?>.</b> <?=$member; ?></td>
+					</tr>
+				<?php endforeach;?>
+				<tr>
+					<td class="draftHeroTableDetail"><b>Country :</b> <img style="margin-right:5px;" width="16" height="11" class="flag-<?=strtolower($this->myTeam[0]->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($this->myTeam[0]->countryCode);?>"><?=Eaglet_Utils_Country::getCountryName($this->myTeam[0]->countryCode);?></td>
+				</tr>
+				<?php if($this->isMyTeam || Zend_Auth::getInstance()->hasIdentity() && (Zend_Auth::getInstance()->getStorage()->read()->userId == 4 || Zend_Auth::getInstance()->getStorage()->read()->rankId == 1) ){ ?>
+					<tr>
+						<td class="draftHeroTableDetail"><b>Tel :</b> <?=$this->myTeam[0]->tel; ?></td>
+					</tr>
+					<tr>
+						<td class="draftHeroTableDetail"><b>Email :</b> <?=$this->myTeam[0]->email; ?></td>
+					</tr>
+				<?php } ?>
+				<tr>
+					<td class="draftHeroTableDetail"><b>Score :</b> <?=$this->myTeam[0]->score; ?></td>
+				</tr>
+				<tr>
+					<td class="draftHeroTableDetail"><b>Win :</b> <?=$this->myTeam[0]->win; ?></td>
+				</tr>
+				<tr>
+					<td class="draftHeroTableDetail"><b>Lose :</b> <?=$this->myTeam[0]->lose; ?></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<br />
+	<?php if($this->isMyTeam){ ?>
+		<div>
+			<a href="/tournament/edituserteam" style="text-decoration:none;"><button class="blueBtn" style="margin:10px;"><?=$this->translate('TOURNAMENT_PROFILE_EDIT'); ?></button></a>
+		</div>
+	<?php } ?>
+	<br />
+	<table width="90%" border="1" class="grid">
+		<tr>
+			<th colspan="4"><?=$this->translate('TOURNAMENT_PROFILE_STAT'); ?></th>
+		</tr>
+		<tr>
+			<td>We</td>
+			<td>Enemy</td>
+			<td>Win</td>
+			<td>Lose</td>
+		</tr>
+		<?php foreach ($this->data as $entry):?>
+			<tr>
+				<td><img style="margin-right:5px;" width="16" height="11" class="flag-<?=strtolower($this->myTeam[0]->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($this->myTeam[0]->countryCode);?>"><?php echo $this->myTeam[0]->shortName;?></td>
+				<td><img style="margin-right:5px;" width="16" height="11" class="flag-<?=strtolower($entry->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($entry->countryCode);?>"><a href="/tournament/profileteam/teamId/<?php echo $entry->team2Id;?>"><?php echo $entry->shortName. ' ('.$entry->score.')';?></a></td>
+				<td><?php echo $entry->win;?></td>
+				<td><?php echo $entry->lose;?></td>
+			</tr>
+		<?php endforeach;?>
+	</table>
+	
+	<?php if (Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin()){?>
+		<button class="redBtn" style="margin:10px 20px 10px 0px;" onclick="resetpassword('<?php echo $this->myTeam[0]->id;?>')">Reset Password</button>
+	<?php } ?>
+</div>
+<div style="clear:both;"></div>

@@ -1,0 +1,15 @@
+<?php 
+
+$key = $_POST['loadKey'];
+$filename = $_POST['filename'];
+if($key == '@llcen.com'){
+	header("Location: ".$filename);
+}
+else{
+	header("Location: /download/program");
+}
+
+
+
+
+?>

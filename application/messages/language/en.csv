@@ -1,0 +1,231 @@
+?# English
+PLEASE;Please
+FIRST;First
+LAYOUT_KEYWORD_TEXT;DotA, Defense Of the Ancient, DotA Replay, DotA News, DotA Tournament, DotA Guide, DotA Hero, DotA Item, DotA Program, DotA Map, DotA Strategy, DotA Wallpaper, DotA Picture, DotA Tournament
+LAYOUT_DESCRIPTION_TEXT;DotA : Defense of the Ancient News, Replay and Guide
+GUIDE_INDEX_TITLE;DotA Hero
+GUIDE_ITEM_TITLE;DotA Item Buy Item
+GUIDE_TECHNIC_TITLE;Technique DotA
+REPLAY_INDEX_TITLE;Replay DotA Tournament
+REPLAY_INDEX2_TITLE;Replay Dota 2 Tournament
+STRATEGY_INDEX_TITLE;DotA Strategy
+STRATEGY_CHANGELOG_TITLE;DotA Change Log
+STRATEGY_GANK_TITLE;Gank War
+STRATEGY_MAP_TITLE;Map Analysis
+DOWNLOAD_PROGRAM_TITLE;Program DotA TCGNetwork Warcraft3TFT W3DR DR Delay Reduce WC3Setup DotaReplayManager Switcher Patch
+DOWNLOAD_WALLPAPER_TITLE;Wallpaper DotA
+DOWNLOAD_FANART_TITLE;Fan Art DotA Picture Image
+LASTEST_MAP;6.74c
+STABLE_MAP;6.74c
+AI_MAP;6.74c AI
+DOWNLOAD_MAP;Download Map
+DOWNLOAD;Download
+WEBBOARD_INDEX_TITLE;Webboard DotA
+GUIDE_HERO_SUFFIX;Hero's Skills & Skill Build & Item Build
+REPLAY_SLUG_URL_TEMPLATE;replay-event-${tournament}-team-${team1}-vs-${team2}
+GUIDE_SKILL_SLUG_URL_TEMPLATE;skill-hero-${heroName}-${heroLastname}
+INDEX_CREDIT_TEXT;Credit
+INDEX_RELATENEWS_TEXT;Relate News
+GUIDE_TYPE_TEXT;Style
+GUIDE_TITLE_TEXT;DotA Guides Skills Guides Information
+GUIDE_DETAIL_SKILL_ITEM_TEXT;Hero's Skills & Skill Build & Item Build
+GUIDE_DETAIL_SKILL_TEXT;Hero's Skills
+GUIDE_INTRODUCTION_TEXT;Introduction
+GUIDE_UPSKILL_TEXT;Skill Build
+GUIDE_BUYITEM_TEXT;Item Build
+GUIDE_NOTE_TEXT;Note: 
+GUIDE_NOTEDETAIL_TEXT;Items always adapt to the game. These are just overall ideas after quite a lot of experience, but always, always adapt.
+GUIDE_HEROCOMBO_TEXT;Good Allies
+GUIDE_HEROWEAK_TEXT;Bad Enemies
+GUIDE_DETAIL_TEXT;Roles and Game Strategy
+GUIDE_REPLAY_TEXT;Replays
+REPLAY_CHANGE_VERSION_WARCRAFT_TEXT;How to change the patch to watch old DotA replays.
+REPLAY_EVENT_TEXT;Event
+REPLAY_DATE_TEXT;Date
+REPLAY_NOTFOUND_TEXT;No replay exists.
+REPLAY_TEAMNAME_TEXT;Team
+REPLAY_EVENTNAME_TEXT;Event
+REPLAY_HERONAME_TEXT;Hero
+REPLAY_NOTE_TEXT;Click on the image of the hero.
+REPLAY_VIEWSCORE;View Scoreboard
+REPLAY_HIDESCORE;Hide Scoreboard
+REPLAY_TUTORIAL_VIEW_REPLAY_BUTTON;Tutorial view replay
+TOURNAMENT_AWARD;Reward
+TOURNAMENT_WON;Won
+TOURNAMENT_TIME;Time
+TOURNAMENT_MENU_HOME;Tournament
+TOURNAMENT_MENU_CREATE_TEAM;Create new team
+TOURNAMENT_MENU_LOGIN_TEAM;Login
+TOURNAMENT_MENU_PROFILE;Profile
+TOURNAMENT_MENU_SCHEDULE;Schedule
+TOURNAMENT_MENU_RULE;RULE
+TOURNAMENT_MENU_FAQ;FAQ
+TOURNAMENT_DETAIL_START_DATE;Start race
+TOURNAMENT_DETAIL_DEADLINE_DATE;Close register
+TOURNAMENT_DETAIL_REGISTER;Register
+TOURNAMENT_DETAIL_VIEW_LIST_TEAM;View list team
+TOURNAMENT_DETAIL_VIEW_LIST_TEAM_EVENT;View list team event
+TOURNAMENT_DETAIL_SCHEDULE;Schedule
+TOURNAMENT_REGISTER;Registration successful. You can view information of your team by clicking "View list team."
+TOURNAMENT_REGISTER_SUCCESS;Registration successful.
+TOURNAMENT_CANCEL;unregister
+TOURNAMENT_CONFIRM_CANCEL;Are you sure you want to unregister?
+TOURNAMENT_VALIDATE_PLEASE_INPUT;Please input
+TOURNAMENT_VALIDATE_AT_LEAST;at least
+TOURNAMENT_VALIDATE_MAXIMUM;at most
+TOURNAMENT_VALIDATE_CHARACTER;character
+TOURNAMENT_VALIDATE_FORMAT_EMAIL;correct format email
+TOURNAMENT_VALIDATE_TEL;telephone number
+TOURNAMENT_VALIDATE_UNDISCLOSED;Undisclosed
+TOURNAMENT_VALIDATE_CORRECT_CAPTHA;correct captha
+TOURNAMENT_VALIDATE_PASSWORD_AND_CONFIRM_PASSWORD_NOT_MATCHED;password and confirm password are not match
+TOURNAMENT_VALIDATE_SHORTNAME_ALREADY_EXISTED;short name already existed
+TOURNAMENT_VALIDATE_EMAIL_ALREADY_EXISTED;email already existed
+TOURNAMENT_VALIDATE_LOGIN_PLEASE_INPUT_USERNAME;Please input Short name
+TOURNAMENT_VALIDATE_LOGIN_PLEASE_INPUT_PASSWORD;Please input Password
+TOURNAMENT_VALIDATE_LOGIN_WRONG_USERNAME;Short name is not available
+TOURNAMENT_VALIDATE_LOGIN_WRONG_PASSWORD;Password is not correct
+TOURNAMENT_VALIDATE_NOT_CHANGE_PASSWORD;If you do not want to change the password, please leave Old Password, New Password, and Confirm Password fields as blank.
+TOURNAMENT_LOGIN_KEEPME_LOGIN;Keep me logged in
+TOURNAMENT_PROFILE_LIST_MEMBER;list member
+TOURNAMENT_PROFILE_EDIT;Edit my profile
+TOURNAMENT_PROFILE_STAT;Stat win lose
+TOURNAMENT_CREATE_TEAM_NAME;Team name
+TOURNAMENT_CREATE_TEAM_SHORT_NAME;Short name
+TOURNAMENT_CREATE_TEAM_FOR_LOGIN;(for login)
+TOURNAMENT_CREATE_MEMBER;Members at
+TOURNAMENT_INDEX_TITLE;Thailand Tournament DotA
+TOURNAMENT_INDEX_HEADER;DotA Tournament
+TOURNAMENT_CREATETEAM_TITLE;Create new team
+TOURNAMENT_CREATETEAM_HEADER;Create new team
+TOURNAMENT_LOGINTEAM_TITLE;Login Team
+TOURNAMENT_LOGINTEAM_HEADER;Login Team
+TOURNAMENT_LOGINTEAM_FORGET_PASSWORD;Forget password
+TOURNAMENT_PROFILETEAM_TITLE;Profile Team
+TOURNAMENT_PROFILETEAM_HEADER;Profile Team
+TOURNAMENT_SCHEDULE_BACK;Back to tournament
+TOURNAMENT_MATCH_HEADER;Match Detail
+TOURNAMENT_MATCH_BACK;Back to schedule
+TOURNAMENT_MATCH_DATE_RACE;Date Race
+TOURNAMENT_MATCH_RESULT;Report Result
+TOURNAMENT_MATCH_RESULT_MANY_GAME;Report Result of game
+TOURNAMENT_MATCH_RESULT_WON_BYE;Free-win (check if free-win)
+TOURNAMENT_MATCH_RESULT_LOSE_BOTH;Lose bye for both team
+TOURNAMENT_MATCH_RESULT_PICTURE;Result Picture
+TOURNAMENT_MATCH_EDIT_RESULT;Edit Result Picture
+TOURNAMENT_MATCH_LINK_REPLAY;Link Download Replay
+TOURNAMENT_MATCH_TUTORIAL_UPLOAD_REPLAY;Tutorial upload replay
+TOURNAMENT_MATCH_RESULT_NOT_REQUIRE;(Not Require)
+TOURNAMENT_MATCH_PLEASE_READ;Attention: Rules and Reporting Results
+TOURNAMENT_MATCH_MAKE_APPOINTMENT;Make an appointment
+TOURNAMENT_MATCH_SORRY;Sorry, only the participated teams can post here.
+TOURNAMENT_MATCHRESULT_VALIDATE_WIN;Please choose team win
+TOURNAMENT_MATCHRESULT_VALIDATE_SS;Please choose result picture
+TOURNAMENT_EDITUSERTEAM_TITLE;Edit Team
+TOURNAMENT_EDITUSERTEAM_HEADER;Edit Team
+TOURNAMENT_RULE_TITLE;lendota tournament rule
+TOURNAMENT_RULE_HEADER;Rule
+TOURNAMENT_RULE_DETAILS;Tournament Details
+TOURNAMENT_RULE_FORMAT;Format: Single Elimination, 1 day / 1 match
+TOURNAMENT_RULE_FORMAT_DOUBLE;Format: Double Elimination, 1 day / 1 match
+TOURNAMENT_RULE_SERVER;Server: Singapore or whatever which acceptable for both teams
+TOURNAMENT_RULE_PLAYER;7 players per team (2 reserved)
+TOURNAMENT_RULE_MODE;Gamemode: -cm (Captain Draft)
+TOURNAMENT_RULE_CONDITIONS;Conditions
+TOURNAMENT_RULE_MATCH_BEGIN;A match begins 8:00 pm UTC +7, allowed to be late for 30 minutes, and it should be finished before 0:00 am UTC +7.
+TOURNAMENT_RULE_SIDE;See your side in the match page as the following image: (system will random side on every match).
+TOURNAMENT_RULE_CREATE_ROOM;Create a private room then post the number in your match page.
+TOURNAMENT_RULE_PRIVATE_ROOM;This private room visibility is set to visible (Actually, live stream is delayed for 2 minutes to prevent cheating)
+TOURNAMENT_RULE_POSTPOND;For a match to be postponed, it must be accepted from both teams and the match must be finish before 6:00 pm UTC +7 of the next day.
+TOURNAMENT_RULE_PLAYER_NAME;Players require to use the same name as in the registration.
+TOURNAMENT_RULE_RULES;Rules
+TOURNAMENT_RULE_DISCONNECT;If a player is disconnected, do pause the game and wait for maximum 10 minutes. The game can continue after 10 minutes had passed.
+TOURNAMENT_RULE_SOFT_RULE;Soft Rules
+TOURNAMENT_RULE_HARM;Player's name should not harm anything, the tournament will not allow that player to participate.
+TOURNAMENT_RULE_TRASH_TALK;Trashtalking should not be done to the other team in-game.
+TOURNAMENT_SCHEDULE_HEADER;Schedule
+TOURNAMENT_SCHEDULE_TITLE;Schedule
+TOURNAMENT_FAQ_TITLE;lendota tournament FAQ
+TOURNAMENT_FAQ_HEADER;FAQ
+TOURNAMENT_FAQ_HOWTO_PARTICIPATE;How to Participate?
+TOURNAMENT_FAQ_MUST_BE;It requires
+TOURNAMENT_FAQ_LOGIN;Login
+TOURNAMENT_FAQ_FIRST_OR;if you have no team account, you can
+TOURNAMENT_FAQ_CREATE_NEW_TEAM;Create new team
+TOURNAMENT_FAQ_THEN_LOGIN;then log in and go to
+TOURNAMENT_FAQ_SCEDULE;tournament page
+TOURNAMENT_FAQ_REGISTER;and click register to the tournament
+TOURNAMENT_FAQ_HOWTO_REPORT_RESULT;How to report the result?
+TOURNAMENT_FAQ_HOWTO_REPORT_TUTORIAL;Go to the tournament page then click on your match to report as the following image:
+TOURNAMENT_FAQ_HOWTO_REPORT_1;Go to the tournament page and click on your match as the following image:
+TOURNAMENT_FAQ_HOWTO_REPORT_2;Click Report Result as the following image
+TOURNAMENT_FAQ_HOWTO_REPORT_3;Select the winner
+TOURNAMENT_FAQ_HOWTO_REPORT_4;Attach the end-game image
+TOURNAMENT_FAQ_DISCONNECT;Disconnected?
+TOURNAMENT_FAQ_PAUSE_GAME;Pause the game and wait for maximum 10 minutes. The game can continue after 10 minutes had passed.
+TOURNAMENT_RANKING_STAT;Statistics
+TOURNAMENT_HOWTO_UPLOAD;How to upload replay
+TOURNAMENT_HOWTO_UPLOAD_1;After the match was finished, find the history of the match and download the replay as in the following image.
+TOURNAMENT_HOWTO_UPLOAD_2;See the Match ID as in the following image.
+TOURNAMENT_HOWTO_UPLOAD_3;Go to the Stream installation folder, e.g., C:\Steam\steamapps\common\dota 2 beta\dota\replays, name of the downloaded replay is the same as Match ID number, e.g., 100895203.dem.
+TOURNAMENT_HOWTO_UPLOAD_4;Upload this replay file to a host such as mediafile, 4share or dropbox and post the link
+TOURNAMENT_HOWTO_VIEW_REPLAY;How to view replay from file
+TOURNAMENT_HOWTO_VIEW_REPLAY_TOPIC;Put the downloaded replay file into the Stream installation folder "steam/steamapps/common/dota2 beta/dota/replays" then:
+TOURNAMENT_HOWTO_VIEW_REPLAY_1;Right-click on the Dota 2 in Stream client and select Properties menu
+TOURNAMENT_HOWTO_VIEW_REPLAY_2;Click on the SET LAUNCH OPTIONS button
+TOURNAMENT_HOWTO_VIEW_REPLAY_3;Enter "-console" into the textbox
+TOURNAMENT_HOWTO_VIEW_REPLAY_4;Click OK button
+TOURNAMENT_HOWTO_VIEW_REPLAY_5;Launch the game normally, the console dialog will be displayed then type the command 'playdemo "replays/lendota001.dem"
+STRATEGY_REPLAY_RECOMMEND_TEXT;Recommended Replays
+STRATEGY_REPLAY_ANALYSIS_TEXT;Replay Analysis
+STRATEGY_GREEN_TEXT;Green
+STRATEGY_RED_TEXT;Red
+STRATEGY_BLUE_TEXT;Yellow
+STRATEGY_YELLOW_TEXT;Blue
+STRATEGY_GREEN_DETAIL_TEXT;is used for pure buffs. Examples of buffs are increase in stats, decrease in cooldowns, decrease in manacost etc.
+STRATEGY_RED_DETAIL_TEXT;is used for pure nerfs, i.e. the exact opposite of buffs.
+STRATEGY_YELLOW_DETAIL_TEXT;is used for a change that is neither a pure buff or a pure nerf.
+STRATEGY_BLUE_DETAIL_TEXT;is used for small, barely noticeable changes, or bug fixes.
+STRATEGY_NOTE_TEXT;..
+STORE_INDEX_TITLE;Dota 2 Store
+STORE_CART_TITLE;Your Shopping Cart 
+DOWNLOAD_TCGNETWORK_TEXT;A network system by Thaicybergames using for playing DotA online.
+DOWNLOAD_WARCRAFT_TFT_TEXT;The upgrade version file of Warcraft III to Version 1.26a
+DOWNLOAD_W3DR_TEXT;Delay Reducer
+DOWNLOAD_W3CSETUP_TEXT;Execute the program and selet "Frozen Throne.exe" to set the correct path of Warcraft III
+DOWNLOAD_REPLAY_MANAGER_TEXT;A program to view the detail of the DotA replays.
+DOWNLOAD_SWITCHER_PATCH_TEXT;Version Switcher
+DOWNLOAD_PATCH24_TEXT;Patch 1.24
+DOWNLOAD_PATCH24B_TEXT;Patch 1.24b
+DOWNLOAD_PATCH24E_TEXT;Patch 1.24e
+DOWNLOAD_PATCH25B_TEXT;Patch 1.25b
+DOWNLOAD_PATCH26A_TEXT;Patch 1.26a
+DOWNLOAD_W3GMASTER_TEXT;A program to view the detail of players in the DotA replays.
+DOWNLOAD_THAIFONT_TEXT;Thai font for Warcraft III
+DOWNLOAD_W3MUX_TEXT;Program change music
+SUPPORT_ADVER_ME_TEXT;Advertise with us
+SUPPORT_POSITION_BANNER_TEXT;The positions of banners are in the picture:
+SUPPORT_POSITION_TEXT;Position no.
+SUPPORT_WEEK_TEXT;Week
+SUPPORT_MONTH_TEXT;Month
+SUPPORT_BATH_TEXT;Bath
+SUPPORT_UIP_TEXT;The price will be increased according to the increased UIP. In the case that the payment already paid, the price is not changed until the contract expired.
+SUPPORT_PRICE_TEXT;We (LenDotA.com) reserves the right to modify or alter the terms, condition and notices contained herein and in any particular LenDotA Web Site.
+SUPPORT_GUIDE_TEXT;How to become our sponsors
+SUPPORT_SEND_EMAIL_TEXT;Send an email to admin@lendota.com to inform your purpose
+SUPPORT_LINK_TEXT;here
+SUPPORT_NAME_TEXT;
+SUPPORT_BANK_TEXT;
+SUPPORT_SIZE_TEXT; Send an email the payment slip including the banners and thier links for advertising on our Web Site.
+SUPPORT_NOTE_TEXT;Remark: 
+SUPPORT_NOTE_DETAIL1_TEXT;We do not accept	illegal content, direct selling and sexual advertising.
+SUPPORT_NOTE_DETAIL2_TEXT;Please pay the payment before advertising. We do not accept credit cards.
+SUPPORT_WHY_WITH_US_HEADER;Why advertise with us?
+SUPPORT_WHY_WITH_US_CONTENT;Our website growing rate is improved continuously. The statistic are compared between 2011 and 2012 and displayed below.<br /><br />Our website provides DotA news and information and always updates the latest news around the world.<br />We also have our own tournament which has been interested by many teams from Thai and other countries such as Philippines, Singapore, Indonesia, and Malaysia.<br /><br />The Replay System is unique since it was created by us. Many players use this system to view and research the techniques and strategy used by the famous team around the world.<br />
+SUPPORT_STAT_HEADER;The statistics of lendota.com
+SUPPORT_STAT_CONTENT;The statistics since 2012.
+SUPPORT_STAT_MORE_DETAIL;* for more information
+SUPPORT_BENEFIT_TOPIC;Benefits from Advertising with us
+SUPPORT_BENEFIT_DETAIL;In addition from the viewers can see your banner, the ranking of your website is also raised in google by "backlink" which also increase the ranking of the website from the banner placed in our website.
+SUPPORT_ADS_DETAIL_HEADER;The advertising details
+USER_TOP5REPLAY_TEXT;Top 5 Replay Last Month

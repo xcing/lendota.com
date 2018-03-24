@@ -1,0 +1,175 @@
+
+<script>
+		var xmlHttp;
+		var colorMember1;
+		var colorMember2;
+		var colorMember3;
+		var colorMember4;
+		var member1;
+		var member2;
+		var member3;
+		var member4;
+		var tag;
+		var name;
+		var icon;
+		var colorTag;
+		
+		function createXMLHttpRequest(){
+			if(window.ActiveXObject){
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			else if(window.XMLHttpRequest){
+				xmlHttp = new XMLHttpRequest();
+			}
+		}
+		function requestCheckTag(){
+			createXMLHttpRequest();
+			
+			var tag = document.getElementById("tag").value;
+			xmlHttp.open("POST","/user/checktagclan/tag/"+tag,true);
+				xmlHttp.onreadystatechange = function(){
+					if(xmlHttp.readyState == 4){
+						if(xmlHttp.status == 200){
+							//displayInfo(xmlHttp.responseText);
+							document.getElementById("errorMessageTag").innerHTML = xmlHttp.responseText;
+						}
+						else{
+							//displayInfo("error"+xmlHttp.statusText);
+							document.getElementById("errorMessageTag").innerHTML = "กรุณาใส่ค่าด้วยครับ";
+						}
+					}
+				}
+				xmlHttp.send(null);
+		}
+		function requestCheck(index){
+			createXMLHttpRequest();
+			
+			var sMember = document.getElementById("member"+index).value;
+			xmlHttp.open("POST","/user/checkuserclan/username/"+sMember+"/index/"+index,true);
+				xmlHttp.onreadystatechange = function(){
+					if(xmlHttp.readyState == 4){
+						if(xmlHttp.status == 200){
+							//displayInfo(xmlHttp.responseText);
+							document.getElementById("errorMessage"+index).innerHTML = xmlHttp.responseText;
+						}
+						else{
+							//displayInfo("error"+xmlHttp.statusText);
+							document.getElementById("errorMessage"+index).innerHTML = "กรุณาใส่ค่าด้วยครับ";
+						}
+					}
+				}
+				xmlHttp.send(null);
+		}
+		
+		function checkValue(){
+			
+			colorMember1 = document.getElementById("user1").style.color;
+			colorMember2 = document.getElementById("user2").style.color;
+			colorMember3 = document.getElementById("user3").style.color;
+			colorMember4 = document.getElementById("user4").style.color;
+
+			member1 = document.getElementById("member1").value;
+			member2 = document.getElementById("member2").value;
+			member3 = document.getElementById("member3").value;
+			member4 = document.getElementById("member4").value;
+
+			tag = document.getElementById("tag").value;
+			name = document.getElementById("name").value;
+			icon = document.getElementById("icon").value;
+
+			colorTag = document.getElementById("errorTag").style.color;
+
+			if(member1 == member2 || member1 == member3 || member1 == member4 || member2 == member3 || member2 == member4 || member3 == member4){
+				alert('username เพื่อนคุณ ซ้ำกันครับ');
+			}
+			else if(colorMember1 == 'red' || colorMember2 == 'red' || colorMember3 == 'red' || colorMember4 == 'red'){
+				alert('username เพื่อนคุณ ไม่ถูกต้อง');
+			}
+			else if(tag == ''){
+				alert('กรุณาใส่ tag');
+			}
+			else if(colorTag == 'red'){
+				alert('ชื่อ Tag นี้มีคนใช้แล้ว');
+			}
+			else if(name == ''){
+				alert('กรุณาใส่ name');
+			}
+			else if(icon == ''){
+				alert('กรุณาใส่ icon');
+			}
+			else{
+				document.forms["createClanForm"].submit();
+			}
+		}
+</script>
+<h1 class="header">
+	Create Clan
+</h1>
+<div class="divLeft">
+	<div class="RoundBlack"> 
+		<div style="padding:10px 20px 20px 20px;">
+			<center>
+				<div class="textHeader" style="margin-top: 30px;margin-bottom:10px;">สร้าง Clan</div>
+				<form method="POST" id="createClanForm" enctype = "multipart/form-data">
+					<input type="hidden" id="mode" name="mode" value="create"></input>
+					<table cellspacing="10">
+						<tr>
+							<td colspan="2" align="center">การสร้าง Clan ต้องมีสมาชิกอย่างน้อย 4 คน</td>
+						</tr>
+						<tr>
+							<td width="140" align="right">username สมาชิก 1.</td>
+							<td>
+								<input type="text" id="member1" name="member1" onblur="requestCheck('1');" maxlength="20"></input>
+								<span id="errorMessage1" name="errorMessage1" style="color:#DD3C10;"></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right">2.</td>
+							<td>
+								<input type="text" id="member2" name="member2" onblur="requestCheck('2');" maxlength="20"></input>
+								<span id="errorMessage2" name="errorMessage2" style="color:#DD3C10;"></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right">3.</td>
+							<td>
+								<input type="text" id="member3" name="member3" onblur="requestCheck('3');" maxlength="20"></input>
+								<span id="errorMessage3" name="errorMessage3" style="color:#DD3C10;"></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="right">4.</td>
+							<td>
+								<input type="text" id="member4" name="member4" onblur="requestCheck('4');" maxlength="20"></input>
+								<span id="errorMessage4" name="errorMessage4" style="color:#DD3C10;"></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">Tag:</td>
+							<td>
+								<input type="text" id="tag" name="tag" size="4" maxlength="4" onblur="requestCheckTag();"></input>
+								<span id="errorMessageTag" name="errorMessageTag" style="color:#DD3C10;"></span>
+							</td>
+						</tr>
+						<tr>
+							<td align="center">Name:</td>
+							<td><input type="text" id="name" name="name" maxlength="20"></input></td>
+						</tr>
+						<tr>
+							<td align="center">Icon:</td>
+							<td><input type="file" id="icon" name="icon"></input></td>
+							<!-- <td><?php echo $this->form;?></td>  -->
+						</tr>
+						<tr>
+							<td align="center">Description:</td>
+							<td><textarea cols="50" rows="5" id="description" name="description"></textarea></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><input type="button" value="Create" onclick="checkValue();"></input></td>
+						</tr>
+					</table>
+				</form>
+			</center>
+		</div>
+	</div>
+</div>

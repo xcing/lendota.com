@@ -1,0 +1,106 @@
+<script>
+	document.title = '<?=$this->translate('TOURNAMENT_INDEX_TITLE'); ?>';
+
+	$(document).ready(function() {
+		$(".greenBtn").each(function() {
+			$(this).click(function() {
+				var tournamentId = $(this).attr("name");
+				<?php if(!Application_Service_TeamService::getInstance()->hasIdentity()){ ?>
+					alert('<?=$this->translate('PLEASE').' '.$this->translate('TOURNAMENT_FAQ_LOGIN').' '.$this->translate('FIRST')?>');
+				<?php } 
+				else if(Application_Service_TeamService::getInstance()->getIdentity()->countryCode != 'TH') { ?>
+					if(tournamentId == '10' || tournamentId == '11'){
+						alert('Sorry, this tournament is available for Thais only.');
+					}
+					else{
+						window.location = '/tournament/registertour/tournamentId/'+tournamentId+'/teamId/<?=Application_Service_TeamService::getInstance()->getIdentity()->id?>';
+					}
+				<? }
+				else{ ?>
+					window.location = '/tournament/registertour/tournamentId/'+tournamentId+'/teamId/<?=Application_Service_TeamService::getInstance()->getIdentity()->id?>';
+				<?php } ?>
+			});
+		});
+		$(".redBtn").each(function() {
+			$(this).click(function() {
+				var tournamentId = $(this).attr("name");
+				var r=confirm("<?=$this->translate('TOURNAMENT_CONFIRM_CANCEL');?>");
+				if (r==true){
+					window.location = '/tournament/canceltour/tournamentId/'+tournamentId+'/teamId/<?=Application_Service_TeamService::getInstance()->getIdentity()->id?>';
+				}
+			});
+		});
+	});
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_INDEX_HEADER'); ?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:0px 35px 0px 5px;">
+	<?php if (Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin()){?>
+		<input class="submitBtn" type="button" style="margin:20px 0px 0px 20px;" value="Create Tournament" onclick="document.location='<?=$this->url(array('controller'=>'tournament','action'=>'createtournament'))?>'; return false;" />
+	<?php } ?>
+	<?php foreach ($this->tournaments as $index =>$tournament):?>
+	<div class="divNews" style="margin:20px 0px 0px 20px;width:850px;padding:0px;">
+		<div class = "topicNewsTour">
+			<?=$tournament->name;?>
+			<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId != 2) {?>
+				<div style="float:right;padding-right:25px;">
+					<a style="color:white;" href="<? echo $this->url(array(
+						'controller'=>'tournament', 
+						'action'=>'edittournament', 
+						'tournamentId'=>$tournament->tournamentId),
+						'default',true); ?>">
+						Edit
+					</a>
+				</div>
+			<?php } ?>
+		</div>
+		<div class = "bodyNewsTour">
+			<img class="node-image-tournament" src="<?=$tournament->picture;?>" width="240" height="100" />
+			<div class="postContent" style="padding:0px 10px 10px 10px;line-height: inherit;">
+				<div style="float:left;">
+					<div><?=$this->translate('TOURNAMENT_DETAIL_START_DATE').' : '.date('d/m/Y', strtotime($tournament->startDate));?></div>
+					<div><?=$this->translate('TOURNAMENT_DETAIL_DEADLINE_DATE').' : '.date('d/m/Y', strtotime($tournament->deadlineDate));?></div>
+					<?php if($tournament->type == 1){?>
+						<div><?=$this->translate('TOURNAMENT_RULE_FORMAT');?></div>
+					<?php }
+					else if($tournament->type == 2){ ?>
+						<div><?=$this->translate('TOURNAMENT_RULE_FORMAT_DOUBLE');?></div>
+					<?php } ?>
+					<?php if($tournament->award != ''){?>
+						<div><?=$this->translate('TOURNAMENT_AWARD').' ';?><font color="#FFC300"><?=$tournament->award;?></font></div>
+					<?php } ?>
+					<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1) {?>
+						<div>ผู้สมัคร <?=$this->amountTeam[$index];?> ทีม</div>
+					<?php } ?>
+					<?php if($tournament->active == 0){?>
+						<?php if(empty($this->relateTourTeamData[$tournament->tournamentId])){?>
+							<button id="regisTour<?=$index;?>" class="greenBtn" style="margin:10px 10px 0px 0px;" name="<?=$tournament->tournamentId?>"><?=$this->translate('TOURNAMENT_DETAIL_REGISTER');?></button>
+						<?php } 
+						else{ ?>
+							<button id="regisTour<?=$index;?>" class="redBtn" style="margin:10px 10px 0px 0px;" name="<?=$tournament->tournamentId?>"><?=$this->translate('TOURNAMENT_CANCEL');?></button>
+						<?php } ?>
+					<?php } ?>
+					<a href="/tournament/viewlistteam/tournamentId/<?=$tournament->tournamentId?>" style="text-decoration:none;"><button class="blueBtn" style="margin:10px 10px 0px 0px;"><?=$this->translate('TOURNAMENT_DETAIL_VIEW_LIST_TEAM');?></button></a>
+					<?php if($tournament->active == 2 || $tournament->active == 3 || ($tournament->active == 1 && Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin())){?>
+						<a href="/tournament/schedule/tournamentId/<?=$tournament->tournamentId?>" style="text-decoration:none;"><button class="blueBtn" style="margin:10px 0px 0px 0px;"><?=$this->translate('TOURNAMENT_DETAIL_SCHEDULE');?></button></a>
+					<?php } ?>
+				</div>
+				<?php if($tournament->active == 3){?>
+					<div style="float:right;margin-right:25px;text-align:center;">
+						<div style="color:#FF6347;font-size:16px;">Champion</div>
+						<a href="/tournament/profileteam/teamId/<?=$this->teamData[$tournament->tournamentId][0]->id;?>">
+							<div><img src="<?=$this->teamData[$tournament->tournamentId][0]->logo;?>" height="80" width="80"/></div>
+							<div style="color:#FFC300;font-size:16px;"><?=$this->teamData[$tournament->tournamentId][0]->shortName;?></div>
+						</a>
+					</div>
+				<?php } ?>
+				<div style="clear:both;"></div>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+	<?php endforeach;?>
+</div>
+<div style="clear:both;"></div>

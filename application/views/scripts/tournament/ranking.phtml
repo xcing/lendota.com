@@ -1,0 +1,46 @@
+<script>
+	document.title = 'Lendota.com Tournament Ranking';
+</script>
+<h1 class="header">
+	Lendota.com Tournament Ranking
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:0px 35px 0px 5px;color:#A7A7A7;width:850px;">
+	<div class="RoundBlack" style="width:800px;margin:auto;">
+		<form method="POST" action="/tournament/ranking" style="margin:5px 0px 20px 25px;">
+			Team : <input type="text" name="keyword" value="<?=$this->keyword;?>" />
+			<input type="submit" value="search" class="submitBtn" />
+		</form>
+		<?php foreach ($this->teamsPaginator as $idxTeam => $team):?>
+			<?php 
+				$stat = round($team->win*100/($team->win+$team->lose));
+			?>
+			<div style="margin:10px;">
+				<div style="float:left;margin:44px 20px 0px 20px;font-size:24px;min-width:60px;">
+					#<?=($idxTeam+1)+(($this->page-1)*$this->limit);?>
+				</div>
+				<div style="float:left;height:120px;width:120px;">
+					<a href="/tournament/profileteam/teamId/<?php if($this->searched) echo $team->id; else echo $team->teamId;?>"><img src="<?=$team->logo; ?>" width="120" /></a>
+				</div>
+				<div style="float:left;font-size:18px;margin-left:10px;">
+					<div style="font-weight:bold;"><?=$this->escape($team->shortName). ' ('.$team->score.')';?></div>
+					<div style="margin:10px 0px;">
+						<img style="margin-right:2px;" width="16" height="11" class="flag-<?=strtolower($team->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($team->countryCode);?>">
+						<?=$this->escape($team->name);?>
+					</div>
+					<div><?=$this->translate('TOURNAMENT_RANKING_STAT').':'; ?> <?=$team->win.'-'.$team->lose.' ('.$stat.'%)';?></div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		<?php endforeach;?>
+	</div>
+	<?php 
+		if(!$this->searched){
+			echo $this->paginationControl(
+							$this->teamsPaginator,
+		                    'Sliding',
+		                    '/template/paging_nav.phtml');
+		}
+	?>
+</div>
+<div style="clear:both;"></div>

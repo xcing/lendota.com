@@ -1,0 +1,57 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<name>Aeva ~ Auto-Embed Video &amp; Audio</name>
+	<id>Nao:Aeva</id>
+	<homepage>http://aeva.noisen.com</homepage>
+
+	<!--// SMF 1.1.x Only Edits. //-->
+
+	<file name="$sourcedir/ModSettings.php">
+		<!--// Adds subaction to view //-->
+		<operation>
+			<search position="before"><![CDATA[$context['sub_template'] = 'show_settings';
+
+	$subActions = array(]]></search>
+			<add><![CDATA[
+		'aeva' => 'ModifyAevaSettings',
+		'aevasites' => 'ModifyAevaSettings',]]></add>
+		</operation>
+		<!--// Adds subaction to save (same edit as above) //-->
+		<operation>
+			<search position="before"><![CDATA[require_once($sourcedir . '/ManageServer.php');
+
+	$subActions = array(]]></search>
+			<add><![CDATA[
+		'aeva' => 'ModifyAevaSettings',
+		'aevasites' => 'ModifyAevaSettings',]]></add>
+		</operation>
+		<!--// Adds tab to Admin > Features and Options //-->
+		<operation>
+			<search position="after"><![CDATA[			'karma' => array(]]></search>
+			<add><![CDATA[			'aeva' => array(
+				'title' => !isset($txt['aeva']) ? (loadlanguage('Aeva') == false ? (loadLanguage('Aeva', 'english') == false ? 'Aeva' : $txt['aeva']) : $txt['aeva']) : $txt['aeva'],
+				'href' => $scripturl . '?action=featuresettings;sa=aeva;sesc=' . $context['session_id'],
+			),
+			'aevasites' => array(
+				'title' => !isset($txt['aeva_sites']) ? 'Aeva Sites' : $txt['aeva_sites'],
+				'href' => $scripturl . '?action=featuresettings;sa=aevasites;sesc=' . $context['session_id'],
+			),
+]]></add>
+		</operation>
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+
+// Aeva - START
+function ModifyAevaSettings()
+{
+	global $sourcedir;
+	@require_once($sourcedir .'/Subs-Aeva-Admin.php');
+	return aeva_admin_manager(false, isset($_GET['sa']) ? $_GET['sa'] : '');
+}
+// Aeva - END
+]]></add>
+		</operation>
+	</file>
+</modification>

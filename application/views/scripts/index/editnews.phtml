@@ -1,0 +1,112 @@
+<?php 
+    $this->headScript()->appendFile('/resources/tiny_mce/tiny_mce.js')
+					   ->appendFile('/js/common/newsEditor.js');
+
+	if($this->entries[0]->replayType == 0){
+		$display = 'none';
+	}
+	else{
+		$display = 'block';
+	}
+?>
+<script>
+	var divReplayId;
+
+	function postComment(){
+		document.forms["commentForm"].submit();
+	}
+	
+	var tagArray = new Array();  
+	var sizeArray;
+	var i = 0;
+
+	$(document).ready(function() {
+		<?php for($i=0; $i<sizeof($this->tagArray); $i++){ ?>
+			tagArray[i] = '<?php echo $this->tagArray[$i]['tagId'];?>';
+			i++;
+		<?php } ?>
+		sizeArray = tagArray.length;
+		for(i=0; i<sizeArray; i++){
+			document.getElementById('tag'+tagArray[i]).checked = true;
+		}
+	});
+
+	function checkDivReplayId(value){
+		divReplayId = document.getElementById('divReplayId');
+		if(value != 0){
+			divReplayId.style.display = 'block';
+		}
+		else{
+			divReplayId.style.display = 'none';
+		}
+	}
+</script>
+<h1 class="header">
+	Edit News
+</h1>
+<div class="divLeft">	
+	<div class="divPostComment">
+		<form method="post" id="commentForm" action="/index/processeditnews">
+			<input type="hidden" id="newsId" name="newsId" value="<?php echo $this->newsId;?>"></input>
+			<input type="hidden" id="page" name="page" value="<?php echo $this->page;?>"></input>
+			<input type="hidden" id="mode" name="mode" value="editNews"></input>
+			<div class = "headPostComment">
+				Post News
+			</div>
+			<div class = "bodyPostComment">
+				<div style="margin: 5px 5px 5px 5px;">
+					<div style="margin: 10px 0px 10px 5px;">หัวข้อข่าว: <input type="text" id="topic" name="topic" size="100" value="<?php echo $this->escape($this->entries[0]->topic);?>"></input></div>
+					<div style="margin: 10px 0px 10px 5px;">หัวข้อข่าว EN: <input type="text" id="topicEN" name="topicEN" size="100" value="<?php echo $this->escape($this->entries[0]->topicEN);?>"></input></div>
+					<div style="margin: 10px 0px 10px 5px;">Url Image: <input type="text" id="imageName" name="imageName" size="100" value="<?php echo $this->entries[0]->picture;?>"></input></div>
+					<div style="margin: 10px 0px 10px 5px;">Credit: <input type="text" id="creditName" name="creditName" size="100" value="<?php echo $this->entries[0]->creditName;?>"></input></div>
+					<div style="margin: 10px 0px 10px 5px;">Credit Link: <input type="text" id="creditLink" name="creditLink" size="100" value="<?php echo $this->entries[0]->creditLink;?>"></input></div>
+					<div style="margin: 10px 0px 10px 5px;">Tags: <input type="text" id="tags" name="tags" size="100" value="<?php echo $this->tags;?>"></input></div>
+                    <input type="hidden" id="oldTags" name="oldTags" value="<?php echo $this->tags;?>"></input>
+					<div style="margin: 10px 0px 10px 5px;">
+						Replay Type :
+						<input type="radio" name="replayType" value="0" onchange="checkDivReplayId('0');" <?php if($this->entries[0]->replayType == 0) {?> checked <?php } ?> /><span style="margin:0px 5px;">Not Replay</span>
+						<input type="radio" name="replayType" value="1" onchange="checkDivReplayId('1');" <?php if($this->entries[0]->replayType == 1) {?> checked <?php } ?>/><span style="margin:0px 5px;">Replay แนะนำ</span>
+						<input type="radio" name="replayType" value="2" onchange="checkDivReplayId('2');" <?php if($this->entries[0]->replayType == 2) {?> checked <?php } ?>/><span style="margin:0px 5px;">Replay Analysis</span>
+					</div>
+					<div style="margin: 10px 0px 10px 5px;display:<?php echo $display;?>;" id="divReplayId">
+						Replay Id : <input type="text" id="replayId" name="replayId" value="<?php echo $this->entries[0]->replayId;?>" />
+					</div>
+					<div style="margin: 10px 0px 10px 5px;text-align:center;">
+						<input type="button" id="btPost" class="submitBtn" name="btPost" value="Post" onclick="postComment();"></input>
+					</div>
+					<center>
+						ไทย <br />
+						<textarea cols="100" rows="30" id="comment" name="comment" class="mceEditor" style="visibility: hidden;"><?php echo $this->entries[0]->detail;?></textarea>
+						<br />
+						Eng <br />
+						<textarea cols="100" rows="30" id="commentEN" name="commentEN" class="mceEditor" style="visibility: hidden;"><?php echo $this->entries[0]->detailEN;?></textarea>
+					</center>
+					<div style="margin: 10px 0px 10px 5px;">
+						<font color="black">Team:</font><br/> 
+						<?php foreach ($this->tagTeam as $team): ?>
+							<input type="checkbox" id="tag<?php echo $team->id;?>" name="tag<?php echo $team->id;?>" style="margin:5px;" disabled="disabled">
+								<?php echo $team->tagName;?>
+							</input>
+						<?php endforeach ?>
+						<br/><font color="black">Player</font><br/>
+						<?php foreach ($this->tagPlayer as $player): ?>
+							<input type="checkbox" id="tag<?php echo $player->id;?>" name="tag<?php echo $player->id;?>" style="margin:5px;" disabled="disabled">
+								<?php echo $player->tagName;?>
+							</input>
+						<?php endforeach ?>
+						<br/><font color="black">Other</font><br/>
+						<?php foreach ($this->tagOther as $other): ?>
+							<input type="checkbox" id="tag<?php echo $other->id;?>" name="tag<?php echo $other->id;?>" style="margin:5px;" disabled="disabled">
+								<?php echo $other->tagName;?>
+							</input>
+						<?php endforeach ?>
+					</div>
+				</div>
+				<div align="center" style="margin:10px 0px 10px 0px;">
+					<input type="button" id="btPreview" class="submitBtn" name="btPreview" value="Preview" onclick="tinyMCE.activeEditor.execCommand('mcePreview');"></input>
+					<input type="button" id="btPost" class="submitBtn" name="btPost" value="Post" onclick="postComment();"></input>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

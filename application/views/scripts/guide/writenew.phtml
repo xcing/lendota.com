@@ -1,0 +1,33 @@
+<?php $this->headScript()->appendFile('/resources/tiny_mce/tiny_mce.js')
+						 ->appendFile('/js/common/guideEditor.js');?>
+<script>
+	function postComment(){
+		var detail = tinyMCE.get('detail').getContent();
+		if(detail == ''){
+			alert('โปรดใส่ เนื้อหา');
+		}
+		else{
+			document.forms["commentForm"].submit();
+		}
+	}
+</script>
+<h1 class="header">
+	Write New Technique
+</h1>
+<form method="post" id="commentForm" action="/guide/processnews">
+	<input type="hidden" id="mode" name="mode" value="addNews"></input>
+	<div style="margin:15px 0px 15px 70px;">Topic : <input type="text" id="topic" name="topic" size="130" ></input></div>
+	<div style="margin:15px 0px 15px 70px;">Topic EN : <input type="text" id="topicEN" name="topicEN" size="130" ></input></div>
+	<div style="margin:15px 0px 15px 70px;">Icon : <input type="text" id="icon" name="icon" size="130" ></input></div>
+	<center>
+		ไทย <br />
+		<textarea cols="100" rows="30" id="detail" name="detail" class="mceEditor" style="visibility: hidden;"></textarea>
+		<br />
+		ENG <br />
+		<textarea cols="100" rows="30" id="detailEN" name="detailEN" class="mceEditor" style="visibility: hidden;"></textarea>
+		<div align="center" style="margin:10px 0px 10px 0px;">
+			<input type="button" id="btPreview" class="submitBtn" name="btPreview" value="Preview" onclick="tinyMCE.activeEditor.execCommand('mcePreview');"></input>
+			<input type="button" id="btPost" class="submitBtn" name="btPost" value="Post" onclick="postComment();"></input>
+		</div>
+	</center>
+</form>

@@ -1,0 +1,33 @@
+<h1 class="header">
+	แก้ไขข้อมูลการ Stream
+</h1>
+<div class="RoundBlack" style="width: 550px;padding:20px;margin:30px auto;">
+	<form method="POST" action="/user/updatestream" enctype="multipart/form-data">
+		<input type="hidden" name="data[streamId]" value="<?=$this->stream->streamId;?>"/>
+		<table>
+			<tr height="30px">
+				<td width="150">Logo : </td>
+				<td><input type="file" name="data[image]" /></td>
+			</tr>
+			<tr height="30px">
+				<td>Tournament : </td>
+				<td><input type="text" name="data[program]" value="<?=$this->stream->program;?>" style="width:300px;"/></td>
+			</tr>
+			<tr height="30px">
+				<td>Team 1 : </td>
+				<td><input type="text" name="data[team1]" value="<?=$this->stream->team1;?>" style="width:300px;"/></td>
+			</tr>
+			<tr height="30px">
+				<td>Team 2 : </td>
+				<td><input type="text" name="data[team2]" value="<?=$this->stream->team2;?>" style="width:300px;"/></td>
+			</tr>
+			<tr height="30px">
+				<td>live : </td>
+				<td><input type="checkbox" name="data[live]" value="1" <?php if($this->stream->live == 1) echo 'checked'?>/></td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="submit" class="submitBtn" value="submit" style="margin-left:210px;"/></td>
+			</tr>
+		</table>
+	</form>
+</div>

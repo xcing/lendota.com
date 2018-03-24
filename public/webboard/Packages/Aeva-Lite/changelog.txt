@@ -1,0 +1,600 @@
+
+-----------------------------------------------------------
+Welcome to... The Aeva changelog. What else did you expect?
+-----------------------------------------------------------
+
+! Fixes + Additions - Removals * Changes @ Notes
+
+Version 7.1.708                                  28th August 2010
+-----------------------------------------------------------------
+! Forcing cache to be disabled on posts, because this would break Javascript code.
++ Added support for HTML-type embedding, and Google Maps (which uses just that)
+* Added support for YouTube's data API. It fixes those pesky permanently
+  broken lookups after embedding a certain amount of videos.
+! Hopefully fixed internal version numbers, avoiding some broken sitelists.
+! More minor fixes from the Aeva Media 2.x codebase.
+
+Version 7.0.707                                   12th March 2010
+-----------------------------------------------------------------
+! Fixed an incompatibility with SMF2 RC3 by removing some install
+  code that was redundant for preventing embedding in signatures.
+
+Version 7.0.706                                 2nd December 2009
+-----------------------------------------------------------------
+* Changed copyright notice to make it less intrusive
+* Slightly rewrote sitelist update system to accomodate for Aeva Media
+* Enable auto-embed module by default on first install... Let's be crazy!
+! SMF 1.1.11 broke links enclosed in noembed tags... Bad boy!
+! Links such as *.avi.html could get embedded... Bad me!
+
+Version 7.0.705                                 9th November 2009
+-----------------------------------------------------------------
+@ Stay tuned for Aeva Media, the upcoming über-media mod!
+! Don't proceed with the sitelist update if Aeva couldn't create the target file
+* Improved compatibility with other mods editing the Subs-Editor.php file
+- Removed support for adult websites, happily complying with SMF's new policy
+
+! Yet another fix for YouTube's Widescreen feature...
+! Updated patterns for The Onion, Sapo.pt and TinyPic
+
+Version 7.0.703                                 28th October 2009
+-----------------------------------------------------------------
++ Added (or fixed) support for local MP4 files
+
+Version 7.0.702                                 22th October 2009
+-----------------------------------------------------------------
+* Added admin area layout compatibility for SMF2's Curve theme
+! Aeva will no longer show its copyright notice on pages
+  where no videos are actually shown
+
+! Fixed widescreen support for YouTube (recent change in their code)
+
+Version 7.0.701                                  7th October 2009
+-----------------------------------------------------------------
++ Added installer compatibility with PostgreSQL and SQLite (hopefully)
++ Added installer support for SMF2 RC2, in case it was needed
+! Installer should no longer reset your settings after an upgrade
+! When local files were allowed externally, Aeva was being too ungreedy,
+  didn't stop at double quotes and could break page layout when posting a link
+@ Why did no one care to tell me that Archive released a new album months ago?!
+
+Version 7.0.700                                  1st October 2009
+-----------------------------------------------------------------
++ Added an admin setting to force HD by default on YouTube videos
+  that offer it. Note this will affect all users.
+- Removed all other YouTube-related features, thanks to their lack of
+  commitment to fixing their broken system. If your Subs-Aeva-Custom file
+  made changes to YouTube sizes, make sure to delete them for best results!
++ Added an admin setting to allow anyone to post "local" files that are
+  hosted on other servers. Use with caution!
++ Added an admin setting to allow a maximum width for all videos. The new
+  ui-height sitelist setting allows you to perfectly resize all videos
++ Added Small/Large links below all videos to allow users to view them at
+  the intended embed size, or use the maximum allowed size (if higher).
+* Replaced ereg calls with preg_match, for compatibility with PHP6
+* Rewrote the External Embedding Disabled error message so that even
+  village idiots can understand it. :D
+
++ Added ui-height for YouTube and DailyMotion... More will come.
+! Fixed or updated these sites: YouTube, Vimeo, Archive, Facebook, Ustream, Sapo.
+
+Version 6.9.101                                  29th August 2009
+-----------------------------------------------------------------
+@ YouTube removed the ability to choose the internal video format months ago,
+  so I'm afraid I had to remove most of that functionality.
+- Reduced the number of different quality levels in YouTube to just LQ, HQ and HD.
++ Viewing a 4/3 video in YouTube will now make it larger if you choose the
+  HQ setting. You can customize the size through Subs-Aeva-Custom as usual.
+! Fixed support for demoscene.tv
+
+Version 6.9.100                                    29th July 2009
+-----------------------------------------------------------------
+! This update is not silent, since you'll need to install it if you
+  want to keep YouTube support working at least a bit.
+! Half-fixed YouTube support by removing all quality levels and simply
+  using a HD flag. Will revert to the usual system if YouTube fixes
+  support for the "ap" parameter on their side.
+* Copyright footer now uses the smalltext class (long overdue!)
+! Fixed typo in Crunchyroll support
+
+Version 6.9.99 (silent)                            18th July 2009
+-----------------------------------------------------------------
++ Integrated Karl's fix for "empty body" errors when posting a
+  video link and nothing else
+! In-context videos weren't always being embedded if displayed
+  right after a closed quote
+* I'm still keeping the sitelist up to date...
+  I'm not sure why, at this point.
+
+Version 6.9.99                                       5th May 2009
+-----------------------------------------------------------------
+@ This is intended to be the final version. Potential subsequent
+  updates shall only be made through automatic sitelist updates.
+! In some cases, Aeva could break message posting boxes
+- Removed Aeva link from all posts, moved it to the footer
+
+Version 6.2.77                                    30th April 2009
+-----------------------------------------------------------------
+- Removed "unlimited" in max items per post/page descriptions (it's
+  been disabled for a while because it's the sensible thing to do.)
+! Make sure the error message is shown for every video over the
+  embedding limits (instead of just videos inside the message
+  where the limit was reached.)
+
+* Enlarged Dailymotion videos to be close to the onsite equivalent
+* Added support for titles in sapo
+
+Version 6.2.76                                    20th April 2009
+-----------------------------------------------------------------
+* Changed ";fvt" query string to ";checkaeva", and added ability
+  to restrict this feature (immediate sitelist update) to admins
+! Switching between Wysiwyg and non-Wysiwyg mode would sometimes
+  break links due to the autolinker not being restrictive enough
+! Fixed HTML validation for SMF2 RC2 and above (as a result though,
+  SMF2 RC1's validation will be broken, but it won't last forever)
+* Footer copyright now chosen by default, over per-video copyright
+- Alternative sitelist download URLs should no longer be needed
+! Fixed a <noembed> bug dating back to version 4.x
+
++ Added support for Ustream, with titles
+! Fixed support for GoEar.com, added support for titles
+! Fixed support for Yahoo Video
+! Fixed support for Slide.com
+! Fixed support for iMDb.com
+! Fixed support for SouthParkStudios.com (embed code, titles)
+! Fixed minor issues and/or titles for Clipster, CollegeHumor,
+  Guba, TheHub, Seeqpod, Streetfire, U-tube and vbox7
+
+Version 6.2.75                                    30th March 2009
+-----------------------------------------------------------------
++ Added "Enable Embedding in Sentences" setting, where videos are
+  embedded even when they're in a sentence. Disabled by default.
++ Site list updates are now performed every time a video is shown
+  (instead of on admin area visits), but no more than once a day
+* Site lists are now saved automatically after being downloaded
+- Removed SSI hack and option, as it looks like it's all fixed now
+! Fixed some rare malformed URLs when embedding was disabled
+! Stopped relying on ob_get_length() to replace headers or not
+
++ Added support for vbox7.com, for a total of 200 sites supported :)
+! Fixed support for TrailerAddict.com, added support for titles
+
+Version 6.1.74                                    27th March 2009
+-----------------------------------------------------------------
+! Don't use Javascript engine on posts inside RSS feeds (action=.xml)
+! Allow [center/li/td]www.url.com[/] just like the http:// version is
+! Fixed warning notice when using "Find titles in all sites" option
+! Fixed Aeva headers appearing too early if called before </head> is
+  written to the buffer but isn't actually empty (which shouldn't happen)
+* Better cleanup job (space/tag trimming) on retrieved video titles
+
++ Added support for Last.fm titles (Artist, Video, YT and Audio pages)
+
+Version 6.1.72                                    24th March 2009
+-----------------------------------------------------------------
+@ Updating version number to 6.1 because all Aeva6 crashes are now
+  officially gone (well, no such report in a week anyway.)
+! Links posted without specifying the http protocol would go through
+  an outdated regex pattern and thus show an empty link after the URL
+* Added a quick hack (yeah, I hate those, too) to allow for Apple's
+  QT vids to be enlarged by 16 pixels where required (embed code fix)
+
++ Added tentative support for Apple Trailers
+
+Version 6.0.71                                    18th March 2009
+-----------------------------------------------------------------
+! Current YT quality now uses default text color, even on dark
+  themes - no need to style it anymore, thanks to style inheritance
++ Added temporary "Disable Aeva in SSI calls" function, to make sure
+  all SSI problems were fixed recently...
+* Slightly re-ordered Aeva admin settings
+
+Version 6.0.70                                    17th March 2009
+-----------------------------------------------------------------
++ Added $context['aeva_safe_passage'] variable, set it to true
+  before calling a SSI function if you're confident it will work.
+  Don't forget to global $context if you haven't yet, silly.
+! Seems there was an incompatibility between PHP 5.2.x and several
+  kinds of output buffer functions. Hopefully this might also fix
+  SSI-related problems (will remove related workaround if it does.)
++ Added 'show-flashvars' sitelist variable for Justin.tv
+! Keep sitelist updates silent if they're false alarms
+
+! Fixed support for Justin.tv (explicit flashvars), added titles
+! Fixed support for BBC News titles that had tags in them
+! Fixed support for BBC News links with no embedded content
+
+Version 6.0.69                                    14th March 2009
+-----------------------------------------------------------------
+! Tentative fix to the incompatibility between Aeva and "Recent
+  Posts" features from portals, such as TinyPortal or PortaMX,
+  that rely on SSI functions. Yet another geeky solution, yay.
+! Looks like YouTube made some changes to their fmt_map code, so
+  Aeva would always receive a false positive for HQ and HQ+ formats.
+  Obviously, this is fixed now. Until next time, YouTube?
+
++ Added support for Yandex.ru
+! Fixed support for Last.fm when a question mark was used in the URL
+
+Version 6.0.68                                    12th March 2009
+-----------------------------------------------------------------
+! Fixed bug where movie link would fail if using ($digit|something)
+  in the pattern, but only when $digit would reference an integer
+* Rewrote max embeds per post/page feature to allow unembedded videos
+  to have a "limit reached" warning next to them. Optimized it all.
+- Removed some pre-PHP5 compatibility code which was no longer needed
++ Added ability to prevent retrieving titles, to save time if Aeva
+  is set to check all pages but remote site really won't give any
+! Fixed a couple of "limit reached" bugs from the days of yore
+! Fixed rare bug where the last videos in a page wouldn't embed
+! Fixed rare bug where video titles would be corrupted if video
+  can't be embedded externally and its title has a # sign in it
+
++ Added support for Mogulus
+! Fixed support for Deezer Playlists (autoplay wasn't disabled)
+! Fixed support for Blip.tv (some videos weren't embeddable anymore)
++ Added support for Blip.tv titles and enlarged video embeds
+
+Version 6.0.67                                    10th March 2009
+-----------------------------------------------------------------
+! Fixed lookups not being triggered if a title was already provided
+  and it had a # in it (which probably happens more than you'd think)
+! Optimized object building routine -- not by much, but don't complain
+! Made sure aeva_dq class can actually be overwritten in style.css
+! Title search would fail if title was broken over several lines
+! Decode HTML entities, such as double quotes, when retrieving titles
+* Fallback value for movie patterns is now even more flexible
+
++ Added support for The Onion (with titles)
+* Added a thumbnail logo for EbaumsWorld because it's so sad
+! "No external embed" and audio were half-broken in BBC News
+! Improved support for Deezer (single tracks), added titles
++ Added support for Deezer Playlists and Deezer Radio (no titles)
+
+Version 6.0.66                                     6th March 2009
+-----------------------------------------------------------------
++ Added option "Try to find titles in all sites", if you're brave enough
+  to try and compile a list of sites that support easy title retrieval
+* Ensured that sites using the old lookup system can search for a title
++ Added a manual option in per-video anchor settings to center the current
+  video -- for instance, anysitelink#center or youtubelink#ws-hd-center
+* Tweaked the table-based layout to prevent it from being enlarged by the
+  browser without asking (because browsers can be rude sometimes. Yes.)
+! The sitelist automatic updater would crash on PHP versions < 5.1
+! Forgot to update English language file with aeva_center_desc...
++ Added ability to provide a fallback value for sitelist movie patterns
+! Fixed a few potential issues in the code that retrieves titles
+* Disabled Javascript code for SSI-based calls -- you never know
+* Very minor changes to the BBCode conversion script
+
++ Added support for ExposureRoom (with both quality levels and titles)
++ Added title support for Scribd
+
+Version 6.0.64                                     3rd March 2009
+-----------------------------------------------------------------
+@ Here's your daily Aeva. Okay, don't worry, I'm hoping it's the last one...
+! Table-based layout wasn't validating properly, and had problems with IE7
+! Made sure to insert the Javascript headers only once, for mod compatibility
+! The tag whitelist system broke compatibility with third-party video tags, so
+  I replaced the tag blacklist with a tag whitelist. This is used when adding
+  autolinks on posting for looking URLs up. If a URL has a tag before it,
+  the new system will autolink if the tag is center, td, li or a closing tag.
++ Better safe than sorry: added Karl's script (aeva_convert_old_bbcodes.php)
+  to the package. If you had a site-specific tag such as [youtube], it will
+  convert all of these links to a proper, normal link. Just upload it to your
+  root folder, run it and don't forget to delete it when you're done.
++ Added a subtext for the centering option... You never know, it may help.
+
+! Fixed support for Yahoo Video + Firefox (wouldn't work with swfobject)
+! Fixed "no external embed" support for YouTube (was changed somehow)
+
+Version 6.0.62                                     2nd March 2009
+-----------------------------------------------------------------
+! Now using table-based embeds instead of divs, which should fix layout
+  issues with Opera, HD, video titles, video size and/or quality levels
+! The sitelist updater should now work, as I've added a workaround in case
+  the simplemachines.org website doesn't return a full sitelist file
+! Try harder to find a suitable footer class before writing copyright
+  info to the body itself (which would break a curious Quick Reply mod)
+! Video titles could sometimes be hidden if aeva_install.php wasn't run
+
+! Fixed support for EbaumsWorld Videos, added support for video thumbnails
+
+Version 6.0.60                                     1st March 2009
+-----------------------------------------------------------------
++ Added optional support of SWFObject to embed videos via JavaScript.
+  Among other things, it produces valid xhtml and removes the need to click
+  twice on a control to enable it. Requires JavaScript to be enabled, of course.
++ Favorite quality level for YouTube is now saved in a cookie for later re-use
++ Added a sitelist parser in the admin area, which will tell you what changed
+  whenever Aeva updates the sitelist automatically (additions, removals, mods)
+! Fixed interaction with SMF Media Gallery, where local videos would appear
+  twice when they're allowed in Aeva and the [smg] tag is used to show them
+! Videos wouldn't be looked up when posted right after a BBC tag. This bug
+  was introduced back in Aevac 4.0, hopefully it's completely fixed now.
+- Removed double-install protection at install time (SMF would't cooperate)
++ Added ability to disable video titles that show up before starting the video
++ Added ability to show video titles in a clickable link below the actual video
++ Embedded video's <div> now has a class name (maeva), meaning you can style it
+! Fixed a warning message that appeared when testing for lookups inside admin area
+* Rewrote and shortened readme.txt file, again...
+
++ Added support for video titles in: YouTube (can also disable inline titles),
+  Vimeo (same idea), DailyMotion, Veoh, MetaCafe, Google Video, BBC News,
+  Yahoo Video, Multiply and Kewego networks - will add more if requested
++ Added support for Demoscene.tv
++ Added support for Multiply.com (videos only, as audio requires logging in)
++ Fixed support for Yahoo Video, added support for video thumbnails (lookups/embed fix)
+! Fixed support for Boomp3.com, but what kind of weird site is that?
+! Fixed support for Break.com and merged both entries into one
+! Fixed support for Kewego network and changed player, hopefully it'll work better
+! Fixed support for Facebook Video (could happen to look up the authentication page)
+! Fixed support for TM-Tube.com (added a setting to enable script access for it)
+! Fixed support for Streetfire.net (embed code and direct links)
+! Fixed support for Project Playlist
+! Fixed support for Veoh.com
+* Changed Godtube.com to Tangle.com, updated links
+- Removed support for Dave.tv (yet another site shut down without warning...)
+
+Version 5.2.56                                  31st January 2009
+-----------------------------------------------------------------
++ Added more video quality options (check out the admin area)
+! Fixed custom width/height not being applied to videos
+! Fixed issue with QuickTime and RealMedia local embedding
+! Fixed lookup-urldecode parameter
+
++ Added support for Slide.com (yeah, a slideshow!)
++ Added support for BombayTV (too funny to pass on)
++ Added support for BBC News articles with attached media files
+! Fixed support for CrunchyRoll.com (needed a complete rewrite...)
+! Fixed support for PhotoBucket videos, added support for PBR files
+
+Version 5.2.52                                  27th January 2009
+-----------------------------------------------------------------
+* The Popular Sites list has grown a bit, to around 25 sites. To be included in it,
+  a website must not be "niche" or limited to a single country, it must have an English
+  version available, and have a ranking below 1,000 at Alexa (probably not the best ranking
+  index, but if you find something better, feel free to share.)
+* Added lookup-skip-empty parameter (see Custom-Example file for more details)
+* Added fix-html-urldecode (same) (only used for CBS Sports, not sure if I'll keep it)
+- Removed lookup-check and lookup-predecode parameters (apparently no longer needed)
+* Re-organized help section in Example file (you NEED to read it if you plan to customize!)
+
++ Added support for ALL Kewego-powered sites, including: Kewego (all countries),
+  MyKewego, eBay, Lycos, CityVox, LeFigaro, L'Equipe, Metro, M6, Tom's Guide, LeMatin.ch,
+  jeuxvideopc.com, Voila and *hundreds* of other sites! Most of them are in French, though.
++ Added support for most Kaltura-powered sites, including Wikipedia (although I couldn't find
+  any example). If the video you want to embed doesn't provide embed code, just paste the
+  URL to its parent page, and add "#kaltura" (without quotes) next to the URL. Should work!
+  Support is only tentative, because I'm not sure whether it is desired by Kaltura itself.
++ Added support for MyTaratata.com (live songs), actually powered by Kewego but
+  it uses different URLs so it's going to be separate from Kewego either way.
+- Removed Brightcove.tv (site was discontinued on December 2008)
+- Removed CityVox and Jubii, as they are part of the Kewego network...
+! BBC News links would try to embed even when there weren't any videos in them
+! Fixed support for Archive.org, added support for mp4 files. Wasted hours working on
+  fixing the Flash player when it actually worked. Grmpf... What? You don't care?!
+! Fixed support for ESPN (now, see, *I* don't care about sports, but I'm doing it. Ha!)
+! Fixed support for CBS Sports, added support for embed code fix (hmm, see below...)
+
+Version 5.2.50                                  24th January 2009
+-----------------------------------------------------------------
+* Site list went from 180kb to 142kb by:
+  - renaming all array variables to simpler, more logical names
+  - reducing the size of countless fix-html patterns, fixing lots of sites in the process,
+    and possibly breaking a couple as well (please send a report if you find any!)
++ Added aeva_link class to links below videos, in case you want to style them
+! Removed magic quotes fix and added a more generic fix for extra addslashes
+* Changed noexternalembed test to something in line with other lookup tests
+* Moved a few sites into the Popular section (maybe it was a bit too empty)
+* Changed hq-movie system for YouTube videos, to make it easier
+  to switch to different movie types for all sites
+* Many, many more small changes...
+
++ Added support for HD in YouTube
++ Added support for noexternalembed in BBC News (in case your lookup server isn't in the UK)
++ Added support for audio in BBC News, and updated lookups to retain the original URLs
++ Added support for audio in Trilulilu.ro
++ Added support for Scribd.com (online e-books)
++ Added support for Cityvox.fr (French video site)
++ Added support for Wat.tv (another French video site, and we're not done yet!)
++ Added support for Allocine.fr (mainly movie trailers, like Excessif.com)
++ Added support for Culturepub.fr (couldn't get the shows to embed, so I just included
+  support for the commercials -- with HD, but autoplay can't be set to false, sucks!)
+* MySpaceTv is now just MySpace, and links were changed accordingly
+! Fixed mp3tube.com lookups (they changed their URL format)
+- Removed both GoFish.com entries (closed without warning)
+- Removed AOL Uncut (they who try to clone YT are doomed to die)
+* Added show-link to Google Video, which doesn't link to its vids
+
+Version 5.1.47                                  18th January 2009
+-----------------------------------------------------------------
+! Changing lookup, HQ and embed fix options didn't immediately refresh the site list
+! aeva_install.php no longer worked when run as a stand-alone script
+* Started simplifying many fix-html-pattern strings, to save space in
+  Subs-Aeva-Sites.php and make them less prone to break over time
+! Fixed support for clipfish.de embed code
+@ (Everything below was actually fixed in the 5.1.42 re-release)
+! Lookups sort of failed in YouTube when the URL had a "&" after the video ID
+! Removed Generated file from the package installer file, so it should
+  no longer erase your customized site list when upgrading
+! Added French UTF8 translation to SMF2 install process
+! Slightly rewrote latest site list version test
+! Fixed config_vars bug when saving site list
+! Fixed admin warnings in SMF 1.1.x versions
+
+Version 5.1.42                                  17th January 2009
+-----------------------------------------------------------------
++ Added automatic sitelist updates, when you visit the Aeva admin area (once a day at most)
++ Added automatic new version checks (you'll still have to download them yourself, though)
++ Added support for per-video non-intrusive settings, including widescreen mode and width/height
++ Added support for arrays of lookup patterns, which enables setting these
+  automatically at lookup time: YouTube widescreen mode and Facebook video dimensions
+* Moved site list creation help comments from Subs-Aeva-Sites.php to Subs-Aeva-Custom-Example.php,
+  where it fits best, and added help on adding custom settings at the end of the file
+* Split Aeva admin page into two separate pages (Settings and Site List),
+  to allow for more breathing space in both sections
+* Added a fake user agent when doing lookups, otherwise Facebook wouldn't work
+* Try to enable lookups by default on first installs, if available
+! lookup-enabled variable from Subs-Aeva-Sites.php was never used
+- Removed YouTube external embedding test, as it is now a regular lookup check
++ Added support for Flickr Video (requires lookups), along with custom width/height
+! Fixed a bug where putting a link to the YouTube homepage might break the page contents
+! Fixed link descriptions getting erased when a lookup was required
+* Cleaned up much more code than usual, fixed minor issues, etc...
+
+Version 5.1.36                                   9th January 2009
+-----------------------------------------------------------------
++ Added "Subs-Aeva-Custom.php" feature (you will need to use & rename
+  the Subs-Aeva-Custom-Example.php file), which adds support for your own
+  custom site definitions -- they won't get deleted when upgrading Aeva
++ Added fatal error when trying to install Aeva with previously uninstalling it
+* All YouTube international links should now be recognized in the future,
+  even if they don't exist yet (also for AOL and Yahoo)
++ Added support for Last.fm France (and possibly other countries)
++ Added support for YouTube videos posted through Last.fm
+  (the old video code was broken for them)
++ Added support for Last.fm Artist pages (playlists)
+! Cleaned up and rewrote much of the Last.fm embed code
+* Cleaned up some more stuff in Subs-Aeva.php
+
+Version 5.1.32                                   2nd January 2009
+-----------------------------------------------------------------
+! Fixed XML error in <name> when using a manual package parser
+* Include URL is now enabled by default (it's only used by a handful of websites anyway)
+* Modified all install XML files to add clean, well-indented custom code to SMF files
+* Don't bother loading a language file just to say "Aeva" for SMF 1.1.x...
+* Install XML files are now optimized and slightly smaller
+* Aeva's admin section manager is now in Subs-Aeva-Admin.php instead of
+  XML files, which should allow for less future edits for manual parsers
+* Same for the pre-protection routine, moved to Subs-Aeva.php
++ Forgot to add French UTF-8 in the install files (oops)
+* My name is Nao and I spend my life cleaning code up. Hi Nao.
+
+Version 5.1.28                                 31st December 2008
+-----------------------------------------------------------------
++ Added a quick hack for users getting issues with the embed fix code
+  due to magic quotes being enabled. Disable these at any cost anyway!
++ Added "allow adult websites" option (disabled by default)
+* Rewrote and optimized half of the admin area's internal code
+* Made it easier to add new site types in the future
+* Renamed "special" site type to "local"
+* Fixed last.fm when URL uses an asterisk
+* Site URLs are no longer mandatory in the definition list
++ Added support for two popular adult websites (disabled by default)
++ Added support for ScreenToaster (screen captures)
++ Added support for Excessif (DVDrama trailers)
+
+Version 5.1.25                                 20th December 2008
+-----------------------------------------------------------------
+* Updated to 5.1 after all bug fixes were found to be working fine
+* Replaced fetch_web_data calls with an optimized aeva_fetch function
+  which should work even better on Safe Mode servers -- hopefully
+* Moved some of the code from Subs.php to Subs-Aeva.php
+* A couple of minor optimizations in the admin area
+* If test lookup in admin area doesn't work, try an external fetch
+! Fixed embed code fixer (?) for YouTube
+! Reverted BBC News behavio(u)r back to something usable
+! TagTele had some question marks on UTF-8 pages
++ Added support for Facebook video
++ Added support for OffUHuge
++ Added support for Joost
+
+Version 5.0.21                                 15th December 2008
+-----------------------------------------------------------------
+! Fixed, once and for all, that annoying bug that crashed servers
+  with PHP 5.2.6 when posting overlong quotes or code blocks
+! Fixed support for local embedded files
+! Fixed important security issue in local embedded files
+* Separated FLV files from SWF files in local embedding options
+
+Version 5.0.18                                 12th December 2008
+-----------------------------------------------------------------
+! Replaced "God of all regexes" with new "Goddess of all regexes" which
+  should fix most of the "Disallow quote embedding" crashes
+! Fixed Blip.tv
+! Fixed Cellfish
+! Fixed video.i.ua
+! Fixed vidmax
+! Fixed Cellfish
+! Fixed ABCNews autoplay
+! Fixed Yahoo Music Videos needing the link
+- Removed all 3 Eyespot websites (dead)
+
+Version 5.0.16                                 10th December 2008
+-----------------------------------------------------------------
+* New versioning system -- 5.0.16 means "5.0" revision 16 (those who
+  played Kyodai Mahjongg already know I love silly version numbers)
+* MSN Video sucks. Spent hours on it, and managed to embed a single video (sic),
+  which doesn't even work on their own website! Still, it's better than before
+  (where nothing would embed)...
++ Added support for Justin TV
++ Added support for Mpora and Mpora TV
+! Fixed BBC News videos and added links to their pages
+! Fixed Veoh links
+! Fixed Brightcove/Brightcode TV links and embed html code
+! Fixed EbaumsWorld audio links and player dimensions
+! Fixed Goear links, player dimensions and embed html code
+! Fixed Divshare, BBC News and RuTube links
+! Turned many &amp; to & in regular expressions
+* Changelog/readme cleanup (who cares?)
+* Optimized a lookup regex
+
+Version 5.0 b1 (beta)                          29th November 2008
+-----------------------------------------------------------------
+* Karl Benson retired, and ownership was handed over to Nao [noisen.com]
+* Mod was renamed to Aeva, because it sounds cooler, and that's a good reason
++ Added Popular Sites list - if you only want the links most likely to show up
+! Fixed &nbsp; bug
+! Renamed install.php to avoid issues when calling the file directly
+! Fixed Photobucket link
++ Added support for Divshare (currently only for audio files)
+! The site list had several duplicate site IDs
+* Overhauled parts of the Admin area template
+
+Version 4.0.2                                    4th October 2008
+-----------------------------------------------------------------
+o Fixed PHP4 error "Cannot redeclare make_pattern()"
+o Fixed local files shouldn't embed when they are disabled
+o Added Youtube India (IN)/Israel (Il)/South Korea (KR) for videos/playlists and lookup check
+
+Version 4.0.1                                    3rd October 2008
+-----------------------------------------------------------------
+o Fixed PHP4 issues
+- Fixed undefined 'message'
+- Fixed undefined '6'
+- Fixed undefined 'aevac'
+
+Version 4.0                                      1st October 2008
+-----------------------------------------------------------------
+o Mod re-written from scratch (almost 100%)
+o Changed format for all definitions (for notes, see Subs-Aeva-Sites.php comments)
+- Merged lookup and embed arrays into one mega array
+- Renamed elements
+o Added Admin Panel
+o Added Youtube checks for links that can't be embedded w/setting
+o Added Youtube higher quality video w/setting
+o Added controlling no. of embeds per page/post w/settings
+o Added setting to embed localfiles (excludes attachments) w/settings
+o Added debug to show the time taken to do the protection/embedding w/setting
+o Added 'fix html' patterns for when noob users try to use the full html embed code instead of link w/setting
+o Added include original url w/setting
+o Added allow embed in quotes w/setting
+o Added enable lookups setting
+o Added check whether lookups will work
+o Added settings to enable/disable each site
+o Added categories eg video/audio/other + checkall options to easily enable/disable
+o Added support for sites using divx / realmedia / wmp / quicktime plugins.
+o Fixed/checked/tested every site (every site now has a sample link in the code that was used to test it)
+o Removed a couple of dead sites
+o Added many new sites
+o Added on saving in Admin CP it writes out enabled definitions to generated file
+  (for bandwidth/memory saving) and removes unneeded elements/comments (based on settings for optimization)
+o Fixed, all ampersands in outputted object are now encoded as &amp;
+o Fixed, player put in div to prevent reloading player onquick edit.
+o Fixed, All aevac functions have prefix in order to avoid conflict with any other mods/integrations (aevac_)
+o Added redirect to package to redirect to configuration settings
+o Added install.php to add our default settings
+o Fixed package so it doesn't show an über-long readme on install. Just a short warning.
+  Full readme will remain in package, you can also find it on the official mod page & topic.
+o Fixed auto_link issues

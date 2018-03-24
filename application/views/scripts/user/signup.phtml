@@ -1,0 +1,37 @@
+<div class="signup">
+	<script type="text/javascript">
+		$(function() {
+			$("#email").focus();
+			$("#email").blur(function() {
+				$("#email").parent().find('.errorMsg').remove();
+				$("#email").parent().find('.successMsg').remove();
+				if ($(this).get(0).value) {
+					var url = '/user/validatemail/email/' + $(this).get(0).value;
+					$.get(url, '', function(resp) {
+						$("#email").parent().append(resp);
+					}, 'html');
+				}
+			});
+			$("#confirmPassword").blur(function() {
+				$(this).parent().find('.errorMsg').remove();
+				if ($("#password").get(0).value != $(this).get(0).value) {
+					$(this).parent().append('<span class="errorMsg"><br />Password และ Confirm password ไม่ตรงกัน</span>');
+				}
+			});
+		});
+	</script>
+	<h1 class="header" style="">สมัครสมาชิก</h1>
+	<center>
+		<div class="RoundBlack" style="width: 550px;">
+			<div style="width:350px; margin: 20px;">
+			<?php if (isset($this->errorMessage)) { ?>
+				<div class="errorMsg">
+				    <?php echo $this->errorMessage;?>
+				</div>
+			<?php } ?>
+			<?php echo $this->form;?>
+			</div>
+		</div>
+	</center>
+	<div style="clear: both;"></div>
+</div>

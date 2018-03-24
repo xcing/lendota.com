@@ -1,0 +1,10 @@
+input.inputUsername {
+	padding-top: 2px;
+}
+input.inputPassword {
+	padding-bottom: 1px;
+}
+div.divLogin {
+	font-size: 14px;
+	font-weight: normal;
+}

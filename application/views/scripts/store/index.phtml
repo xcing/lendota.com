@@ -1,0 +1,234 @@
+<? $this->headScript()->appendFile('/resources/modal/jquery.simplemodal.1.4.2.min.js')
+                      ->appendFile('/js/replay/addReplay2.js');
+?>
+<script>
+	document.title = '<?=$this->translate('STORE_INDEX_TITLE'); ?>';
+	var isLogin = '<?=Zend_Auth::getInstance()->hasIdentity();?>';
+	
+	$(document).ready(function() {
+		$("#heroImg").click(function () {
+			filter();
+		});
+		$("#rarity").change(function () {
+			filter();
+		});
+		$("#sort").change(function () {
+			filter();
+		});
+		$(".itemBoxContainer").each(function() {
+			var itemBoxContainerId = $(this).attr("name");
+			$(this).mouseover(function () {
+				$("#AddToCartButton"+itemBoxContainerId).show();
+			});
+			$(this).mouseout(function () {
+				$("#AddToCartButton"+itemBoxContainerId).hide();
+			});
+		});
+		$(".HoverAddToCartButton").each(function() {
+			var equipmentId = $(this).attr("name");
+			$(this).click(function () {
+				addtocart(equipmentId);
+			});
+		});	
+	});
+
+	function filter(){
+		var heroId = $("#heroImg").attr("heroId");
+		var rarityId = $("#rarity").val();
+		var sort = $("#sort").val();
+		var categoryId = '<?=$this->categoryId;?>';
+		window.location = '/store/index/heroId/'+heroId+'/rarityId/'+rarityId+'/sort/'+sort+'/categoryId/'+categoryId;
+	}
+	function addtocart(equipmentId){
+		if(isLogin == 1){
+			window.location = '/store/addtocart/equipmentId/'+equipmentId;
+		}
+		else{
+			alert('กรุณา login ก่อนครับ');
+		}
+	}
+</script>
+<h1 class="header">
+	Dota 2 Store
+</h1>
+
+<div>
+	<?php if (isset($this->flashMessages) && !empty($this->flashMessages)) {?>
+		<div class="message" style="text-align:right;margin-right:90px;">
+		<?php 
+			foreach ($this->flashMessages as $message) {
+				echo $message . '<br />';
+		    }
+		?>
+		</div>
+	<?php }?>
+	<?php if (Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin()){?>
+		<div style="margin-left:20px;">
+			<input class="submitBtn" type="button" value="Add New Item" onclick="document.location='<?=$this->url(array('controller'=>'store','action'=>'additem','page' =>$this->page, 'categoryId' =>$this->categoryId))?>'; return false;" />
+		</div>
+	<?php }?>
+	<?php include("login.phtml")?>
+</div>
+<div style="width: 890px;margin:auto;">	
+	<div id="StoreTabs">
+		<span id="StoreTabButtons">													
+			<a href="/store/index/categoryId/0"><span class="StoreTab NoSelect <?php if($this->categoryId == 0) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">BUNDLES</span></a>														
+			<a href="/store/index/categoryId/1"><span class="StoreTab NoSelect <?php if($this->categoryId == 1) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">EQUIPMENT</span></a>															
+			<a href="/store/index/categoryId/2"><span class="StoreTab NoSelect <?php if($this->categoryId == 2) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">TOOLS</span></a>
+			<a href="/store/index/categoryId/3"><span class="StoreTab NoSelect <?php if($this->categoryId == 3) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">COURIERS</span></a>
+			<a href="/store/index/categoryId/4"><span class="StoreTab NoSelect <?php if($this->categoryId == 4) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">ANNOUNCERS</span></a>
+			<a href="/store/index/categoryId/5"><span class="StoreTab NoSelect <?php if($this->categoryId == 5) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">TOURNAMENTS</span></a>
+			<a href="/store/index/categoryId/6"><span class="StoreTab NoSelect <?php if($this->categoryId == 6) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">TEAMS</span></a>
+			<span class="LowerBg"></span>
+		</span>
+		<!-- 
+		<span class="StoreTabPadding"></span>
+		<span id="CartButton" class="NoSelect GenericGreenButton CartHeaderButton"">
+			<div class="LeftCap"></div>
+			<div class="RightCap"></div>
+			<span id="CartButtonText">Cart (<span id="NumItemsInCart">2</span>)</span>
+			<span id="CartButton_Spinner"></span>
+		</span>
+		 -->
+	</div>
+	<div style="margin:20px;">
+		<div style="float:left;width:170px;border:1px solid white;margin-right:70px;padding:5px;">
+			<span style="vertical-align:top;color:#8F8884;">Hero : <input id="heroBtnImg" type="button" value=" hero " /></span>
+			<img id="heroImg" width="80" src="<? if($this->heroId != 0) { echo $this->heros[$this->heroId-1]['picIcon2']; }?>" heroId="<?=$this->heroId;?>"/>
+		</div>
+		<div style="float:left;margin-right:100px;color:#8F8884;">
+			ระดับความหายาก
+			<select id="rarity" style="color:#8F8884;background-color:black;width:150px;height:30px;padding:4px;">
+				<option style="padding:5px;" value="all" <?php if($this->rarityId == 'all') echo 'selected';?>>All</option>
+				<option style="padding:5px;" value="0" <?php if($this->rarityId != 'all' && $this->rarityId == 0) echo 'selected';?>>Common</option>
+				<option style="padding:5px;" value="1" <?php if($this->rarityId == 1) echo 'selected';?>>Uncommon</option>
+				<option style="padding:5px;" value="2" <?php if($this->rarityId == 2) echo 'selected';?>>Rare</option>
+				<option style="padding:5px;" value="3" <?php if($this->rarityId == 3) echo 'selected';?>>Mythical</option>
+				<option style="padding:5px;" value="4" <?php if($this->rarityId == 4) echo 'selected';?>>Legendary</option>
+				<option style="padding:5px;" value="5" <?php if($this->rarityId == 5) echo 'selected';?>>Arcana</option>
+			</select>
+		</div>
+		<div style="float:left;color:#8F8884;" >
+			การเรียงลำดับ
+			<select id="sort" style="color:#8F8884;background-color:black;width:150px;height:30px;padding:4px;">
+				<option style="padding:5px;" value="0" <?php if($this->sort == 0) echo 'selected';?>>จากใหม่สุด</option>
+				<option style="padding:5px;" value="1" <?php if($this->sort == 1) echo 'selected';?>>จากเก่าสุด</option>
+			</select>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+	<div style="margin-bottom:10px;">
+	<?php echo $this->paginationControl(
+						$this->equipmentsPaginator,
+	                    'Sliding',
+	                    '/template/paging_nav.phtml');
+	?>
+	</div>
+	<?php foreach ($this->equipmentsPaginator as $entry){?>
+		<? $position = -5;?>
+		<div class="itemBoxContainer" name="<?=$entry->equipmentId;?>">
+			<div class="itemBox <?=Eaglet_Utils_Store::getRarityClass($entry->rarity);?>">
+				<div style="margin-bottom:10px;">
+					<a href="/store/detail/equipmentId/<?=$entry->equipmentId;?>/categoryId/<?=$this->categoryId;?>">
+						<div style="position:relative;">
+							<?php if($entry->isNew == 1) {?>
+								<div style="position:absolute;left:-5px;top:-5px;background-color:#963222;color:#BCBCBC;  font-size: 12px;padding:5px;text-align: center;">New</div>
+								<? $position += 25; ?>
+							<?php } 
+							if($entry->priceSale != 0){ ?>
+								<div style="position:absolute;left:-5px;top:<?=$position;?>px;background-color:#4C6B22;color:#BCBCBC;  font-size: 12px;padding:5px;text-align: center;"><?=Eaglet_Utils_Store::calculateSale($entry->price, $entry->priceSale)?></div>
+							<?php } ?>
+							
+						</div>
+						<img src="<?=$entry->image;?>" width="200px"/>
+					</a>
+				</div>
+				<div style="color:#BCBCBC;">
+					<?php if($entry->heroId != 0) {?>
+						<img src="<?=$this->heros[$entry->heroId-1]['picCartoon2'];?>" style="margin-bottom:-5px;"/>
+					<?php } ?>
+					<?=$entry->name;?>
+				</div>
+				<div style="color:#686868;"><?=Eaglet_Utils_Store::getRarityName($entry->rarity);?></div>
+				<div style="color:#948C88;">
+					<?php 
+						if($entry->priceSale != 0){
+							echo '<span style="text-decoration:line-through;">'.Eaglet_Utils_Store::getPrice($entry->price).'</span> '.Eaglet_Utils_Store::getPrice($entry->priceSale).' บาท';
+						}
+						else{
+							echo Eaglet_Utils_Store::getPrice($entry->price).' บาท';
+						}
+					?>
+				</div>
+				<div id="AddToCartButton<?=$entry->equipmentId;?>" class="NoSelect GenericGreenButton HoverAddToCartButton" name="<?=$entry->equipmentId;?>">
+					<div class="LeftCap"></div>
+					<div class="RightCap"></div>
+					<span>Add to Cart</span>
+				</div>
+			</div>
+		</div>
+	<?php } ?>
+	<div style="clear:both;"></div>
+	<?php echo $this->paginationControl(
+						$this->equipmentsPaginator,
+	                    'Sliding',
+	                    '/template/paging_nav.phtml');
+	?>
+	<?php if ($this->equipmentsPaginator->getCurrentItemCount() == 0):?>
+		<div class="noData">ไม่พบข้อมูลที่ท่านต้องการค้นหา</div>
+	<?php endif;?>
+</div>
+<div id="modalContainer">
+    <div id="heroModal">
+        <div>
+        	<?php $type = 0; $j = 1;?>
+            <div class="dota2ModalContent">
+            	<?php for($i=0; $i<$this->sizeHeroData; $i++){?>
+                	<?php if($type != $this->entries[$i]->type){?>
+                    	<?php 
+                        	 $type = $this->entries[$i]->type; 
+                             switch($j){
+                                 case 1:
+                                     $imageNameHome = 'RADIANT STRENGTH';
+                                     break;
+                                 case 2:
+                                     $imageNameHome = 'RADIANT AGILITY';
+                                     break;
+                                 case 3:
+                                     $imageNameHome = 'RADIANT INTELLIGENCE';
+                                     break;
+                                 case 4:
+                                     $imageNameHome = 'DIRE STRENGTH';
+                                     break;
+                                 case 5:
+                                     $imageNameHome = 'DIRE AGILITY';
+                                     break;
+                                 case 6:
+                                     $imageNameHome = 'DIRE INTELLIGENCE';
+                                     break;
+                          	}
+                         ?>
+                         <div style="width:175px;float:left;text-align:center;margin:0px 5px;">
+                         	<?=$imageNameHome?>
+                            <ul style="list-style-type: none !important;">
+                     <?php } ?>
+                     <?php if($this->entries[$i]->picIcon2 != ''){ ?>
+                            <li style="float:left;width:50px;margin:4px;">
+                                <a href="#" class="simplemodal-close" title="<?php echo $this->entries[$i]->name2;?>" onclick="setHeroValueImg(<?=$this->entries[$i]->id;?>,'<?=$this->entries[$i]->picIcon2;?>'); filter(); return false;">
+                                     <img style="width:50px;" src="<?php echo $this->entries[$i]->picIcon2;?>" />
+                                </a>
+                            </li>
+                     <?php } ?>
+                     <?php 
+                          if($i == $this->sizeHeroData-1 || $type != $this->entries[$i+1]->type){?>
+                               </ul>
+                               <div style="clear:both;"></div>
+                          </div>
+                          <?php $j++;?>
+                	<?php } ?>
+            	<?php }?>
+            </div>
+            <div style="clear:both;"></div>  
+        </div>
+    </div>
+</div>

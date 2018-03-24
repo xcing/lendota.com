@@ -1,0 +1,17 @@
+<h1 class="header" style="">แก้ไขข้อมูลส่วนตัว</h1>
+<div style="margin-bottom:20px;">
+	<? echo $this->render('store/login.phtml') ?>
+</div>
+<center>
+	<div class="RoundBlack" style="width: 550px;">
+		<div style="width:350px; margin: 20px;">
+		<?php if (isset($this->errorMessage)) { ?>
+			<div class="errorMsg">
+			    <?php echo $this->errorMessage;?>
+			</div>
+		<?php }?>
+		<?php echo $this->form;?>
+		</div>
+	</div>
+</center>
+<div style="clear: both;"></div>

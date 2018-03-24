@@ -1,0 +1,71 @@
+<?php $this->headScript()->appendFile('/resources/tiny_mce/tiny_mce.js')
+						 ->appendFile('/js/common/editor.js'); ?>
+<script>
+	function postComment(){
+		var comment = tinyMCE.get('comment').getContent();
+		if(comment == ''){
+			alert('โปรดใส่ comment');
+		}
+		else{
+			document.forms["commentForm"].submit();
+		}
+	}
+</script>
+<h1 class="header">
+	Reply Comment
+</h1>
+<div class="divLeft">
+	<div class="divComment">
+			<div class = "headComment">
+				Comments
+			</div>
+			<?php foreach ($this->entriesComment as $entry): ?>
+				<div class = "topicComment">
+					<span>
+						By 
+						<?php if($entry->clanActive == 1) {?>
+							<img src="<?php echo $this->escape($entry->clanImg)?>" alt="clan <?php echo $this->escape($entry->clanName) ?>" width="20" height="20" />
+							<?php echo $this->escape($entry->clanTag)?>
+						<?php } ?>
+						<?php echo $this->escape($entry->username) ?>
+					</span>
+					<span style="padding-left: 5px;"> on <?php echo $this->escape($entry->date) ?></span>
+				</div>
+				<div class = "bodyComment">
+					<div style="float:left;">
+						<img width="40"  height="40" src="<?php echo $this->escape($entry->picture)?>" />
+					</div>
+					<div class="postContent" style="float:left;padding-left:10px;width:605px;word-wrap:break-word;">
+						<?php echo $entry->detail ?>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+			<?php endforeach ?>
+			<div class = "footerComment"></div>
+			
+		</div>
+	
+	<div class="divPostComment">
+		<form method="post" id="commentForm" action="/index/detail/id/<?php echo $this->newsId;?>">
+			<input type="hidden" id="userId" name="userId" value="<?php echo Zend_Auth::getInstance()->getStorage()->read()->userId;?>"></input>
+			<input type="hidden" id="newsId" name="newsId" value="<?php echo $this->newsId;?>"></input>
+			<input type="hidden" id="parentId" name="parentId" value="<?php echo $this->commentId;?>"></input>
+			<input type="hidden" id="mode" name="mode" value="addNewComment"></input>
+			<div class = "headPostComment">
+				Post New Comment
+			</div>
+			<div class = "bodyPostComment">
+				<div style="color:#82BDFF;"> <?php echo Zend_Auth::getInstance()->getStorage()->read()->username;?> </div>
+				<div style="margin: 5px 5px 5px 5px;">
+					<center>
+						<textarea cols="100" rows="10" id="comment" name="comment" class="mceEditor" style="visibility: hidden;"></textarea>
+					</center>
+				</div>
+				<div align="center" style="margin:10px 0px 10px 0px;">
+					<input type="button" id="btPreview" class="submitBtn" name="btPreview" value="Preview" onclick="tinyMCE.activeEditor.execCommand('mcePreview');"></input>
+					<input type="button" id="btPost" class="submitBtn" name="btPost" value="Post" onclick="postComment();"></input>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

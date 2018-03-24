@@ -1,0 +1,48 @@
+<?php if ($this->pageCount > 1): ?>
+<div class="paginationContainer">
+	<div class="paginationControl">
+		<?php 
+			if ($this->search) {
+				$pageCriteria = $this->search;
+				unset($pageCriteria['search']);
+			} else {
+				$pageCriteria = array();
+			}
+			if (!isset($this->pageParam)) {
+			    $this->pageParam = 'page';
+			}
+			if (isset($this->tab)) {
+			    $pageCriteria['tab'] = $this->tab;
+			}
+		?>
+		<?php if (isset($this->previous)): ?>
+		  <a class="paginationNav" href="<?php $pageCriteria[$this->pageParam] = $this->first; echo $this->url($pageCriteria); ?>" title="Go to first page">
+		    &laquo; First
+		  </a>
+		  <a class="paginationNav" href="<?php $pageCriteria[$this->pageParam] = $this->previous; echo $this->url($pageCriteria); ?>" title="Previous page">
+		    &larr;
+		  </a> 
+		<?php endif; ?>
+		
+		<?php foreach ($this->pagesInRange as $page): ?>
+		  <?php if ($page != $this->current): ?>
+		    <a class="paginationNav" href="<?php $pageCriteria[$this->pageParam] = $page; echo $this->url($pageCriteria); ?>">
+		        <?php echo $page; ?>
+		    </a>
+		  <?php else: ?>
+		  	<span class="paginationNavSelected"><?=$page;?></span>
+		  <?php endif; ?>
+		<?php endforeach; ?>
+		
+		<?php if (isset($this->next)): ?>
+		  <a class="paginationNav" href="<?php $pageCriteria[$this->pageParam] = $this->next; echo $this->url($pageCriteria); ?>" title="Next page">
+			&rarr;
+		  </a>
+		  <a class="paginationNav" href="<?php $pageCriteria[$this->pageParam] = $this->last; echo $this->url($pageCriteria); ?>" title="Go to last page">
+		    Last &raquo;
+		  </a>
+		<?php endif; ?>
+	</div>
+	<div class="clear"></div>
+</div>
+<?php endif; ?>

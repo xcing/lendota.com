@@ -1,0 +1,9 @@
+div.menu .selected, a:hover div.selected {
+	background: url("/images/menu/menu_bg_selected.png") repeat-x scroll 0 0 transparent;
+}
+input.inputUsername{
+	padding-top:1px;
+}
+div.divLogin {
+	color: white;
+}

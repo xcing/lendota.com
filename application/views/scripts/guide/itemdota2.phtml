@@ -1,0 +1,404 @@
+<?php 
+	//header('content-type:text/plain');print_r($this->recipe);exit;
+	$size = sizeof($this->entries);
+	$display = 'block';
+?>
+<script>
+	var divItem;
+	var divItemShow;
+	var divItemOld;
+	var divItemShowOld;
+	var oldId = 1;
+	var thisId;
+	var time;
+
+	document.title = '<?=$this->translate('GUIDE_ITEM_TITLE'); ?>';
+	function changeDetail(id){
+		if(oldId != id){
+			thisId = id;
+			clearTimeout(time);
+			divItemOld = document.getElementById('div'+oldId);
+			divItemShowOld = $(divItemOld);
+			
+			divItem = document.getElementById('div'+thisId);
+			divItemShow = $(divItem);
+			
+			divItemShowOld.fadeOut();
+			time = setTimeout(swapFadeIn,350);
+		}
+	}
+	function swapFadeIn(){
+		divItemShow.fadeIn();
+		oldId = thisId;
+	}
+</script>
+<h1 class="header">
+	DotA Item
+</h1>
+<div style="text-align:center;margin:20px 0px;">
+	<a href="<?=$this->url(array('controller'=>'guide','action'=>'item'))?>" style="margin-right:40px;" class="iconDota"></a>
+	<div class="iconDota2Normal"></div>
+</div>
+<div style="float:left;margin:0px 50px 0px 80px;">
+	<table >
+		<tr name="1">
+			<td>
+				<table name="protectoRate" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c1.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/assault.png" width="37" height="37" alt="<?php echo $this->entries['0']->name ?>" onmouseover="changeDetail(1);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/heart.png" width="37" height="37" alt="<?php echo $this->entries['1']->name ?>" onmouseover="changeDetail(2);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/bkb.png" width="37" height="37" alt="<?php echo $this->entries['2']->name ?>" onmouseover="changeDetail(3);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/aegis.png" width="37" height="37" alt="<?php echo $this->entries['3']->name ?>" onmouseover="changeDetail(4);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/shiva.png" width="37" height="37" alt="<?php echo $this->entries['4']->name ?>" onmouseover="changeDetail(5);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/bloodstone.png" width="37" height="37" alt="<?php echo $this->entries['5']->name ?>" onmouseover="changeDetail(6);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/linken.png" width="37" height="37" alt="<?php echo $this->entries['6']->name ?>" onmouseover="changeDetail(7);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/vanguard.png" width="37" height="37" alt="<?php echo $this->entries['7']->name ?>" onmouseover="changeDetail(8);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/blade_mail.png" width="37" height="37" alt="<?php echo $this->entries['8']->name ?>" onmouseover="changeDetail(9);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/soul_booster.png" width="37" height="37" alt="<?php echo $this->entries['9']->name ?>" onmouseover="changeDetail(10);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/hood.png" width="37" height="37" alt="<?php echo $this->entries['10']->name ?>" onmouseover="changeDetail(11);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/manta.png" width="37" height="37" alt="<?php echo $this->entries['38']->name ?>" onmouseover="changeDetail(39);"/></div></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table name="arcane" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c2.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/hex.png" width="37" height="37" alt="<?php echo $this->entries['11']->name ?>" onmouseover="changeDetail(12);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/orchid.png" width="37" height="37" alt="<?php echo $this->entries['12']->name ?>" onmouseover="changeDetail(13);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/cyclone.png" width="37" height="37" alt="<?php echo $this->entries['13']->name ?>" onmouseover="changeDetail(14);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/force_staff.png" width="37" height="37" alt="<?php echo $this->entries['14']->name ?>" onmouseover="changeDetail(15);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/dagon.png" width="37" height="37" alt="<?php echo $this->entries['15']->name ?>" onmouseover="changeDetail(16);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/necro.png" width="37" height="37" alt="<?php echo $this->entries['16']->name ?>" onmouseover="changeDetail(17);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/scepter.png" width="37" height="37" alt="<?php echo $this->entries['17']->name ?>" onmouseover="changeDetail(18);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/refresher.png" width="37" height="37" alt="<?php echo $this->entries['18']->name ?>" onmouseover="changeDetail(19);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/veil.png" width="37" height="37" alt="<?php echo $this->entries['19']->name ?>" onmouseover="changeDetail(20);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/sanctum.png" width="37" height="37" alt="<?php echo $this->entries['123']->name ?>" onmouseover="changeDetail(124);"/></div></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table name="supporttive" cellspacing="8" >
+					<tr>
+						<td colspan="4"><img src="/images/guide/c3.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/heal.png" width="37" height="37" alt="<?php echo $this->entries['20']->name ?>" onmouseover="changeDetail(21);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/vladmir.png" width="37" height="37" alt="<?php echo $this->entries['21']->name ?>" onmouseover="changeDetail(22);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/bootmana.png" width="37" height="37" alt="<?php echo $this->entries['22']->name ?>" onmouseover="changeDetail(23);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/aquila.png" width="37" height="37" alt="<?php echo $this->entries['124']->name ?>" onmouseover="changeDetail(125);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/buckler.png" width="37" height="37" alt="<?php echo $this->entries['24']->name ?>" onmouseover="changeDetail(25);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/basilius.png" width="37" height="37" alt="<?php echo $this->entries['25']->name ?>" onmouseover="changeDetail(26);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/pipe.png" width="37" height="37" alt="<?php echo $this->entries['26']->name ?>" onmouseover="changeDetail(27);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/urn.png" width="37" height="37" alt="<?php echo $this->entries['27']->name ?>" onmouseover="changeDetail(28);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/headdress.png" width="37" height="37" alt="<?php echo $this->entries['28']->name ?>" onmouseover="changeDetail(29);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/medallion.png" width="37" height="37" alt="<?php echo $this->entries['29']->name ?>" onmouseover="changeDetail(30);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/janggo.png" width="37" height="37" alt="<?php echo $this->entries['30']->name ?>" onmouseover="changeDetail(31);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/tranquil_boot.png" width="37" height="37" alt="<?php echo $this->entries['125']->name ?>" onmouseover="changeDetail(126);"/></div></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<br/>
+	<table>
+		<tr name="2">
+			<td>
+				<table name="weaponary" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c4.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/rapier.png" width="37" height="37" alt="<?php echo $this->entries['31']->name ?>" onmouseover="changeDetail(32);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/mkb.png" width="37" height="37" alt="<?php echo $this->entries['32']->name ?>" onmouseover="changeDetail(33);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/radiance.png" width="37" height="37" alt="<?php echo $this->entries['33']->name ?>" onmouseover="changeDetail(34);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/butterfly.png" width="37" height="37" alt="<?php echo $this->entries['34']->name ?>" onmouseover="changeDetail(35);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/buriza.png" width="37" height="37" alt="<?php echo $this->entries['35']->name ?>" onmouseover="changeDetail(36);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/basher.png" width="37" height="37" alt="<?php echo $this->entries['36']->name ?>" onmouseover="changeDetail(37);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/fury.png" width="37" height="37" alt="<?php echo $this->entries['37']->name ?>" onmouseover="changeDetail(38);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/abyssal.png" width="37" height="37" alt="<?php echo $this->entries['126']->name ?>" onmouseover="changeDetail(127);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/cri.png" width="37" height="37" alt="<?php echo $this->entries['39']->name ?>" onmouseover="changeDetail(40);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/armlet.png" width="37" height="37" alt="<?php echo $this->entries['40']->name ?>" onmouseover="changeDetail(41);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/lothar.png" width="37" height="37" alt="<?php echo $this->entries['41']->name ?>" onmouseover="changeDetail(42);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/ethereal.png" width="37" height="37" alt="<?php echo $this->entries['42']->name ?>" onmouseover="changeDetail(43);"/></div></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table name="enchanted" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c5.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/sange_and_yasha.png" width="37" height="37" alt="<?php echo $this->entries['43']->name ?>" onmouseover="changeDetail(44);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/satanic.png" width="37" height="37" alt="<?php echo $this->entries['44']->name ?>" onmouseover="changeDetail(45);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/mjollnir.png" width="37" height="37" alt="<?php echo $this->entries['45']->name ?>" onmouseover="changeDetail(46);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/skadi.png" width="37" height="37" alt="<?php echo $this->entries['46']->name ?>" onmouseover="changeDetail(47);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/sange.png" width="37" height="37" alt="<?php echo $this->entries['47']->name ?>" onmouseover="changeDetail(48);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/helm.png" width="37" height="37" alt="<?php echo $this->entries['48']->name ?>" onmouseover="changeDetail(49);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/maelstrom.png" width="37" height="37" alt="<?php echo $this->entries['49']->name ?>" onmouseover="changeDetail(50);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/deso.png" width="37" height="37" alt="<?php echo $this->entries['50']->name ?>" onmouseover="changeDetail(51);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/yasha.png" width="37" height="37" alt="<?php echo $this->entries['51']->name ?>" onmouseover="changeDetail(52);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/mask.png" width="37" height="37" alt="<?php echo $this->entries['52']->name ?>" onmouseover="changeDetail(53);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/diffusal.png" width="37" height="37" alt="<?php echo $this->entries['53']->name ?>" onmouseover="changeDetail(54);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/halberd.png" width="37" height="37" alt="<?php echo $this->entries['127']->name ?>" onmouseover="changeDetail(128);"/></div></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table name="gate way" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c6.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/travel.png" width="37" height="37" alt="<?php echo $this->entries['54']->name ?>" onmouseover="changeDetail(55);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/phase_boot.png" width="37" height="37" alt="<?php echo $this->entries['55']->name ?>" onmouseover="changeDetail(56);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/tread.png" width="37" height="37" alt="<?php echo $this->entries['56']->name ?>" onmouseover="changeDetail(57);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/soul_ring.png" width="37" height="37" alt="<?php echo $this->entries['57']->name ?>" onmouseover="changeDetail(58);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/midas.png" width="37" height="37" alt="<?php echo $this->entries['58']->name ?>" onmouseover="changeDetail(59);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/oblivion_staff.png" width="37" height="37" alt="<?php echo $this->entries['59']->name ?>" onmouseover="changeDetail(60);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/perserv.png" width="37" height="37" alt="<?php echo $this->entries['60']->name ?>" onmouseover="changeDetail(61);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/poor.png" width="37" height="37" alt="<?php echo $this->entries['61']->name ?>" onmouseover="changeDetail(62);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/bracer.png" width="37" height="37" alt="<?php echo $this->entries['62']->name ?>" onmouseover="changeDetail(63);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/wraith.png" width="37" height="37" alt="<?php echo $this->entries['63']->name ?>" onmouseover="changeDetail(64);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/null.png" width="37" height="37" alt="<?php echo $this->entries['64']->name ?>" onmouseover="changeDetail(65);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/wand.png" width="37" height="37" alt="<?php echo $this->entries['65']->name ?>" onmouseover="changeDetail(66);"/></div></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table>
+		<tr name="3">
+			<td>
+				<table name="cache" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c7.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/glove.png" width="37" height="37" alt="<?php echo $this->entries['66']->name ?>" onmouseover="changeDetail(67);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/mask_of_death.png" width="37" height="37" alt="<?php echo $this->entries['67']->name ?>" onmouseover="changeDetail(68);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/ring_of_regen.png" width="37" height="37" alt="<?php echo $this->entries['68']->name ?>" onmouseover="changeDetail(69);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/blink.png" width="37" height="37" alt="<?php echo $this->entries['69']->name ?>" onmouseover="changeDetail(70);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/sobi_mask.png" width="37" height="37" alt="<?php echo $this->entries['70']->name ?>" onmouseover="changeDetail(71);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/boot.png" width="37" height="37" alt="<?php echo $this->entries['71']->name ?>" onmouseover="changeDetail(72);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/gem.png" width="37" height="37" alt="<?php echo $this->entries['72']->name ?>" onmouseover="changeDetail(73);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/cloak.png" width="37" height="37" alt="<?php echo $this->entries['73']->name ?>" onmouseover="changeDetail(74);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/stick.png" width="37" height="37" alt="<?php echo $this->entries['74']->name ?>" onmouseover="changeDetail(75);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/evasion.png" width="37" height="37" alt="<?php echo $this->entries['75']->name ?>" onmouseover="changeDetail(76);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/ghost.png" width="37" height="37" alt="<?php echo $this->entries['76']->name ?>" onmouseover="changeDetail(77);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/shadowamulet.png" width="37" height="37" alt="<?php echo $this->entries['129']->name ?>" onmouseover="changeDetail(129);"/></div></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table name="wonder" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c8.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/clarity.png" width="37" height="37" alt="<?php echo $this->entries['77']->name ?>" onmouseover="changeDetail(78);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/flask.png" width="37" height="37" alt="<?php echo $this->entries['78']->name ?>" onmouseover="changeDetail(79);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/tango.png" width="37" height="37" alt="<?php echo $this->entries['79']->name ?>" onmouseover="changeDetail(80);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/bottle.png" width="37" height="37" alt="<?php echo $this->entries['80']->name ?>" onmouseover="changeDetail(81);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/ward.png" width="37" height="37" alt="<?php echo $this->entries['81']->name ?>" onmouseover="changeDetail(82);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/sentry.png" width="37" height="37" alt="<?php echo $this->entries['82']->name ?>" onmouseover="changeDetail(83);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/dust.png" width="37" height="37" alt="<?php echo $this->entries['83']->name ?>" onmouseover="changeDetail(84);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/courier.png" width="37" height="37" alt="<?php echo $this->entries['84']->name ?>" onmouseover="changeDetail(85);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/warp.png" width="37" height="37" alt="<?php echo $this->entries['85']->name ?>" onmouseover="changeDetail(86);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/smoke.png" width="37" height="37" alt="<?php echo $this->entries['86']->name ?>" onmouseover="changeDetail(87);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/bird.png" width="37" height="37" alt="<?php echo $this->entries['23']->name ?>" onmouseover="changeDetail(24);"/></div></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table name="sena" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c9.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/gauntlets.png" width="37" height="37" alt="<?php echo $this->entries['87']->name ?>" onmouseover="changeDetail(88);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/slippers.png" width="37" height="37" alt="<?php echo $this->entries['88']->name ?>" onmouseover="changeDetail(89);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/mantle.png" width="37" height="37" alt="<?php echo $this->entries['89']->name ?>" onmouseover="changeDetail(90);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/branches.png" width="37" height="37" alt="<?php echo $this->entries['90']->name ?>" onmouseover="changeDetail(91);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/belt.png" width="37" height="37" alt="<?php echo $this->entries['91']->name ?>" onmouseover="changeDetail(92);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/elvenskin.png" width="37" height="37" alt="<?php echo $this->entries['92']->name ?>" onmouseover="changeDetail(93);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/robe.png" width="37" height="37" alt="<?php echo $this->entries['93']->name ?>" onmouseover="changeDetail(94);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/circlet.png" width="37" height="37" alt="<?php echo $this->entries['94']->name ?>" onmouseover="changeDetail(95);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/orge.png" width="37" height="37" alt="<?php echo $this->entries['95']->name ?>" onmouseover="changeDetail(96);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/blade.png" width="37" height="37" alt="<?php echo $this->entries['96']->name ?>" onmouseover="changeDetail(97);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/staff.png" width="37" height="37" alt="<?php echo $this->entries['97']->name ?>" onmouseover="changeDetail(98);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/orb.png" width="37" height="37" alt="<?php echo $this->entries['98']->name ?>" onmouseover="changeDetail(99);"/></div></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	<table>
+		<tr name="4">
+			<td>
+				<table name="weapon" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c10.gif" alt="dota" /></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/blades_of_attack.png" width="37" height="37" alt="<?php echo $this->entries['99']->name ?>" onmouseover="changeDetail(100);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/broadsword.png" width="37" height="37" alt="<?php echo $this->entries['100']->name ?>" onmouseover="changeDetail(101);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/quarterstaff.png" width="37" height="37" alt="<?php echo $this->entries['101']->name ?>" onmouseover="changeDetail(102);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/claymore.png" width="37" height="37" alt="<?php echo $this->entries['102']->name ?>" onmouseover="changeDetail(103);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/ring_of_protection.png" width="37" height="37" alt="<?php echo $this->entries['103']->name ?>" onmouseover="changeDetail(104);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/shield.png" width="37" height="37" alt="<?php echo $this->entries['104']->name ?>" onmouseover="changeDetail(105);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/javelin.png" width="37" height="37" alt="<?php echo $this->entries['105']->name ?>" onmouseover="changeDetail(106);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/hammer.png" width="37" height="37" alt="<?php echo $this->entries['106']->name ?>" onmouseover="changeDetail(107);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/chainmail.png" width="37" height="37" alt="<?php echo $this->entries['107']->name ?>" onmouseover="changeDetail(108);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/helm_of_iron_will.png" width="37" height="37" alt="<?php echo $this->entries['108']->name ?>" onmouseover="changeDetail(109);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/platemail.png" width="37" height="37" alt="<?php echo $this->entries['109']->name ?>" onmouseover="changeDetail(110);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/quelling.png" width="37" height="37" alt="<?php echo $this->entries['110']->name ?>" onmouseover="changeDetail(111);"/></div></td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<table name="laragas" cellspacing="8">
+					<tr>
+						<td colspan="4"><img src="/images/guide/c11.gif" alt="dota" /></td>
+					</tr>
+					
+					<tr>
+						<td><div class="icon"><img src="/images/item2/demon_edge.png" width="37" height="37" alt="<?php echo $this->entries['111']->name ?>" onmouseover="changeDetail(112);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/eaglehorn.png" width="37" height="37" alt="<?php echo $this->entries['112']->name ?>" onmouseover="changeDetail(113);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/reaver.png" width="37" height="37" alt="<?php echo $this->entries['113']->name ?>" onmouseover="changeDetail(114);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/relic.png" width="37" height="37" alt="<?php echo $this->entries['114']->name ?>" onmouseover="changeDetail(115);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/hyperstone.png" width="37" height="37" alt="<?php echo $this->entries['115']->name ?>" onmouseover="changeDetail(116);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/ring_of_health.png" width="37" height="37" alt="<?php echo $this->entries['116']->name ?>" onmouseover="changeDetail(117);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/void.png" width="37" height="37" alt="<?php echo $this->entries['117']->name ?>" onmouseover="changeDetail(118);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/mystic_staff.png" width="37" height="37" alt="<?php echo $this->entries['118']->name ?>" onmouseover="changeDetail(119);"/></div></td>
+					</tr>
+					<tr>
+						<td><div class="icon"><img src="/images/item2/energy_booster.png" width="37" height="37" alt="<?php echo $this->entries['119']->name ?>" onmouseover="changeDetail(120);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/point_booster.png" width="37" height="37" alt="<?php echo $this->entries['120']->name ?>" onmouseover="changeDetail(121);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/vitality_booster.png" width="37" height="37" alt="<?php echo $this->entries['121']->name ?>" onmouseover="changeDetail(122);"/></div></td>
+						<td><div class="icon"><img src="/images/item2/venom.png" width="37" height="37" alt="<?php echo $this->entries['122']->name ?>" onmouseover="changeDetail(123);"/></div></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+<div style="float:left;width:250px;margin-top:10px;">
+	<center>
+		<?php for($i=0; $i<$size; $i++){?>
+			<?php 
+				if(Eaglet_Utils_Bilingual::isThaiLang()){
+					$detail = $this->escape($this->entries[$i]->detail);
+					$information = $this->entries[$i]->information;
+				}
+				else{
+					$detail = $this->escape($this->entries[$i]->detailEN);	
+					$information = $this->entries[$i]->informationEN;
+				}
+			?>
+			<div id="div<?php echo $this->entries[$i]->id?>" name="div<?php echo $this->entries[$i]->id?>" style="display:<?php echo $display?>;">
+				<div><img src="/images/guide/isummary.jpg" alt="dota" /></div>
+				<div style="float:left;padding:0px 5px 0px 5px;">
+					<img id="iconItem" name="iconItem" src="<?php echo $this->escape($this->entries[$i]->picture2)?>" alt="<?php echo $this->entries[$i]->name ?>" width="64" height="64" />
+				</div>
+				<div style="float:left;">
+					<div style="color:#FFC300;padding-left:5px;width:165px;" id="nameItem" name="nameItem" align="left"><?php echo $this->escape($this->entries[$i]->name)?></div>
+					<div style="color:white;padding-left:5px;width:165px;" align="left">
+						<img src="/images/guide/coin.jpg" alt="dota" />
+						<span style="margin-left:-5px;"><?php echo $this->escape($this->entries[$i]->price)?></span>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+				<div style="color:#898989;margin-top:10px;" align="left"><?php echo $detail;?></div>
+				
+				<div style="color:#FFC300;margin:10px 0px 10px 0px;font-size:20px;" align="left">Bonus</div>
+				<div style="color:white;" align="left"><?php echo $this->entries[$i]->bonus?></div>
+				
+				<?php $sizeRecipe = sizeof($this->recipe[$i]);?>
+				<?php if($sizeRecipe != 0){?>
+					<div style="color:#FFC300;margin:10px 0px 10px 0px;font-size:20px;" align="left">Recipe</div>
+					<?php for($j=0; $j<$sizeRecipe; $j++){?>
+						<?php if($i == 56 && $j == 2){ ?>
+							<div style="margin:10px 0px 14px -30px;">1 of following:</div>
+						<?php } ?>
+						<div style="float:left;margin-right:5px;">
+							<img width="48" height="48" src="<?php echo $this->entries[($this->recipe[$i][$j]['materialId']-1)]->picture2?>" alt="<?php echo $this->entries[($this->recipe[$i][$j]['materialId']-1)]->name?>" />
+						</div>
+						<?php if($this->recipe[$i][$j]['amount'] > 1){?>
+							<div style="floar:left;" align="left"><?php echo $this->recipe[$i][$j]['amount'].' X '.$this->entries[($this->recipe[$i][$j]['materialId']-1)]->name?><font style="padding-left:5px;color:#83B9FF;"><?php echo '('.$this->recipe[$i][$j]['price'].')'?></font></div>
+						<?php } 
+						else{ ?>
+							<div style="floar:left;" align="left"><?php echo $this->entries[($this->recipe[$i][$j]['materialId']-1)]->name?><font style="padding-left:5px;color:#83B9FF;"><?php echo '('.$this->recipe[$i][$j]['price'].')'?></font></div>
+						<?php } ?>
+						<div style="clear:both;"></div>
+					<?php } ?>
+				<?php } ?>
+				
+				<?php $sizeUsein = sizeof($this->usein[$i]);?>
+				<?php if($sizeUsein != 0){?>
+					<div style="color:#FFC300;margin:10px 0px 10px 0px;font-size:20px;" align="left">Use In</div>
+					<?php for($j=0; $j<$sizeUsein; $j++){?>
+						<div style="float:left;margin-right:5px;">
+							<img width="48" height="48" src="<?php echo $this->entries[($this->usein[$i][$j]['itemId']-1)]->picture2?>" alt="<?php echo $this->entries[($this->usein[$i][$j]['itemId']-1)]->name?>" />
+						</div>
+						<div style="floar:left;" align="left"><?php echo $this->entries[($this->usein[$i][$j]['itemId']-1)]->name?><font style="padding-left:5px;color:#83B9FF;"><?php echo '('.$this->entries[($this->usein[$i][$j]['itemId']-1)]->price.')'?></font></div>
+						<div style="clear:both;"></div>
+					<?php } ?>
+				<?php } ?>
+				
+				<div style="color:#FFC300;margin:10px 0px 10px 0px;font-size:20px;" align="left">Information</div>
+				<div style="color:#898989;" align="left"><?php echo $information;?></div>
+			</div>
+			<?php $display = 'none';?>
+		<?php } ?>
+	</center>
+</div>
+<div style="clear:both;"></div>

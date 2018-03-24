@@ -1,0 +1,33 @@
+<script>
+	function checkEmail(){
+		var emailpat = /^([a-zA-Z0-9])+([\.a-zA-Z0-9_-])*@([a-zA-Z0-9])+(\.[a-zA-Z0-9_-]+)+$/;
+		var email = document.getElementById('email').value;
+
+		if(email == ''){
+			alert('โปรดใส่ email');
+		}
+		else if( !emailpat.test( email ) ) {
+			 alert('โปรดใส่ Email ให้ถูกต้อง');
+		}
+		else{
+			document.forms["forgetPassForm"].submit();
+		}
+	}
+</script>
+<h1 class="header">
+	Forget Password
+</h1>
+<div class="divLeft">
+	<div class="RoundBlack"> 
+		<div style="padding:10px 20px 20px 20px;">
+			<center>
+				<form method="POST" id="forgetPassForm">
+					<input type="hidden" id="mode" name="mode" value="sendmail"></input>
+					<div>โปรดใส่ Email ของท่าน</div>
+					<div style="margin:5px 0px 5px 0px;"><input type="text" id="email" name="email" size="30" onkeypress="if(event.keyCode==13)document.forms['forgetPassForm'].checkEmail();"></input></div>
+					<div style="margin:5px 0px 5px 0px;"><input type="button" value="Send" onclick="checkEmail();"></input></div>
+				</form>
+			</center>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,182 @@
+<?php 
+	$start = 0;
+	$end = 4;
+	$display = 'block';
+?>
+
+<script>
+	var divHero;
+	var divHeroShow;
+	var divHeroOld;
+	var divHeroShowOld;
+	var oldId = 1;
+	var thisId;
+	var time;
+
+	document.title = '<?=$this->translate('GUIDE_INDEX_TITLE'); ?>';
+	
+	function changeDetail(id){
+		if(oldId != id){
+			thisId = id;
+			clearTimeout(time);
+			divHeroOld = document.getElementById('div'+oldId);
+			divHeroShowOld = $(divHeroOld);
+			
+			divHero = document.getElementById('div'+thisId);
+			divHeroShow = $(divHero);
+			
+			divHeroShowOld.fadeOut();
+			time = setTimeout(swapFadeIn,350);
+		}
+	}
+	function swapFadeIn(){
+		divHeroShow.fadeIn();
+		oldId = thisId;
+	}
+</script>
+<h1 class="header">
+	DotA Hero
+</h1>
+<div style="text-align:center;margin:20px 0px;">
+	<a href="<?=$this->url(array('controller'=>'guide','action'=>'index'))?>" style="margin-right:40px;" class="iconDota"></a>
+	<div class="iconDota2Normal"></div>
+</div>
+<div style="float:left;margin:0px 10px 0px 40px;">
+	<?php $type = 0; $j = 1;?>
+	<div style="width:790px;">
+		<?php for($i=0; $i<$this->sizeHeroData; $i++){?>
+			<?php if($type != $this->entries[$i]->type){?>
+				<?php 
+					$type = $this->entries[$i]->type; 
+					switch($j){
+						case 1:
+							$imageNameHome = 'RADIANT STRENGTH';
+							break;
+						case 2:
+							$imageNameHome = 'RADIANT AGILITY';
+							break;
+						case 3:
+							$imageNameHome = 'RADIANT INTELLIGENCE';
+							break;
+						case 4:
+							$imageNameHome = 'DIRE STRENGTH';
+							break;
+						case 5:
+							$imageNameHome = 'DIRE AGILITY';
+							break;
+						case 6:
+							$imageNameHome = 'DIRE INTELLIGENCE';
+							break;
+					}
+				?>
+				<div style="width:234px;float:left;text-align:center;margin:0px 10px;height:320px;">
+					<?=$imageNameHome?>
+					<ul style="list-style-type: none !important;">
+			<?php } ?>
+				<?php if($this->entries[$i]->picIcon2 != ''){ ?>
+						<li style="float:left;width:59px;margin:4px;">
+							<a href="<? echo $this->url(array('controller'=>'guide', 'action'=>'herodota2', 'heroId'=>$this->entries[$i]->id), 'default', true); ?>">
+								<img style="width:59px;" src="<?php echo $this->entries[$i]->picIcon2;?>" alt="<?php echo $this->entries[$i]->name2;?>" onmouseover="changeDetail('<?php echo $this->entries[$i]->id;?>');"/>
+							</a>
+						</li>
+				<?php } ?>
+			<?php 
+			if($i == $this->sizeHeroData-1 || $type != $this->entries[$i+1]->type){?>
+					</ul>
+					<div style="clear:both;"></div>
+				</div>
+				<?php $j++;?>
+			<?php } ?>
+		<?php }?>
+	</div>
+	<div style="clear:both;"></div>
+</div>
+<div style="float:left;width:260px;margin-top:10px;">
+	<center>
+		<?php foreach ($this->entries as $hero): ?>
+			<div id="div<?php echo $hero->id?>" name="div<?php echo $hero->id?>" style="display:<?php echo $display?>;">
+				<div><img src="/images/guide/hs.gif" alt="dota" /></div>
+				<div style="float:left;padding:0px 5px 0px 5px;"><img id="iconHero" name="iconHero" src="<?php echo $this->escape($hero->picIcon2)?>" width="100" alt="<?php echo $this->escape($hero->name2)?>" /></div>
+				<div style="float:left;">
+					<div style="color:#FFC300;padding-left:5px;width:140px;" id="nameHero" name="nameHero" align="left"><?php echo $this->escape($hero->name2)?></div>
+				</div>
+				<div style="clear:both;"></div>
+				<table>
+					<tr>
+						<td align="center" style="color:#FFC300;">Str</td>
+						<td align="center" style="color:#FFC300;">Agi</td>
+						<td align="center" style="color:#FFC300;">Int</td>
+					</tr>
+					<tr>
+						<?php if($this->escape($hero->type) == 1) {?>
+							<td align="center"><img src="/images/guide/strength-c.jpg" alt="dota" /></td>
+						<?php } 
+						else {?>
+							<td align="center"><img src="/images/guide/strength.jpg" alt="dota" /></td>
+						<?php } ?>
+						<?php if($this->escape($hero->type) == 2) {?>
+							<td align="center"><img src="/images/guide/agility-c.jpg" alt="dota" /></td>
+						<?php } 
+						else {?>
+							<td align="center"><img src="/images/guide/agility.jpg" alt="dota" /></td>
+						<?php } ?>
+						<?php if($this->escape($hero->type) == 3) {?>
+							<td align="center"><img src="/images/guide/intelligence-c.jpg" alt="dota" /></td>
+						<?php } 
+						else {?>
+							<td align="center"><img src="/images/guide/intelligence.jpg" alt="dota" /></td>
+						<?php } ?>
+					</tr>
+					<tr>
+						<td align="center" width="75"><span id="strHero" name="strHero"><?php echo $this->escape($hero->str)?></span></td>
+						<td align="center" width="75"><span id="agiHero" name="agiHero"><?php echo $this->escape($hero->agi)?></span></td>
+						<td align="center" width="75"><span id="intHero" name="intHero"><?php echo $this->escape($hero->int)?></span></td>
+					</tr>
+				</table>
+				<div><img src="/images/guide/as.gif" style="margin-top:10px;" alt="dota" /></div>
+				<table>
+					<tr>
+						<td style="color:#82BDFF;">Hp :</td>
+						<td><span id="hpHero" name="strHero"><?php echo $this->escape($hero->hp)?></span></td>
+					</tr>
+					<tr>
+						<td style="color:#82BDFF;">Mp :</td>
+						<td><span id="mpHero" name="strHero"><?php echo $this->escape($hero->mp)?></span></td>
+					</tr>
+					<tr>
+						<td style="color:#82BDFF;">Atk :</td>
+						<td><span id="atkHero" name="strHero"><?php echo $this->escape($hero->atk)?></span></td>
+					</tr>
+					<tr>
+						<td style="color:#82BDFF;">Armor :</td>
+						<td><span id="armorHero" name="strHero"><?php echo $this->escape($hero->armor)?></span></td>
+					</tr>
+					<tr>
+						<td style="color:#82BDFF;">Movespeed :&nbsp;</td>
+						<td><span id="movespeedHero" name="strHero"><?php echo $this->escape($hero->movespeed)?></span></td>
+					</tr>
+					<tr>
+						<td style="color:#82BDFF;">Atk Range :</td>
+						<td><span id="rangeHero" name="strHero"><?php echo $this->escape($hero->range)?></span></td>
+					</tr>
+				</table>
+				<div><img src="/images/guide/sk.gif" style="margin-top:10px;" alt="dota" /></div>
+				
+				<?php for($i=$start; $i<$end; $i++) {?>
+					<div style="float:left;padding:0px 5px 0px 0px;"><img src="<?php echo $this->escape($this->entriesSkill[$i]['picture2']) ?>" width="40" height="40" alt="<?php echo $this->escape($this->entriesSkill[$i]['name']) ?>" /></div>
+					<div style="float:left;">
+						<div style="color:#0182D3;padding-left:5px;width:164px;" align="left"><?php echo $this->escape($this->entriesSkill[$i]['name']) ?></div>
+						<div style="color:#898989;padding-left:5px;" align="left">Hotkey : <font color="#FF9000"><?php echo $this->escape($this->entriesSkill[$i]['hotkey']) ?></font></div>
+					</div>
+					<div style="clear:both;"></div>
+				<?php } ?>
+				<?php 
+					$start = $start + 4;
+					$end = $end + 4;
+				?>
+			</div>
+			<?php $display = 'none';?>
+		<?php endforeach ?>
+	</center>
+</div>
+<div style="clear:both;"></div>

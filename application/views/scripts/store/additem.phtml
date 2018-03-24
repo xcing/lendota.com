@@ -1,0 +1,162 @@
+<? $this->headScript()->appendFile('/resources/modal/jquery.simplemodal.1.4.2.min.js')
+                      ->appendFile('/js/replay/addReplay2.js');
+?>
+<script>
+	var xmlHttp;
+
+	function createXMLHttpRequest(){
+		if(window.ActiveXObject){
+			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		else if(window.XMLHttpRequest){
+			xmlHttp = new XMLHttpRequest();
+		}
+	}
+	function changeHero(heroId){
+		createXMLHttpRequest();
+		
+		xmlHttp.open("POST","/store/changehero/heroId/"+heroId,true);
+		xmlHttp.onreadystatechange = function(){
+			if(xmlHttp.readyState == 4){
+				if(xmlHttp.status == 200){
+					document.getElementById("bundleSpace").innerHTML = xmlHttp.responseText;
+				}
+				else{
+					document.getElementById("bundleSpace").innerHTML = "";
+				}
+			}
+		}
+		xmlHttp.send(null);
+	}
+</script>
+<h1 class="header">
+	Add New Item
+</h1>
+<div class="RoundBlack" style="margin:auto;width: 550px;padding:15px;">
+	<form method="POST" action="/store/insert" enctype = "multipart/form-data">
+		<input type="hidden" name="page" value="<?=$this->page;?>"/>
+		<input type="hidden" name="categoryId" value="<?=$this->categoryId;?>"/>
+		<div style="margin:10px;">Name : <input type="text" name="data[name]"/></div>
+		<div style="margin:10px;">Image : <input type="file" name="data[image]" /></div>
+		<div style="margin:10px;">Price : <input type="text" name="data[price]" value="0.99"/></div>
+		<div style="margin:10px;">PriceSale : <input type="text" name="data[priceSale]" /></div>
+		<div style="margin:10px;">
+			Hero : <input id="heroId" name="data[heroId]" type="hidden" />
+			<img id="heroImg" width="80" />
+			<input id="heroBtn" type="button" value=" hero " />
+		</div>
+		<div style="margin:10px;">BundleId :  
+			<span id="bundleSpace">
+				<select name="data[bundleId]">
+					<option value="0">N/A</option>
+				</select>
+			</span>
+		</div>
+		<div style="margin:10px;">ChestId : 
+			<select name="data[chestId]">
+				<option value="0">N/A</option>
+				<?php foreach ($this->chests as $chest) {?>
+					<option value="<?=$chest->equipmentId;?>"><?=$chest->name;?></option>
+				<?php } ?>
+			</select>
+		</div>
+		<div style="margin:10px;">Rarity : 
+			<select name="data[rarity]">
+				<option value="0">Common</option>
+				<option value="1">Uncommon</option>
+				<option value="2">Rare</option>
+				<option value="3">Mythical</option>
+				<option value="4">Legendary</option>
+				<option value="5">Arcana</option>
+			</select>
+		</div>
+		<div style="margin:10px;">Slot : 
+			<select name="data[slot]">
+				<?php foreach ($this->slots as $idxSlot => $slot) {?>
+					<option value="<?=$idxSlot;?>"><?=$slot;?></option>
+				<?php } ?>
+			</select>
+		</div>
+		<div style="margin:10px;">Category : 
+			<select name="data[category]">
+				<option value="0">Bundles</option>
+				<option value="1" selected>Equipment</option>
+				<option value="2">Tools</option>
+				<option value="3">Couriers</option>
+				<option value="4">Announcers</option>
+				<option value="5">Tournaments</option>
+				<option value="6">Teams</option>
+			</select>
+		</div>
+		<div style="margin:10px;">Type : 
+			<select name="data[type]">
+				<option value="0" selected>normal</option>
+				<option value="1">bundle</option>
+				<option value="2">chest</option>
+			</select>
+		</div>
+		<div style="margin:10px;">Is New : 
+			<input type="radio" name="data[isNew]" value="0" checked /> old
+			<input type="radio" name="data[isNew]" value="1" /> new
+		</div>
+		<div style="margin:10px;">Active : 
+			<input type="radio" name="data[active]" value="0" checked /> yes
+			<input type="radio" name="data[active]" value="1" /> no
+		</div>
+		<div><input type="submit" value="Save" class="submitBtn"/></div>
+	</form>
+</div>
+<div id="modalContainer">
+    <div id="heroModal">
+        <div>
+        	<?php $type = 0; $j = 1;?>
+            <div class="dota2ModalContent">
+            	<?php for($i=0; $i<$this->sizeHeroData; $i++){?>
+                	<?php if($type != $this->entries[$i]->type){?>
+                    	<?php 
+                        	 $type = $this->entries[$i]->type; 
+                             switch($j){
+                                 case 1:
+                                     $imageNameHome = 'RADIANT STRENGTH';
+                                     break;
+                                 case 2:
+                                     $imageNameHome = 'RADIANT AGILITY';
+                                     break;
+                                 case 3:
+                                     $imageNameHome = 'RADIANT INTELLIGENCE';
+                                     break;
+                                 case 4:
+                                     $imageNameHome = 'DIRE STRENGTH';
+                                     break;
+                                 case 5:
+                                     $imageNameHome = 'DIRE AGILITY';
+                                     break;
+                                 case 6:
+                                     $imageNameHome = 'DIRE INTELLIGENCE';
+                                     break;
+                          	}
+                         ?>
+                         <div style="width:175px;float:left;text-align:center;margin:0px 5px;">
+                         	<?=$imageNameHome?>
+                            <ul style="list-style-type: none !important;">
+                     <?php } ?>
+                     <?php if($this->entries[$i]->picIcon2 != ''){ ?>
+                            <li style="float:left;width:50px;margin:4px;">
+                                <a href="#" class="simplemodal-close" title="<?php echo $this->entries[$i]->name2;?>" onclick="setHeroValueImg(<?=$this->entries[$i]->id;?>,'<?=$this->entries[$i]->picIcon2;?>'); changeHero(<?=$this->entries[$i]->id;?>); return false;">
+                                     <img style="width:50px;" src="<?php echo $this->entries[$i]->picIcon2;?>" />
+                                </a>
+                            </li>
+                     <?php } ?>
+                     <?php 
+                          if($i == $this->sizeHeroData-1 || $type != $this->entries[$i+1]->type){?>
+                               </ul>
+                               <div style="clear:both;"></div>
+                          </div>
+                          <?php $j++;?>
+                	<?php } ?>
+            	<?php }?>
+            </div>
+            <div style="clear:both;"></div>  
+        </div>
+    </div>
+</div>

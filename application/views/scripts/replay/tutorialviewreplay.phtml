@@ -1,0 +1,35 @@
+<script>
+	document.title = '<?=addslashes($this->translate('REPLAY_TUTORIAL_VIEW_REPLAY_BUTTON')); ?>';
+</script>
+<?php 
+	if(Eaglet_Utils_Bilingual::isThaiLang()){
+		$line1 = 'เมื่อเข้าเกมแล้วกดที่ tab WATCH ด้านบนดังภาพ';
+		$line2 = 'ด้านซ้ายบนกด RECENT GAMES';
+		$line3 = 'ปุ่ม FILTER ตรงซ้ายบน';
+		$line4 = 'นำค่า Match Id จากในเว็บไปใส่ที่ช่อง MATCH ID ดังภาพ แล้วกด apply';
+		$line5 = 'มันจะขึ้น score ของเกมนั้นขึ้นมาให้ดู แล้วกด Download Replay ด้านล่าง เมื่อโหลดเสร็จก็ดูได้เลย';
+		$line6 = 'กรณีที่เป็นรีเพลย์การแข่งขัน บางรายการ เค้าจะไม่เปิดให้เข้าชม ทำให้พอเอา Match Id ไปใส่มันจะขึ้นว่า Access Denie เราต้องเสียตังซื้อ ticket จาก Valve ถึงจะสามารถดูได้';
+	}
+	else{
+		$line1 = 'Login to the game then click tab Watch same as in the picture';
+		$line2 = 'Click RECENT GAMES on the left';
+		$line3 = 'Click FILTER on the top-left';
+		$line4 = 'Put the Match ID from the website into MATCH ID field same as in the picture then click Apply';
+		$line5 = 'The score of the selected game will be displayed, You can click Download Replay in the bottom to view on your desire';
+		$line6 = 'If that replay comes from a tournament which requires to pay for view, when I enter a Match ID then it returns "Access Denied". We need to buy a ticket from Valve in order to view that match.';
+	}
+?>
+<h1 class="header" style="color:#FFC300;">
+	<?=$this->translate('REPLAY_TUTORIAL_VIEW_REPLAY_BUTTON');?>
+</h1>
+<div style="margin:30px;">
+	<ol style="margin:0px 0px 15px 30px;">
+		<li><?=$line1;?></li>
+		<li><?=$line2;?></li>
+		<li><?=$line3;?></li>
+		<li><?=$line4;?></li>
+		<li><?=$line5;?></li>
+		<li><?=$line6;?></li>
+	</ol>
+	<img width="950" src="/images/replay/viewReplay.png" />
+</div>

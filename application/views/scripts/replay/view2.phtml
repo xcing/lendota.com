@@ -1,0 +1,391 @@
+<? $this->headScript()->appendFile('/js/replay/replayView2.js')
+						->appendFile('/resources/modal/jquery.simplemodal.1.4.2.min.js')
+						->appendFile('/js/replay/addReplay2.js');?>
+<script>
+	document.title = "<?php echo addslashes($this->replayPageTitle); ?>";
+	replayRate = '<?=$this->replayRate;?>';
+</script>
+<?php 
+	$this->doctype(Zend_View_Helper_Doctype::XHTML1_RDFA);
+	$this->headMeta()->setProperty('og:title', addslashes($this->replayTitle))
+				 	 ->setProperty('og:description', $this->description);
+	
+	if($this->uploadedDate >= '2555-10-04')
+		$firstBan2 = true;
+	else
+		$firstBan2 = false;
+?>
+<h1 class="header">
+	DotA Replay
+</h1>
+<div class="divLeft">
+	<?php if (Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin()):?>
+		<div class="manageReplay">
+			<input id="editReplayBtn" class="submitBtn" type="button" value="Edit Replay" onclick="editReplay();" />
+			<input class="submitBtn" type="button" value="Delete Replay" onclick="confirmDeleteReplay('<?=$this->url(array('controller'=>'replay','action'=>'delete2', 'replay2Id'=>$this->replayId))?>');" />
+		</div>
+		<div id="editReplayDiv" class="replayContent editReplayDiv">
+			<form method="post">
+				<input type="hidden" id="replay2Id" name="replay2Id" value="<?=$this->replayId;?>" />
+				<table class="uploadReplayForm">
+					<tbody>
+						<tr>
+							<td style="padding-right: 10px; display:block; width:128px;"><span class="label">การแข่งขันรายการ</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="matchContest" id="matchContest" value="<?=$this->matchContest;?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ชื่อ Radiant ทีม</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="team1" id="team1" value="<?=$this->team1;?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ชื่อ Dire ทีม</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="team2" id="team2" value="<?=$this->team2;?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ทีมชนะ</span></td>
+							<td><span class="label">: </span>
+								<select name="win" id="win">
+									<option value="0" <?if($this->win == 0) { echo 'selected'; }?>>Unknown</option>
+									<option value="1" <?if($this->win == 1) { echo 'selected'; }?>>Radiant</option>
+									<option value="2" <?if($this->win == 2) { echo 'selected'; }?>>Dire</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ระดับความมัน</span></td>
+							<td><span class="label">: </span>
+								<select name="rate" id="rate">
+									<option value="0">ธรรมดา</option>
+									<option value="1">มันมาก</option>
+									<option value="2">มันสัดสัด</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">First pick</span></td>
+							<td><span class="label">: </span>
+								<select name="firstPick" id="firstPick">
+									<option value="1" <?if($this->firstPick == 1) { echo 'selected'; }?>>Radiant</option>
+									<option value="2" <?if($this->firstPick == 2) { echo 'selected'; }?>>Dire</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">Match Id</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="replayMatchId" id="replayMatchId" value="<?=$this->replayMatchId;?>"/>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">Link</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<textarea name="link" id="link" rows="6" cols="40"><?=$this->link;?></textarea>
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 1 Ban</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team1Bans" name="team1Bans" type="text" value="<?=$this->banTeam1;?>" />
+								<input id="team1BanHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 2 Ban</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team2Bans" name="team2Bans" type="text" value="<?=$this->banTeam2;?>" />
+								<input id="team2BanHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 1 Pick</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team1Picks" name="team1Picks" type="text" value="<?=$this->chosenTeam1;?>" />
+								<input id="team1PickHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 2 Pick</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team2Picks" name="team2Picks" type="text" value="<?=$this->chosenTeam2;?>" />
+								<input id="team2PickHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div id="modalContainer">
+                    <div id="heroModal">
+                        <div>
+                            <?php $type = 0; $j = 1;?>
+                            <div class="dota2ModalContent">
+                                <?php for($i=0; $i<$this->sizeHeroData; $i++){?>
+                                    <?php if($type != $this->entries[$i]->type){?>
+                                        <?php 
+                                            $type = $this->entries[$i]->type; 
+                                            switch($j){
+                                                case 1:
+                                                    $imageNameHome = 'RADIANT STRENGTH';
+                                                    break;
+                                                case 2:
+                                                    $imageNameHome = 'RADIANT AGILITY';
+                                                    break;
+                                                case 3:
+                                                    $imageNameHome = 'RADIANT INTELLIGENCE';
+                                                    break;
+                                                case 4:
+                                                    $imageNameHome = 'DIRE STRENGTH';
+                                                    break;
+                                                case 5:
+                                                    $imageNameHome = 'DIRE AGILITY';
+                                                    break;
+                                                case 6:
+                                                    $imageNameHome = 'DIRE INTELLIGENCE';
+                                                    break;
+                                            }
+                                        ?>
+                                        <div style="width:175px;float:left;text-align:center;margin:0px 5px;">
+                                            <?=$imageNameHome?>
+                                            <ul style="list-style-type: none !important;">
+                                    <?php } ?>
+                                        <?php if($this->entries[$i]->picIcon2 != ''){ ?>
+                                                <li style="float:left;width:50px;margin:4px;">
+                                                    <a href="#" title="<?php echo $this->entries[$i]->name2;?>" onclick="setHeroValue(<?=$this->entries[$i]->id;?>); return false;">
+                                                        <img style="width:50px;" src="<?php echo $this->entries[$i]->picIcon2;?>" />
+                                                    </a>
+                                                </li>
+                                        <?php } ?>
+                                    <?php 
+                                    if($i == $this->sizeHeroData-1 || $type != $this->entries[$i+1]->type){?>
+                                            </ul>
+                                            <div style="clear:both;"></div>
+                                        </div>
+                                        <?php $j++;?>
+                                    <?php } ?>
+                                <?php }?>
+                            </div>
+                            <div style="clear:both;"></div>
+                            <input type="text" id="popupHeroId" />
+                        </div>
+                    </div>
+                </div>
+				<div class="replaySaveBtn"><input class="submitBtn" type="submit" value="Save" name="saveEditReplay" /></div>
+			</form>
+		</div>
+	<?php endif;?>
+	<div class="wrapper">
+		<div class="replay">
+			<?php
+			  
+			  echo "<h2 class='replay_h2'>".$this->replayTitle."</h2>";
+			  
+			  echo ('   
+			    <div class="replayDetailContent" style="width: 293px; float: left;">
+                    <span class="label">First Pick: </span> '.$this->firstPickName.'
+			    </div>
+			  	<div class="replayDetailContent" style="width: 293px; float: right;">
+                    <span class="label" style="width: 60px;">View: </span> '.$this->totalView.'
+			    </div>
+                <div class="replayDetailContent" style="width: 293px; float: left;">');
+              if ($this->replayMatchId > 0) {
+                  echo '<span class="label">Match ID: </span> ' . $this->replayMatchId;
+              }
+              echo '</div>';
+				if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1) {
+			  		echo ('<div class="replayDetailContent" style="width: 590px;">
+					        <span class="label">ReplayId: </span> '.$this->replayId.'
+					    </div>');
+				}
+			  echo ('
+                <div class="clear"></div>
+			    <div class="replayDetailContent winnerSpoil" style="width: 293px;float: left;">
+	                <span class="label">Winner: </span>
+	                <a class="reveal">Show</a>
+	                <span class="spoiler">'.$this->teamWin.'</span>
+	            </div>
+	            <div class="clear"></div>
+			   ');
+			   echo ('
+			    <div style="display: '.($this->chosenTeam1 != '' ? 'block' : 'none').'" >
+			    <hr class="viewReplay" />
+			    <h2 class="replay_h2"> Draft Heroes </h2>
+			    <div class="replayDetailContent">');
+			?>
+	        <table class="draftHeroTable">
+	            <tr>
+	                <td class="draftHeroTableHeader draftTeamName">
+	                    <?=$this->team1?>
+	                </td>
+	                <td class="draftHeroTableHeader draftTeamName">
+	                    <?=$this->team2?>
+	                </td>
+	            </tr>
+	            <?php if(!($this->banTeam1 == '' && $this->banTeam2 == '')){?>
+		            <tr>
+		                <td class="draftHeroTableHeader" colspan="2" style="text-align:center;">
+		                    <b>‎Ban</b>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="draftHeroTableData">
+		                	<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam1[0]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam1[0]-1]['name2']?>" />
+		                	<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam1[1]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam1[1]-1]['name2']?>" />
+		               		<?php if(!$firstBan2){ ?>
+		               			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam1[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam1[2]-1]['name2']?>" />
+		               		<?php } ?>
+		                </td>
+		                <td class="draftHeroTableData">
+		                	<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam2[0]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam2[0]-1]['name2']?>" />
+		                	<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam2[1]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam2[1]-1]['name2']?>" />
+		                	<?php if(!$firstBan2){ ?>
+		                		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam2[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam2[2]-1]['name2']?>" />
+		                	<?php } ?>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td class="draftHeroTableData">
+		                	<?php if($firstBan2){ ?>
+		                		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam1[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam1[2]-1]['name2']?>" />
+		                	<?php } ?>
+		                	<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam1[3]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam1[3]-1]['name2']?>" />
+		                	<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam1[4]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam1[4]-1]['name2']?>" />
+		                </td>
+		                <td class="draftHeroTableData">
+		                	<?php if($firstBan2){ ?>
+		                		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam2[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam2[2]-1]['name2']?>" />
+		               		<?php } ?>
+		               		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam2[3]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam2[3]-1]['name2']?>" />
+		               		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdBanTeam2[4]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdBanTeam2[4]-1]['name2']?>" />
+		                </td>
+		            </tr>
+	            <?php } ?>
+	            <tr>
+	                <td class="draftHeroTableHeader" colspan="2" style="text-align:center;">
+	                    <b>Pick</b>
+	                </td>
+	            </tr>
+	            <tr>
+	            	<?php if($this->firstPick == 1){?>
+                		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[0]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[0]-1]['name2']?>" />
+                		</td>
+                		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[0]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[0]-1]['name2']?>" />
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[1]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[1]-1]['name2']?>" />
+                		</td>
+                	<?php } 
+                	else{ ?>
+                		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[0]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[0]-1]['name2']?>" />
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[1]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[1]-1]['name2']?>" />
+                		</td>
+                		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[0]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[0]-1]['name2']?>" />
+                		</td>
+                	<?php } ?>
+	            </tr>
+	            <tr>
+	            	<?php if($this->firstPick == 1){?>
+	            		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[1]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[1]-1]['name2']?>" />
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[2]-1]['name2']?>" />
+                		</td>
+                		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[2]-1]['name2']?>" />
+                		</td>
+                		
+                	<?php } 
+                	else{ ?>
+                		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[2]-1]['name2']?>" />
+                		</td>
+                		<td class="draftHeroTableData">
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[1]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[1]-1]['name2']?>" />
+                			<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[2]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[2]-1]['name2']?>" />
+                		</td>
+                	<?php } ?>
+	            </tr>
+	            <tr>
+                	<td class="draftHeroTableData">
+                		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[3]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[3]-1]['name2']?>" />
+                		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam1[4]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam1[4]-1]['name2']?>" />
+                	</td>
+                	<td class="draftHeroTableData">
+                		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[3]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[3]-1]['name2']?>" />
+                		<img width="59" style="margin:3px;" src="<?=$this->heroData[$this->heroIdChosenTeam2[4]-1]['picIcon2']?>" title="<?=$this->heroData[$this->heroIdChosenTeam2[4]-1]['name2']?>" />
+                	</td>
+	            </tr>
+                <?php if ($this->laneTeam1): ?>
+                    <?php
+                        $heroPlayerLaneTeam1 = explode(',', $this->laneTeam1);
+                        $heroPlayerLaneTeam2 = explode(',', $this->laneTeam2);
+                    ?>
+                    <tr>
+                        <td class="draftHeroTableHeader" colspan="2" style="text-align:center;">
+                            <b>Lane</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="draftHeroTableData">
+                            <?php foreach ($heroPlayerLaneTeam1 as $laneTeam1Value): ?>
+                                <?php $heroLaneTeam1 = explode('|', $laneTeam1Value, 2); ?>
+                                <img width="59" style="margin:3px; vertical-align: middle;" src="<?=$this->heroData[Eaglet_Utils_Hero::getHeroId($heroLaneTeam1[0]) - 1]['picIcon2']?>"
+                                     title="<?=$this->heroData[Eaglet_Utils_Hero::getHeroId($heroLaneTeam1[0]) - 1]['name2']?>" />
+                                <span style="color: black; font-size: 13px;"><?= $heroLaneTeam1[1]; ?></span>
+                                <br />
+                            <?php endforeach; ?>
+                        </td>
+                        <td class="draftHeroTableData">
+                            <?php foreach ($heroPlayerLaneTeam2 as $laneTeam2Value): ?>
+                                <?php $heroLaneTeam2 = explode('|', $laneTeam2Value, 2); ?>
+                                <img width="59" style="margin:3px; vertical-align: middle;" src="<?=$this->heroData[Eaglet_Utils_Hero::getHeroId($heroLaneTeam2[0]) - 1]['picIcon2']?>"
+                                     title="<?=$this->heroData[Eaglet_Utils_Hero::getHeroId($heroLaneTeam2[0]) - 1]['name2']?>" />
+                                <span style="color: black; font-size: 13px;"><?= $heroLaneTeam2[1]; ?></span>
+                                <br />
+                            <?php endforeach; ?>
+                        </td>
+                    </tr>
+                <?php endif; ?>
+	        </table>
+		</div>
+		<div style="text-align:center;">
+	    	<?=$this->link;?>
+	    </div>
+    </div>
+    
+</div>
+    
+		<div style="margin: 10px 0px 10px 0px;float:left;">
+			<a href="http://twitter.com/share" class="twitter-share-button" data-text="@lendotacom" data-count="horizontal" data-via="XCiNg_Pawanwit">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+		</div>
+		<div style="margin: 10px 0px 10px 0px;float:left;">
+			<!-- Place this tag in your head or just before your close body tag -->
+			<script type="text/javascript" src="https://apis.google.com/js/plusone.js">
+			  {lang: 'th'}
+			</script>
+			
+			<!-- Place this tag where you want the +1 button to render -->
+			<g:plusone></g:plusone>
+		</div>
+		<div style="margin: 10px 0px 10px 0px;float:left;width:350px;">
+			<div id="fb-root"></div><fb:like href="http://lendota.com/replay/view2/replay2Id/<?=$this->replayId;?>" send="true" layout="button_count" width="450" show_faces="true" colorscheme="dark"></fb:like>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+	<div class="fbCommentReplay">
+		<div class="fb-comments" data-href="http://lendota.com/replay/view2/replay2Id/<?=$this->replayId;?>" data-num-posts="10" data-width="650" data-colorscheme="light"></div>
+	</div>
+</div>

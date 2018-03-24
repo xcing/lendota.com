@@ -1,0 +1,168 @@
+<? $this->headScript()->appendFile('/resources/modal/jquery.simplemodal.1.4.2.min.js')
+                      ->appendFile('/js/replay/addReplay2.js');
+?>
+<div class="wrapper" style="margin-top: 30px;">
+	<div class="replay">
+		<h2 class="replay_h2">Upload Replay</h2> 
+		<div class="replayContent" style="width: 99%;">
+			<form method="post">
+				<table class="uploadReplayForm">
+					<tbody>
+						<tr>
+							<td style="padding-right: 10px; display:block; width:128px;"><span class="label">การแข่งขันรายการ</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="matchContest" id="matchContest" value="<?php Eaglet_Utils_Form::getOldValue('matchContest');?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ชื่อ Radiant ทีม</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="team1" id="team1" value="<?php Eaglet_Utils_Form::getOldValue('team1');?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ชื่อ Dire ทีม</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="team2" id="team2" value="<?php Eaglet_Utils_Form::getOldValue('team2');?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ทีมชนะ</span></td>
+							<td><span class="label">: </span>
+								<select name="win" id="win">
+									<option value="Automatic">Unknown</option>
+									<option value="1">Radiant</option>
+									<option value="2">Dire</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ระดับความมัน</span></td>
+							<td><span class="label">: </span>
+								<select name="rate" id="rate">
+									<option value="0">ธรรมดา</option>
+									<option value="1">มันมาก</option>
+									<option value="2">มันสัดสัด</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">First pick</span></td>
+							<td><span class="label">: </span>
+								<select name="firstPick" id="firstPick">
+									<option value="1">Radiant</option>
+									<option value="2">Dire</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">Match Id</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="replayMatchId" id="replayMatchId" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">Link (width 560px)</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<textarea name="link" id="link" rows="6" cols="40"></textarea>
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 1 Ban</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team1Bans" name="team1Bans" type="text" />
+								<input id="team1BanHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 2 Ban</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team2Bans" name="team2Bans" type="text" />
+								<input id="team2BanHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 1 Pick</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team1Picks" name="team1Picks" type="text" />
+								<input id="team1PickHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+                        <tr>
+							<td><span class="label">Team 2 Pick</span></td>
+							<td>
+								<span class="label">: </span>
+                                <input id="team2Picks" name="team2Picks" type="text" />
+								<input id="team2PickHeroBtn" type="button" value=" hero " />
+							</td>
+						</tr>
+					</tbody>
+				</table>
+                <div id="modalContainer">
+                    <div id="heroModal">
+                        <div>
+                            <?php $type = 0; $j = 1;?>
+                            <div class="dota2ModalContent">
+                                <?php for($i=0; $i<$this->sizeHeroData; $i++){?>
+                                    <?php if($type != $this->entries[$i]->type){?>
+                                        <?php 
+                                            $type = $this->entries[$i]->type; 
+                                            switch($j){
+                                                case 1:
+                                                    $imageNameHome = 'RADIANT STRENGTH';
+                                                    break;
+                                                case 2:
+                                                    $imageNameHome = 'RADIANT AGILITY';
+                                                    break;
+                                                case 3:
+                                                    $imageNameHome = 'RADIANT INTELLIGENCE';
+                                                    break;
+                                                case 4:
+                                                    $imageNameHome = 'DIRE STRENGTH';
+                                                    break;
+                                                case 5:
+                                                    $imageNameHome = 'DIRE AGILITY';
+                                                    break;
+                                                case 6:
+                                                    $imageNameHome = 'DIRE INTELLIGENCE';
+                                                    break;
+                                            }
+                                        ?>
+                                        <div style="width:175px;float:left;text-align:center;margin:0px 5px;">
+                                            <?=$imageNameHome?>
+                                            <ul style="list-style-type: none !important;">
+                                    <?php } ?>
+                                        <?php if($this->entries[$i]->picIcon2 != ''){ ?>
+                                                <li style="float:left;width:50px;margin:4px;">
+                                                    <a href="#" title="<?php echo $this->entries[$i]->name2;?>" onclick="setHeroValue(<?=$this->entries[$i]->id;?>); return false;">
+                                                        <img style="width:50px;" src="<?php echo $this->entries[$i]->picIcon2;?>" />
+                                                    </a>
+                                                </li>
+                                        <?php } ?>
+                                    <?php 
+                                    if($i == $this->sizeHeroData-1 || $type != $this->entries[$i+1]->type){?>
+                                            </ul>
+                                            <div style="clear:both;"></div>
+                                        </div>
+                                        <?php $j++;?>
+                                    <?php } ?>
+                                <?php }?>
+                            </div>
+                            <div style="clear:both;"></div>
+                            <input type="text" id="popupHeroId" />
+                        </div>
+                    </div>
+                </div>
+				<div class="replayUploadButton"><input class="submitBtn" type="submit" value="Add" name="uploadReplay" /></div>
+			</form>
+		</div>
+	</div>
+</div>

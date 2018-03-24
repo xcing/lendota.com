@@ -1,0 +1,253 @@
+<script>
+	document.title = '<?=addslashes($this->equipment[0]['name']);?>';
+	var isLogin = '<?=Zend_Auth::getInstance()->hasIdentity();?>';
+	
+	$(document).ready(function() {
+		$(".DetailAddToCartButton").each(function() {
+			var equipmentId = $(this).attr("name");
+			$(this).click(function () {
+				addtocart(equipmentId);
+			});
+		});	
+	});
+	
+	function login(){
+		var email = document.getElementById('email').value;
+		var password = document.getElementById('password').value;
+		if(email == ''){
+			alert('กรุณาใส่ email');
+		}
+		else if(password == ''){
+			alert('กรุณาใส่ password');
+		}
+		else{
+			document.forms["loginForm"].submit();
+		}
+	}
+	function addtocart(equipmentId){
+		if(isLogin == 1){
+			window.location = '/store/addtocart/equipmentId/'+equipmentId;
+		}
+		else{
+			alert('กรุณา login ก่อนครับ');
+		}
+	}
+</script>
+<h1 class="header">
+	<?=$this->equipment[0]['name'];?>
+</h1>
+<div>
+	<?php if (isset($this->flashMessages) && !empty($this->flashMessages)) {?>
+		<div class="message" style="text-align:right;margin-right:90px;">
+		<?php 
+			foreach ($this->flashMessages as $message) {
+				echo $message . '<br />';
+		    }
+		?>
+		</div>
+	<?php }?>
+	<?php if (Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin()){?>
+		<div style="margin-left:20px;float:left;">
+			<input class="submitBtn" type="button" value="Edit Item" onclick="document.location='<?=$this->url(array('controller'=>'store','action'=>'edititem', 'equipmentId' => $this->equipment[0]['equipmentId']))?>'; return false;" />
+		</div>
+	<?php }?>
+	<?php include("login.phtml")?>
+</div>
+<div style="width: 890px;margin:auto;">
+	<div id="StoreTabs">
+		<span id="StoreTabButtons">													
+			<a href="/store/index/categoryId/0"><span class="StoreTab NoSelect <?php if($this->categoryId == 0) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">BUNDLES</span></a>														
+			<a href="/store/index/categoryId/1"><span class="StoreTab NoSelect <?php if($this->categoryId == 1) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">EQUIPMENT</span></a>															
+			<a href="/store/index/categoryId/2"><span class="StoreTab NoSelect <?php if($this->categoryId == 2) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">TOOLS</span></a>
+			<a href="/store/index/categoryId/3"><span class="StoreTab NoSelect <?php if($this->categoryId == 3) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">COURIERS</span></a>
+			<a href="/store/index/categoryId/4"><span class="StoreTab NoSelect <?php if($this->categoryId == 4) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">ANNOUNCERS</span></a>
+			<a href="/store/index/categoryId/5"><span class="StoreTab NoSelect <?php if($this->categoryId == 5) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">TOURNAMENTS</span></a>
+			<a href="/store/index/categoryId/6"><span class="StoreTab NoSelect <?php if($this->categoryId == 6) echo 'StoreTabActive'; else echo 'StoreTabInactive'; ?>">TEAMS</span></a>
+			<span class="LowerBg"></span>
+		</span>
+	</div>
+	<div style="float:left;margin-right:30px;">
+		<div><img src="<?=$this->equipment[0]['image'];?>" /></div>
+	</div>
+	<div style="float:left;">
+		<div style="font-size:24px;color:#C6C6C6;"><?=$this->equipment[0]['name'];?></div>
+		<div style="color:#5E98D9;margin-bottom:15px;"><?=Eaglet_Utils_Store::getRarityName($this->equipment[0]['rarity']);?></div>
+		<?php if($this->equipment[0]['heroId'] != 0){ ?>
+			<div><img src="<?=$this->heros[$this->equipment[0]['heroId']-1]['picIcon2'];?>" /></div>
+		<?php } ?>
+		<div style="color:#6C7075">Slot : <?=Eaglet_Utils_Store::getSlotName($this->equipment[0]['slot']);?></div>
+	</div>
+	<div style="clear:both;"></div>
+	<?php if(Zend_Auth::getInstance()->getStorage()->read()->userId == 1){?>
+		<div style="text-align:center;">
+			Original : 
+			<?php 
+				if($this->equipment[0]['priceSale'] != 0){
+					echo $this->equipment[0]['priceSale'].'$';
+				}
+				else{
+					echo $this->equipment[0]['price'].'$';
+				}
+			?>
+		</div>
+	<?php } ?>
+	<div style="text-align:center;margin-bottom:-15px;">
+		True Money : 
+		<?php 
+			if($this->equipment[0]['priceSale'] != 0){
+				echo Eaglet_Utils_Store::getPriceTruemoney($this->equipment[0]['priceSale']).' บาท';
+			}
+			else{
+				echo Eaglet_Utils_Store::getPriceTruemoney($this->equipment[0]['price']).' บาท';
+			}
+		?>
+	</div>
+	<div class="DetailPrice">
+		<div class="Price">
+			<?php 
+				if($this->equipment[0]['priceSale'] != 0){
+					echo Eaglet_Utils_Store::getPrice($this->equipment[0]['priceSale']).' บาท';
+				}
+				else{
+					echo Eaglet_Utils_Store::getPrice($this->equipment[0]['price']).' บาท';
+				}
+			?> 
+		</div>
+		<div class="LargeGreenButton DetailAddToCartButton" name="<?=$this->equipment[0]['equipmentId'];?>">
+			<div class="LeftCap"></div>
+			<div class="RightCap"></div>
+			<span>Add to Cart</span>
+		</div>
+		<div style="clear:both;"></div>
+	</div>
+	<div style="clear:both;margin-bottom:20px;"></div>
+	<?php if($this->equipment[0]['bundleId'] != 0){ ?>
+		<hr style="color:#6C7075;"/>
+		<div style="color:#C6C6C6;text-align:center;font-size:20px;margin:10px;">เป็นส่วนหนึ่งของ set</div>
+		<div style="float:left;margin-right:30px;">
+			<div><a href="/store/detail/equipmentId/<?=$this->bundle->equipmentId;?>/categoryId/<?=$this->categoryId;?>"><img src="<?=$this->bundle->image;?>" /></a></div>
+		</div>
+		<div style="float:left;">
+			<div style="font-size:24px;color:#6C7075;"><?=$this->bundle->name;?></div>
+			<div style="color:#5E98D9;margin-bottom:15px;"><?=Eaglet_Utils_Store::getRarityName($this->bundle->rarity);?></div>
+			<div class="DetailPrice">
+				<div class="Price">
+					<?php 
+						if($this->bundle->priceSale != 0){
+							echo Eaglet_Utils_Store::getPrice($this->bundle->priceSale).' บาท';
+						}
+						else{
+							echo Eaglet_Utils_Store::getPrice($this->bundle->price).' บาท';
+						}
+					?>
+				 </div>
+				<div class="LargeGreenButton DetailAddToCartButton" name="<?=$this->bundle->equipmentId;?>">
+					<div class="LeftCap"></div>
+					<div class="RightCap"></div>
+					<span>Add to Cart</span>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+		<div style="clear:both;margin-bottom:20px;"></div>
+	<?php } ?>
+	<?php if($this->equipment[0]['chestId'] != 0){ ?>
+		<hr style="color:#6C7075;"/>
+		<div style="color:#C6C6C6;text-align:center;font-size:20px;margin:10px;">มีอยู่ในหีบ</div>
+		<?php foreach ($this->chests as $chest){?>
+			<div style="float:left;width:200px;height:230px;margin:5px 10px 60px 10px;text-align:center;">
+				<div style="height:180px;">
+					<div style="margin-bottom:10px;"><a href="/store/detail/equipmentId/<?=$chest->equipmentId;?>/categoryId/<?=$this->categoryId;?>"><img src="<?=$chest->image;?>" width="200px"/></a></div>
+					<div style="color:#BCBCBC;"><?=$chest->name;?></div>
+					<div style="color:#686868;"><?=Eaglet_Utils_Store::getRarityName($chest->rarity);?></div>
+				</div>
+				<div class="DetailPrice">
+					<div class="Price">
+						<?php 
+							if($chest->priceSale != 0){
+								echo Eaglet_Utils_Store::getPrice($chest->priceSale).' บาท';
+							}
+							else{
+								echo Eaglet_Utils_Store::getPrice($chest->price).' บาท';
+							}
+						?> 
+					</div>
+					<div class="LargeGreenButton DetailAddToCartButton" name="<?=$chest->equipmentId;?>">
+						<div class="LeftCap"></div>
+						<div class="RightCap"></div>
+						<span>Add to Cart</span>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		<?php } ?>
+		<div style="clear:both;margin-bottom:20px;"></div>
+	<?php } ?>
+	<?php if($this->equipment[0]['type'] == 1){ ?>
+		<hr style="color:#6C7075;" />
+		<div style="color:#C6C6C6;text-align:center;font-size:20px;margin:10px;">มีรายการของดังนี้</div>
+		<?php foreach ($this->parts as $part){?>
+			<div style="float:left;width:200px;height:230px;margin:5px 10px 60px 10px;text-align:center;">
+				<div style="height:180px;">
+					<div style="margin-bottom:10px;"><a href="/store/detail/equipmentId/<?=$part->equipmentId;?>/categoryId/<?=$this->categoryId;?>"><img src="<?=$part->image;?>" width="200px"/></a></div>
+					<div style="color:#BCBCBC;"><?=$part->name;?></div>
+					<div style="color:#686868;"><?=Eaglet_Utils_Store::getRarityName($part->rarity);?></div>
+				</div>
+				<div class="DetailPrice">
+					<div class="Price">
+						<?php 
+							if($part->priceSale != 0){
+								echo Eaglet_Utils_Store::getPrice($part->priceSale).' บาท';
+							}
+							else{
+								echo Eaglet_Utils_Store::getPrice($part->price).' บาท';
+							}
+						?> 
+					</div>
+					<div class="LargeGreenButton DetailAddToCartButton" name="<?=$part->equipmentId;?>">
+						<div class="LeftCap"></div>
+						<div class="RightCap"></div>
+						<span>Add to Cart</span>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		<?php } ?>
+		<div style="clear:both;margin-bottom:20px;"></div>
+	<?php }
+	else if($this->equipment[0]['type'] == 2){ ?>
+		<hr style="color:#6C7075;" />
+		<div style="color:#C6C6C6;text-align:center;font-size:20px;margin:10px;">มีรายการของดังนี้</div>
+		<?php foreach ($this->partsChest as $partChest){?>
+			<div style="float:left;width:200px;height:230px;margin:5px 10px 60px 10px;text-align:center;">
+				<div style="height:180px;">
+					<div style="margin-bottom:10px;"><a href="/store/detail/equipmentId/<?=$partChest->equipmentId;?>/categoryId/<?=$this->categoryId;?>"><img src="<?=$partChest->image;?>" width="200px"/></a></div>
+					<div style="color:#BCBCBC;"><?=$partChest->name;?></div>
+					<div style="color:#686868;"><?=Eaglet_Utils_Store::getRarityName($partChest->rarity);?></div>
+				</div>
+				<div class="DetailPrice">
+					<div class="Price">
+						<?php 
+							if($partChest->priceSale != 0){
+								echo Eaglet_Utils_Store::getPrice($partChest->priceSale).' บาท';
+							}
+							else{
+								echo Eaglet_Utils_Store::getPrice($partChest->price).' บาท';
+							}
+						?> 
+					</div>
+					<div class="LargeGreenButton DetailAddToCartButton" name="<?=$partChest->equipmentId;?>">
+						<div class="LeftCap"></div>
+						<div class="RightCap"></div>
+						<span>Add to Cart</span>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		<?php } ?>
+		<div style="clear:both;margin-bottom:20px;"></div>
+	<?php } ?>
+</div>

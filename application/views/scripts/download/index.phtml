@@ -1,0 +1,36 @@
+<?php 
+	$lastMap = $this->translate('LASTEST_MAP');
+	$stableMap = $this->translate('STABLE_MAP');
+	$aiMap = $this->translate('AI_MAP');
+?>
+
+<script>
+	document.title = '<?=Eaglet_Utils_PageTitle::getDownloadMapTitle();?>';
+
+	function download(file){
+		//alert('file = '+file);
+		document.getElementById('filename').value = file;
+		document.forms["uploadForm"].submit();
+	}
+</script>
+<form method="POST" action="/download/load" id="uploadForm">
+	<input type="hidden" id="loadKey" name="loadKey" value="@llcen.com"></input>
+	<input type="hidden" id="filename" name="filename" value="" ></input>
+	<center>
+		<h1 class="header">
+			DotA Map
+		</h1>
+		<table style="font-size:20px;margin-top:25px;">
+			<tr align="center">
+				<td width="400">Latest Map: <?php echo $lastMap;?></td>
+				<td width="400">Stable Map: <?php echo $stableMap;?></td>
+				<td width="400">AIMap: <?php echo $aiMap;?></td>
+			</tr>
+			<tr align="center">
+				<td width="400"><span onclick="download('/upload/map/DotA v<?php echo $lastMap;?>.zip')" style="cursor:pointer;"><img src="/upload/map/download.png" /></span></td>
+				<td width="400"><span onclick="download('/upload/map/DotA v<?php echo $stableMap;?>.zip')" style="cursor:pointer;"><img src="/upload/map/download.png" /></span></td>
+				<td width="400"><span onclick="download('/upload/map/DotA v<?php echo $aiMap;?>.zip')" style="cursor:pointer;"><img src="/upload/map/download.png" /></span></td>
+			</tr>
+		</table>
+	</center>
+</form>

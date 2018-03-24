@@ -1,0 +1,75 @@
+<script>
+	function login(){
+		var email = document.getElementById('email').value;
+		var password = document.getElementById('password').value;
+		if(email == ''){
+			alert('กรุณาใส่ email');
+		}
+		else if(password == ''){
+			alert('กรุณาใส่ password');
+		}
+		else{
+			document.forms["loginForm"].submit();
+		}
+	}
+</script>
+<div style="float:left;margin-left:170px;">
+	<a href="/store/tutorial">
+		<div><img src="/images/admin.png" style="margin-left:15px;"/></div>
+		<div style="color:#CCCCCC;">วิธีการสั่งซื้อ</div>
+	</a>
+</div>
+<div class ="divLogin" style="float:right;margin-right:90px;padding:5px 20px 5px 23px;margin-bottom:0px;">
+	<?php if(!Zend_Auth::getInstance()->hasIdentity()) {?>
+		<form id="loginForm" name="loginForm" method="POST" action="/user/login">
+			<input type="hidden" name="referredUri" value="<?php echo $_SERVER['REQUEST_URI'];?>" />
+			Email : <input type="text" id="email" name="email" style="width:120px;"/> 
+			Password : <input type="password" id="password" name="password" style="width:100px;" onkeypress="if(event.keyCode==13)login();"/>
+			<input type="checkbox" id="rememberMe" name="rememberMe" onkeypress="if(event.keyCode==13)login();" /> <?=$this->translate('TOURNAMENT_LOGIN_KEEPME_LOGIN'); ?>
+			<input class="submitBtn" type="button" value="login" style="margin-left:10px;margin-right:10px;" onclick="login();"/>
+			or <a href="/user/signup">register</a>
+		</form>
+	<?php } 
+	else{ ?>
+		<?php if(Zend_Auth::getInstance()->getStorage()->read()->userId == 1){?>
+			<div style="float:left;margin-right:60px;">
+				<a href="/store/admin">
+					<div><img src="/images/admin.png" style="margin-left:-3px;"/></div>
+					<div style="color:#CCCCCC;">Admin <? if($this->notiAdmin != 0) { ?><span style="color:red;">(<?=$this->notiAdmin; ?>)</span><?php } ?></div>
+				</a>
+			</div>
+		<?php } ?>
+		<div style="float:left;margin-right:60px;">
+			<a href="/store">
+				<div><img src="/images/store.png" style="margin-left:-3px;"/></div>
+				<div style="color:#CCCCCC;">Store</div>
+			</a>
+		</div>
+		<div style="float:left;margin-right:68px;">
+			<a href="/user/edituser">
+				<div><img src="/images/user.png" /></div>
+				<div style="color:#CCCCCC;"><?=Zend_Auth::getInstance()->getStorage()->read()->steamName;?></div>
+			</a>
+		</div>
+		<div style="float:left;margin-right:62px;">
+			<a href="/store/cart">
+				<div><img src="/images/cart.png" style="margin-left:-8px;"/></div>
+				<div style="color:#CCCCCC;">Cart <? if($this->notiCart != 0) { ?><span style="color:red;">(<?=$this->notiCart; ?>)</span><?php } ?></div>
+			</a>
+		</div>
+		<div style="float:left;margin-right:60px;">
+			<a href="/store/order">
+				<div><img src="/images/order.png" style="margin-left:-2px;"/></div>
+				<div style="color:#CCCCCC;">Order <? if($this->notiOrder != 0) { ?><span style="color:red;">(<?=$this->notiOrder; ?>)</span><?php } ?></div>
+			</a>
+		</div>
+		<div style="float:left;">
+			<a href="/user/logout">
+				<div><img src="/images/logout.png" /></div>
+				<div style="color:#CCCCCC;">logout</div>
+			</a>
+		</div>
+		<div style="clear:both;"></div>
+	<?php } ?>
+</div>
+<div style="clear:both;"></div>

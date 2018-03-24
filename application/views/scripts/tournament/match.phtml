@@ -1,0 +1,384 @@
+<?php 
+	$dif = Eaglet_Utils_CalculateScore::getScoreWinAndLose($this->team1->score, $this->team2->score);
+	
+	if($this->match->teamSide == 1){
+		$land1 = 'Radiant';
+		$colorLand1 = '#FF4500';
+		$land2 = 'Dire';
+		$colorLand2 = '#8FBC8F';
+	}
+	else{
+		$land1 = 'Dire';
+		$colorLand1 = '#8FBC8F';
+		$land2 = 'Radiant';
+		$colorLand2 = '#FF4500';
+	}
+	if($this->match->result == 1){
+		$positionWon = 'left:34px;top:118px;';
+		$positionLose = 'left:684px;top:126px;';
+	}
+	else if($this->match->result == 2){
+		$positionWon = 'left:684px;top:118px;';
+		$positionLose = 'left:34px;top:126px;';
+	}
+?>
+
+<script>
+	document.title = '<?=addslashes('Lendota.com Tournament round '.$this->match->round.' '.$this->team1->shortName.' vs '.$this->team2->shortName); ?>';
+	
+	$(document).ready(function() {
+		$('#bothLoseBye').click(function() {
+			var matchId = $(this).attr("matchId");
+			var r=confirm("คุณแน่ใจว่าต้องการปรับแพ้บายทั้งคู่");
+			if (r==true){
+				window.location = '/tournament/bothlosebye/matchId/'+matchId;
+			}
+		});
+		$('#cancelResult').click(function() {
+			var matchId = $(this).attr("matchId");
+			var r=confirm("คุณแน่ใจว่าต้องการยกเลิกผลการแข่งขัน");
+			if (r==true){
+				window.location = '/tournament/cancelresult/matchId/'+matchId;
+			}
+		});
+		$('.editScreenshot').click(function() {
+			var matchResultId = $(this).attr("matchResultId");
+			window.location = '/tournament/editscreenshot/matchResultId/'+matchResultId;
+		});
+	});
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_MATCH_HEADER'); ?>
+</h1>
+<h1 class="header">
+	Round : <?=$this->match->round; ?>
+</h1>
+
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin-left:5px;">
+	<div style="margin:0px 0px -15px 10px;"><a href="/tournament/schedule/tournamentId/<?=$this->match->tournamentId;?>" style="text-decoration:none;"><button class="blueBtn"><?=$this->translate('TOURNAMENT_MATCH_BACK'); ?></button></a></div>
+	<div class="wrapper" style="width:800px;">
+		<div class="replay" style="width:798px;position:relative;">
+			<div style="position:absolute;left:334px;top:126px;"><img src="/images/tournament/vs.png" width="125" /></div>
+			<?php if($this->match->result != '') {?>
+				<div style="position:absolute;<?=$positionWon;?>"><img src="/images/tournament/won.png" width="80" /></div>
+				<div style="position:absolute;<?=$positionLose;?>"><img src="/images/tournament/lose.png" width="80" /></div>
+			<?php } ?>
+			<table class="draftHeroTable" style="width:98%;">
+				<tr>
+	                <td class="draftHeroTableHeader draftTeamName" width="50%" height="40px" colspan="2">
+	                	<?php if(isset($this->roundSchedule)){?>
+		                    <span style="font-weight: bold;line-height: 18px;font-size: 18px;letter-spacing: 2px;color: white;">
+								<?=$this->translate('TOURNAMENT_MATCH_DATE_RACE'); ?>
+								<br />
+								<?= date('d/m/Y g:i A', strtotime($this->roundSchedule->getDate())); ?>
+							</span>
+						<?php } ?>
+	                </td>
+	            </tr>
+				<tr>
+	                <td class="draftHeroTableHeader draftTeamName" width="50%">
+	                    <span style="font-weight: bold;line-height: 18px;font-size: 18px;letter-spacing: 2px;color: <?=$colorLand1?>;"><?=$land1?></span>
+	                </td>
+	                <td class="draftHeroTableHeader draftTeamName" width="50%">
+	                    <span style="font-weight: bold;line-height: 18px;font-size: 18px;letter-spacing: 2px;color: <?=$colorLand2?>;"><?=$land2?></span>
+	                </td>
+	            </tr>
+				<tr>
+	                <td class="draftHeroTableHeader draftTeamName" width="50%">
+	                	<img style="margin-right:5px;" width="16" height="11" class="flag-<?=strtolower($this->team1->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($this->team1->countryCode);?>">
+	                	<a href="/tournament/profileteam/teamId/<?=$this->team1->id;?>" style="text-decoration: none;">
+	                    	<span style="font-weight: bold;line-height: 18px;font-size: 18px;letter-spacing: 2px;color: #FFC300;"><?=$this->team1->shortName?></span>
+	                    </a>
+	                </td>
+	                <td class="draftHeroTableHeader draftTeamName" width="50%">
+	                	<img style="margin-right:5px;" width="16" height="11" class="flag-<?=strtolower($this->team2->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($this->team1->countryCode);?>">
+	                	<a href="/tournament/profileteam/teamId/<?=$this->team2->id;?>" style="text-decoration: none;">
+	                    	<span style="font-weight: bold;line-height: 18px;font-size: 18px;letter-spacing: 2px;color: #FFC300;"><?=$this->team2->shortName?></span>
+	                    </a>
+	                </td>
+	            </tr>
+	            <tr>
+					<td class="draftHeroTableHeader draftTeamName" style="border-right: none;">
+	                	<a href="/tournament/profileteam/teamId/<?=$this->team1->id;?>">
+	                    	<img src="<?=$this->team1->logo; ?>" width="120" />
+	                    </a>
+	                </td>
+					<td class="draftHeroTableHeader draftTeamName" style="border-left: none;">
+	                	<a href="/tournament/profileteam/teamId/<?=$this->team2->id;?>">
+	                    	<img src="<?=$this->team2->logo; ?>" width="120" />
+	                    </a>
+	                </td>
+	            </tr>
+	            <tr>
+	                <td class="draftHeroTableDetail">
+	                    <b><?=$this->translate('TOURNAMENT_CREATE_TEAM_NAME'); ?> :</b> <?=$this->team1->name; ?>
+	                </td>
+	                <td class="draftHeroTableDetail">
+	                    <b><?=$this->translate('TOURNAMENT_CREATE_TEAM_NAME'); ?> :</b> <?=$this->team2->name; ?>
+	                </td>
+	            </tr>
+	            <?php for($i=0; $i<7; $i++){?>
+					<?php 
+						if(!isset($this->member1[$i])){
+							$memberTeam1 = '-';
+						}
+						else{
+							$memberTeam1 = $this->member1[$i];
+						}
+						if(!isset($this->member2[$i])){
+							$memberTeam2 = '-';
+						}
+						else{
+							$memberTeam2 = $this->member2[$i];
+						}
+					?>
+					<tr>
+						<td class="draftHeroTableDetail"><b><?=$i+1;?>.</b> <?=$memberTeam1; ?></td>
+						<td class="draftHeroTableDetail"><b><?=$i+1;?>.</b> <?=$memberTeam2; ?></td>
+					</tr>
+				<?php }?>
+				<?php if(Zend_Auth::getInstance()->hasIdentity() && (Zend_Auth::getInstance()->getStorage()->read()->userId == 4 || Zend_Auth::getInstance()->getStorage()->read()->rankId == 1)){?>
+					<tr>
+						<td class="draftHeroTableDetail"><b>Tel :</b> <?=$this->team1->tel; ?></td>
+						<td class="draftHeroTableDetail"><b>Tel :</b> <?=$this->team2->tel; ?></td>
+					</tr>
+				<?php } ?>
+				<tr>
+					<td class="draftHeroTableDetail"><b>Email :</b> <?=$this->team1->email; ?></td>
+					<td class="draftHeroTableDetail"><b>Email :</b> <?=$this->team2->email; ?></td>
+				</tr>
+				<tr>
+					<td class="draftHeroTableDetail"><b>Score :</b> <?=$this->team1->score; ?></td>
+					<td class="draftHeroTableDetail"><b>Score :</b> <?=$this->team2->score; ?></td>
+				</tr>
+				<tr>
+					<td class="draftHeroTableDetail"><b>Rate :</b> +<?=$dif['dif1win']?> / -<?=$dif['dif1lose']?></td>
+					<td class="draftHeroTableDetail"><b>Rate :</b> +<?=$dif['dif2win']?> / -<?=$dif['dif2lose']?></td>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:center;background:#708090;"><?=$this->translate('TOURNAMENT_PROFILE_STAT'); ?></td>
+				</tr>
+				<tr>
+					<td class="draftHeroTableDetail"><?=$this->translate('TOURNAMENT_WON').' '.$this->stat->win.' '.$this->translate('TOURNAMENT_TIME'); ?></td>
+					<td class="draftHeroTableDetail"><?=$this->translate('TOURNAMENT_WON').' '.$this->stat->lose.' '.$this->translate('TOURNAMENT_TIME'); ?></td>
+				</tr>
+				<?php if($this->match->result != '') {?>
+					<?php 
+						if($this->match->result == 1){
+							$teamWin = $this->team1->shortName;
+						}
+						else{
+							$teamWin = $this->team2->shortName;
+						}
+					?>
+					<tr>
+						<td class="draftHeroTableHeader" colspan="2" style="text-align:center;padding:5px;">
+							<span style="font-weight: bold;line-height: 18px;font-size: 18px;letter-spacing: 2px;color: #FFC300;">Winner : <?=$teamWin;?></span>
+						</td>
+					</tr>
+				<?php } ?>
+				<?php if($this->match->round == $this->tournament->roundAmount){
+					$gameAmount = $this->tournament->finalGameAmount;
+					$isFinalRound = true;
+				} 
+				else{
+					$gameAmount = $this->tournament->gameAmount;
+					$isFinalRound = false;
+				} 
+				?>
+				<?php if($gameAmount > 1) { ?>
+					<?php for($i=1; $i<=$gameAmount; $i++){?>
+						<tr>
+							<td class="draftHeroTableHeader" colspan="2" style="text-align:center;padding:5px;">
+								<?php if(!isset($this->matchResults[$i-1]) && $this->match->result == '') {?>
+									<?php if(Application_Service_TeamService::getInstance()->hasIdentity()){?>
+										<?php if(Application_Service_TeamService::getInstance()->getIdentity()->id == $this->team1->id || Application_Service_TeamService::getInstance()->getIdentity()->id == $this->team2->id){?>
+											<a href="/tournament/matchresult/matchId/<?=$this->matchId;?>/game/<?=$i;?>/amount/<?=$gameAmount?>/isFinalRound/<?=$isFinalRound;?>"><button class="greenBtn" style="margin:0px;"><?=$this->translate('TOURNAMENT_MATCH_RESULT_MANY_GAME'); ?>&nbsp;<?=$i;?></button></a>
+										<?php } ?>
+									<?php } ?>
+									<?php if (Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId != 2) {?>
+										<div style="margin:10px auto;"><button class="redBtn" id="bothLoseBye" matchId="<?=$this->matchId;?>" style="margin:0px;">แพ้บายทั้งคู่</button></div>
+									<?php }?>
+								<?php } 
+								else if(isset($this->matchResults[$i-1])){ 
+									if($this->matchResults[$i-1]->result == 1){
+										$teamWin = $this->team1->shortName;
+										$teamWinId = $this->team1->id;
+									}
+									else if($this->matchResults[$i-1]->result == 2){
+										$teamWin = $this->team2->shortName;
+										$teamWinId = $this->team2->id;
+									}
+									else if($this->match->result == 0){
+										$teamWin = $this->translate('TOURNAMENT_MATCH_RESULT_LOSE_BOTH');
+										$teamWinId = '';
+									}
+									?>
+									
+									<span style="font-weight: bold;line-height: 15px;font-size: 15px;">
+										Game <?=$i;?> : <?=$teamWin; ?>&nbsp;<?php if($this->matchResults[$i-1]->result != 0) { if($this->matchResults[$i-1]->screenshot == '') { echo 'Free Won'; } else{ echo 'Won'; } } ?>
+										<?php /*
+										<?php if($this->matchResults[$i-1]->replay != ''){?>
+											--> <a href="<?=$this->matchResults[$i-1]->replay;?>">Download Replay</a>
+										<?php }
+										else if(Application_Service_TeamService::getInstance()->getIdentity()->id == $teamWinId){?>
+											--> <a href="/tournament/addlinkdownloadreplay/matchId/<?=$this->matchId;?>/matchResultId/<?=$this->matchResults[$i-1]->matchResultId;?>">Add link Download</a>
+										<?php } ?>
+										*/ ?>
+									</span>
+									<?php if((Application_Service_TeamService::getInstance()->hasIdentity() && Application_Service_TeamService::getInstance()->getIdentity()->id == $teamWinId) || (Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1)){?>
+										<div style="margin:10px auto;" ><button class="greenBtn editScreenshot" matchResultId="<?=$this->matchResults[$i-1]->matchResultId;?>" style="margin:0px;"><?=$this->translate('TOURNAMENT_MATCH_EDIT_RESULT');?></button></div>
+									<?php } ?>
+									<?php if($this->matchResults[$i-1]->screenshot != '') {?>
+                                                <a href="<?=$this->matchResults[$i-1]->screenshot;?>" target="_blank">
+                                                    <img src="<?=$this->matchResults[$i-1]->screenshot;?>" width="750" height="485" style="margin-top:5px;"/>
+                                                </a>
+									<?php } ?>
+								<?php } ?>
+							</td>
+						</tr>
+					<?php } ?>
+				<?php } 
+				else { ?>
+					<tr>
+						<td class="draftHeroTableHeader" colspan="2" style="text-align:center;padding:5px;">
+							<?php if(!isset($this->matchResults[0]) && $this->match->result == '') {?>
+								<?php if(Application_Service_TeamService::getInstance()->hasIdentity()){?>
+									<?php if(Application_Service_TeamService::getInstance()->getIdentity()->id == $this->team1->id || Application_Service_TeamService::getInstance()->getIdentity()->id == $this->team2->id){?>
+										<a href="/tournament/matchresult/matchId/<?=$this->matchId;?>/game/1/amount/<?=$gameAmount?>/isFinalRound/<?=$isFinalRound;?>"><button class="greenBtn" style="margin:0px;"><?=$this->translate('TOURNAMENT_MATCH_RESULT'); ?></button></a>
+									<?php } ?>
+								<?php } ?>
+								<?php if (Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1) {?>
+									<div style="margin:10px auto;"><button class="redBtn" id="bothLoseBye" matchId="<?=$this->matchId;?>" style="margin:0px;">แพ้บายทั้งคู่</button></div>
+								<?php }?>
+							<?php } 
+							else{ 
+								if($this->matchResults[0]->result == 1){
+									$teamWin = $this->team1->shortName;
+									$teamWinId = $this->team1->id;
+								}
+								else if($this->matchResults[0]->result == 2){
+									$teamWin = $this->team2->shortName;
+									$teamWinId = $this->team2->id;
+								}
+								else if($this->match->result == 0){
+									$teamWin = $this->translate('TOURNAMENT_MATCH_RESULT_LOSE_BOTH');
+									$teamWinId = '';
+								}
+								?>
+								
+								<span style="font-weight: bold;line-height: 15px;font-size: 15px;">
+									<?=$teamWin; ?>&nbsp;<?php if($this->match->result != 0) { if($this->matchResults[0]->screenshot == '') { echo 'Free Won'; } else{ echo 'Won'; } } ?>
+									<?php /*
+									<?php if($this->matchResults[0]->replay != ''){?>
+										--> <a href="<?=$this->matchResults[0]->replay;?>">Download Replay</a>
+									<?php } 
+									else if(Application_Service_TeamService::getInstance()->getIdentity()->id == $teamWinId){?>
+										--> <a href="/tournament/addlinkdownloadreplay/matchId/<?=$this->matchId;?>/matchResultId/<?=$this->matchResults[0]->matchResultId;?>">Add link Download</a>
+									<?php } ?>
+									*/ ?>
+								</span>
+								
+								<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1){?>
+									<div style="margin:10px auto;" ><button class="redBtn" id="cancelResult" matchId="<?=$this->matchId;?>" style="margin:0px;">ยกเลิกผลการแข่งขัน</button></div>
+								<?php } ?>
+								<?php if((Application_Service_TeamService::getInstance()->hasIdentity() && Application_Service_TeamService::getInstance()->getIdentity()->id == $teamWinId) || (Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1)){?>
+									<div style="margin:10px auto;" ><button class="greenBtn editScreenshot" matchResultId="<?=$this->matchResults[0]->matchResultId;?>" style="margin:0px;"><?=$this->translate('TOURNAMENT_MATCH_EDIT_RESULT');?></button></div>
+								<?php } ?>
+								<?php if($this->matchResults[0]->screenshot != '') {?>
+                                    <a href="<?=$this->matchResults[0]->screenshot;?>" target="_blank">
+                                        <img src="<?=$this->matchResults[0]->screenshot;?>" width="750" height="485" style="margin-top:5px;"/>
+                                    </a>
+								<?php } ?>
+							<?php } ?>
+						</td>
+					</tr>
+				<?php } ?>
+			</table>
+		</div>	
+	</div>
+	<div style="margin-top:20px;">
+		<!--div style="float:left;margin-right:20px;"><div style="width:140px;border:1px solid #ccc;background:#010 ;color: #010 ;font-weight:bold"><a style="padding:2px 1px;margin:2px 1px;font-size:12px;line-height:16px;font-family:arial;text-decoration:none;color:#11ff11" href="http://localtimes.info/Asia/Thailand/Bangkok/"><img src="http://localtimes.info/images/countries/th.png" border=0 style="border:0;margin:0;padding:0">&nbsp;Time in Bangkok </a></div><script type="text/javascript" src="http://localtimes.info/clock.php?continent=Asia&country=Thailand&city=Bangkok&color=green&widget_number=1000&fwdt=150&mon=1"></script></div-->
+		<div style="padding-top:10px;"><a href="/index/detail/id/607"><button class="blueBtn"><?=$this->translate('TOURNAMENT_MATCH_PLEASE_READ'); ?></button></a></div>
+	</div>
+	<h1 class="header">
+		<div><?=$this->translate('TOURNAMENT_MATCH_MAKE_APPOINTMENT'); ?></div>
+	</h1>
+	<?php if(count($this->appointments) > 0) {?>
+		<div class="divComment" style="width:750px;">
+			<div class = "headComment">
+				Comments
+			</div>
+			<?php foreach ($this->appointments as $entry): ?>
+				<div class = "topicComment">
+					<span>
+						By
+						<a href="/tournament/profileteam/teamId/<?=$entry->teamId;?>" style="text-decoration: none;">
+							<?=$this->escape($entry->shortName) ?>
+						</a>
+					</span>
+					<span style="padding-left: 5px;"> on <?=$this->escape($entry->date) ?></span>
+				</div>
+				<div class = "bodyComment">
+					<div style="float:left;">
+						<a href="/tournament/profileteam/teamId/<?=$entry->teamId;?>">
+							<img width="40"  height="40" src="<?php echo $this->escape($entry->logo)?>" />
+						</a>
+					</div>
+					<div class="postContent" style="float:left;padding-left:10px;width:605px;word-wrap:break-word;">
+						<?= nl2br($entry->detail); ?>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+			<?php endforeach ?>
+			<div class = "footerComment"></div>
+		</div>
+	<?php } ?>
+	<?php if(Application_Service_TeamService::getInstance()->hasIdentity()){?>
+		<?php if(Application_Service_TeamService::getInstance()->getIdentity()->id == $this->team1->id || Application_Service_TeamService::getInstance()->getIdentity()->id == $this->team2->id || Application_Service_TeamService::getInstance()->getIdentity()->isAdmin == 1){?>
+			<div class="divPostComment" style="width:750px;">
+				<form method="post" id="commentForm" action="/tournament/addcomment">
+					<input type="hidden" id="matchId" name="matchId" value="<?=$this->matchId;?>"></input>
+					<div class = "headPostComment" style="width:740px;">
+						Post New Comment
+					</div>
+					<div class="bodyPostComment">
+						<div style="color:#82BDFF;"> <?=Application_Service_TeamService::getInstance()->getIdentity()->shortName;?> </div>
+						<div style="margin: 5px 5px 5px 5px;">
+							<textarea rows="10" id="detail" name="detail" style="width: 720px;"></textarea>
+						</div>
+						<div align="center" style="margin:10px 0px 10px 0px;">
+							<input type="submit" class="submitBtn" value="Post"></input>
+						</div>
+					</div>
+				</form>
+			</div>
+		<?php } 
+		else{?>
+			<div class="divPostComment" style="width:750px;">
+				<div class = "headPostComment" style="width:740px;">
+					Post New Comment
+				</div>
+				<div class = "bodyPostComment" style="text-align:center;">
+					<div style="margin:10px;"><?=$this->translate('TOURNAMENT_MATCH_SORRY'); ?></div>
+				</div>
+			</div>
+		<?php } ?>
+	<?php } 
+	else{?>
+		<div class="divPostComment" style="width:750px;">
+			<div class = "headPostComment" style="width:740px;">
+				Post New Comment
+			</div>
+			<div class = "bodyPostComment" style="text-align:center;">
+				<div style="margin:10px;">
+					<?=$this->translate('PLEASE'); ?> 
+					login
+					<?=$this->translate('FIRST'); ?>
+				</div> 
+			</div>
+		</div>
+	<?php } ?>
+</div>
+<div style="clear:both;"></div>

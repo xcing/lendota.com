@@ -1,0 +1,34 @@
+<div class="menu">
+	<ul id="nav">
+		<a href="/index"><div class="menuItem <?=$this->homeSelected;?>">Home</div></a>
+		<a href="/guide/index/<?= Eaglet_Utils_Url::getHeroIndexSlugUrl()?>" onmouseover="over('tab-1', 'guideMenu')" onmouseout="out('tab-1', 'guideMenu')"><div id="guideMenu" class="menuItem <?=$this->guideSelected;?>">Guide</div></a>
+		<a href="/replay/index/<?= Eaglet_Utils_Url::getReplayIndexSlugUrl();?>" onmouseover="over('tab-2', 'replayMenu')" onmouseout="out('tab-2', 'replayMenu')"><div class="menuItem <?=$this->replaySelected;?>">Replay</div></a>
+		<a href="/tournament" ><div class="menuItem <?=$this->tournamentSelected;?>">Tournament</div></a>
+		<a href="/store" ><div class="menuItem <?=$this->storeSelected;?>">Store</div></a>
+		<a href="/webboard"><div class="menuItem <?=$this->webboardSelected;?>">Webboard</div></a>
+		<a href="/download/index/<?= Eaglet_Utils_Url::getMapSlugUrl();?>" onmouseover="over('tab-4', 'downloadMenu')" onmouseout="out('tab-4', 'downloadMenu')"><div id="downloadMenu" class="menuItem <?=$this->downloadSelected;?>">Download</div></a>
+	</ul>
+</div>
+<div class="dropdown1" id="tab-1" onmouseover="over('tab-1', 'guideMenu')" onmouseout="out('tab-1', 'guideMenu')">
+	<ul>
+		<li><a href="/guide/index/<?= Eaglet_Utils_Url::getHeroIndexSlugUrl()?>">Heroes DotA</a></li>
+		<li><a href="/guide/indexdota2/<?= Eaglet_Utils_Url::getHeroIndexSlugUrl()?>">Heroes DOTA 2</a></li>
+		<li><a href="/guide/item/<?= Eaglet_Utils_Url::getItemIndexSlugUrl()?>">Items DotA</a></li>
+		<li><a href="/guide/itemdota2/<?= Eaglet_Utils_Url::getItemIndexSlugUrl()?>">Items DOTA 2</a></li>
+        <li><a href="/guide/technic/<?= Eaglet_Utils_Url::getTechnicIndexSlugUrl()?>">Technique</a></li>
+	</ul>
+</div>
+<div class="dropdown2" id="tab-2" onmouseover="over('tab-2', 'replayMenu')" onmouseout="out('tab-2', 'replayMenu')">
+	<ul>
+		<li><a href="/replay/index/<?= Eaglet_Utils_Url::getReplayIndexSlugUrl()?>">DotA</a></li>
+		<li><a href="/replay/index2/<?= Eaglet_Utils_Url::getReplayIndexSlugUrl()?>">DOTA 2</a></li>
+	</ul>
+</div>
+<div class="dropdown4" id="tab-4" onmouseover="over('tab-4', 'downloadMenu')" onmouseout="out('tab-4', 'downloadMenu')">
+	<ul>
+		<li><a href="/download/index/<?= Eaglet_Utils_Url::getMapSlugUrl()?>">Map</a></li>
+		<li><a href="/download/program/<?= Eaglet_Utils_Url::getProgramSlugUrl()?>">Program</a></li>
+		<li><a href="/download/wallpaper/<?= Eaglet_Utils_Url::getWallpaperSlugUrl()?>">Wallpaper</a></li>
+        <li><a href="/download/fanart/<?= Eaglet_Utils_Url::getFanArtSlugUrl()?>">Fan Art</a></li>
+	</ul>
+</div>

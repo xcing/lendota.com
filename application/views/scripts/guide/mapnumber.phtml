@@ -1,0 +1,26 @@
+<center>
+	<table>
+		<tr>
+			<td width="200">
+				<table border="1" cellspacing="5">
+					<?php for($i=0; $i<30; $i++){?>
+						<tr>
+							<td width="40"><?php echo $this->map[$i]->id;?></td>
+							<td width="60"><?php echo $this->map[$i]->mapName;?></td>
+						</tr>
+					<?php }?>
+				</table>
+			</td>
+			<td width="200">
+				<table border="1" cellspacing="5">
+					<?php for($i=30; $i<$this->size; $i++){?>
+						<tr>
+							<td width="40"><?php echo $this->map[$i]->id;?></td>
+							<td width="60"><?php echo $this->map[$i]->mapName;?></td>
+						</tr>
+					<?php }?>
+				</table>
+			</td>
+		</tr>
+	</table>
+</center>

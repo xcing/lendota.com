@@ -1,0 +1,95 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<name>Aeva ~ Auto-Embed Video &amp; Audio</name>
+	<id>Nao:Aeva</id>
+	<homepage>http://aeva.noisen.com</homepage>
+
+	<!--// Common Edits. These are the same for SMF 1.1.x and SMF 2.x. So perform these for both versions. //-->
+
+	<file name="$sourcedir/Post.php">
+		<operation>
+			<search position="after"><![CDATA[	// Previewing? Go back to start.
+	if (isset($_REQUEST['preview']))
+		return Post();]]></search>
+			<add><![CDATA[	// Aeva - START
+	// On posting new topic/reply/full modify: replace embed HTML, do lookups, and/or check whether YouTube links are embeddable
+	if (!empty($_POST['message']))
+	{
+		global $sourcedir;
+		@include_once($sourcedir . '/Subs-Aeva.php');
+		if (function_exists('aeva_onposting'))
+			$_POST['message'] = aeva_onposting($_POST['message']);
+	}
+	// Aeva - END
+
+]]></add>
+		</operation>
+		<!--// Does the lookups on quick edit //-->
+		<operation>
+			<search position="before"><![CDATA[$post_errors[] = 'long_message';
+			unset($_POST['message']);
+		}
+		else
+		{]]></search>
+			<add><![CDATA[
+			// Aeva - START
+			// On Quick Edit - Only call if message is set.
+			if (!empty($_POST['message']))
+			{
+				global $sourcedir;
+				@include_once($sourcedir . '/Subs-Aeva.php');
+				if (function_exists('aeva_onposting'))
+					$_POST['message'] = aeva_onposting($_POST['message']);
+			}
+			// Aeva - END
+]]></add>
+		</operation>
+
+		<!--// Avoid the "empty body" error when posting a video and nothing else //-->
+		<operation error="ignore">
+			<search position="replace"><![CDATA['<img>']]></search>
+			<add><![CDATA['<img><object><embed>']]></add>
+		</operation>
+
+		<operation error="ignore">
+			<search position="replace"><![CDATA['<img>']]></search>
+			<add><![CDATA['<img><object><embed>']]></add>
+		</operation>
+	</file>
+
+	<file name="$sourcedir/Subs.php">
+		<operation>
+			<search position="before"><![CDATA[$open_tags = array();
+	$message = strtr($message, array("\n" => '<br />'));]]></search>
+			<add><![CDATA[
+
+	// Aeva - START
+	// Protect noembed & autolink items from embedding *before* BBC parsing - wrap quotes, but don't protect
+	if (empty($parse_tags) && empty($context['uninstalling']) && !empty($modSettings['aeva_enable']) && strlen($message) > 15)
+	{
+		global $sourcedir;
+		@include_once($sourcedir . '/Subs-Aeva.php');
+		if (function_exists('aeva_preprotect'))
+			aeva_preprotect($message, $cache_id);
+	}
+	// Aeva - END]]></add>
+		</operation>
+		<operation>
+			<search position="before"><![CDATA[$message = strtr($message, array('  ' => ' &nbsp;', "\r" => '', "\n" => '<br />', '<br /> ' => '<br />&nbsp;', '&#13;' => "\n"));]]></search>
+			<add><![CDATA[
+
+	// Aeva - START
+	// Do the actual embedding
+	if (empty($parse_tags) && !function_exists('aeva_parse_bbc2'))
+	{
+		global $sourcedir;
+		@include_once($sourcedir . '/Subs-Aeva.php');
+	}
+	if (empty($parse_tags) && function_exists('aeva_parse_bbc2'))
+		aeva_parse_bbc2($message, $smileys, $cache_id);
+	// Aeva - END]]></add>
+		</operation>
+	</file>
+
+</modification>

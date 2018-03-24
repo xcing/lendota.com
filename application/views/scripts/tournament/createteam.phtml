@@ -1,0 +1,22 @@
+<script>
+	document.title = '<?=$this->translate('TOURNAMENT_CREATETEAM_TITLE'); ?>';
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_CREATETEAM_HEADER'); ?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:30px 35px 0px 35px;">
+	<center>
+		<div class="RoundBlack" style="width: 550px;">
+			<div style="width:380px; margin: 20px;">
+			<?php if (isset($this->errorMessage)) { ?>
+				<div class="errorMsg">
+				    <?php echo $this->errorMessage;?>
+				</div>
+			<?php } ?>
+			<?php echo $this->form;?>
+			</div>
+		</div>
+	</center>
+</div>
+<div style="clear:both;"></div>

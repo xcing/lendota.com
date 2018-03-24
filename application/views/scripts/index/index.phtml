@@ -1,0 +1,155 @@
+<?php $i = 0;?>
+<div style="margin-top:40px;"></div>
+<div class="divLeft">
+	<div class = "headerNews"></div>
+	<div class = "maincontent">
+		<?php foreach ($this->newsPaginator as $entry):?>
+			<?php 
+				if(Eaglet_Utils_Bilingual::isThaiLang()){
+					$topic = $this->escape($entry->topic);
+					$detail = $entry->detail;
+				}
+				else{
+					$topic = $this->escape($entry->topicEN);
+					$detail = $entry->detailEN;
+				}
+			?>
+			<div class="divNews">
+				<div class = "topicNews">
+					<a style="color:#9C3021;" href="/index/detail/id/<?=$entry->newsId . '/' . Eaglet_Utils_Url::convertToSlugUrl($entry->topic);?>">
+						<?php echo $topic; ?>
+					</a>
+				</div>
+				<div class = "bodyNews">
+					<div style="margin:0px 0px 20px 0px;">
+						<div style="float:left;margin-right:30px;">
+							<?php echo date('F d, Y', strtotime($entry->date)). ' - '.$entry->steamName;?>
+						</div>
+						<?php if(sizeof($this->tagArray[$i]) > 0) {?>
+							<div style="float:left;">
+								Tags:
+								<?php for($j = 0; $j < sizeof($this->tagArray[$i]); $j++) {?>
+									<a style="color:#CC3300;" href="<? echo $this->url(array(
+										'controller'=>'index', 
+										'action'=>'index', 
+										'tagId'=>$this->tagArray[$i][$j]['tagId']),
+										'default',true); ?>"><span><?php echo $this->tagArray[$i][$j]['tagName']; ?></span></a>
+									&nbsp;
+								<?php }  ?>
+							</div>
+						<?php } $i++;?>
+						<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId != 2) {?>
+							<?php if(Zend_Auth::getInstance()->getStorage()->read()->rankId == 1){?>
+								<div style="float:right;">
+									<a style="color:#363636;" onclick="return confirm('คุณต้องการ ลบข่าวนี้?')" href="<? echo $this->url(array(
+										'controller'=>'index', 
+										'action'=>'deletenews', 
+										'id'=>$this->escape($entry->newsId),
+										'page'=>$this->page),
+										'default',true); ?>">
+										<img src="/images/close.gif" width="18" height="18" />
+									</a>
+								</div>
+								<?php if (Eaglet_Utils_Auth::isAdminMode()) {?>
+									<div style="float:right;padding-right:25px;">
+										<a style="color:#363636;" onclick="return confirm('คุณต้องการ ให้ข่าวนี้ Online?')" href="<? echo $this->url(array(
+											'controller'=>'index', 
+											'action'=>'processonlinenews', 
+											'id'=>$this->escape($entry->newsId),
+											'active'=>'1',
+											'page'=>$this->page),
+											'default',true); ?>">
+											Online
+										</a>
+									</div>
+								<?php } 
+								else{ ?>
+									<div style="float:right;padding-right:25px;">
+										<a style="color:#363636;" onclick="return confirm('คุณต้องการ ให้ข่าวนี้ Offine?')" href="<? echo $this->url(array(
+											'controller'=>'index', 
+											'action'=>'processonlinenews', 
+											'id'=>$this->escape($entry->newsId),
+											'active'=>'0',
+											'page'=>$this->page),
+											'default',true); ?>">
+											Offine
+										</a>
+									</div>
+								<?php } ?>
+							<?php } ?>
+							<?php if(Zend_Auth::getInstance()->getStorage()->read()->rankId == 1 || (Zend_Auth::getInstance()->getStorage()->read()->rankId == 3 && Eaglet_Utils_Auth::isAdminMode() && $this->escape($entry->userId) == Zend_Auth::getInstance()->getStorage()->read()->userId)){?>
+								<div style="float:right;padding-right:25px;">
+									<a style="color:#363636;" href="<? echo $this->url(array(
+										'controller'=>'index', 
+										'action'=>'edittopic', 
+										'id'=>$this->escape($entry->newsId),
+										'page'=>$this->page),
+										'default',true); ?>">
+										E2
+									</a>
+								</div>
+								<div style="float:right;padding-right:25px;">
+									<a style="color:#363636;" href="<? echo $this->url(array(
+										'controller'=>'index', 
+										'action'=>'editnews', 
+										'id'=>$this->escape($entry->newsId),
+										'page'=>$this->page),
+										'default',true); ?>">
+										E1
+									</a>
+								</div>
+								
+							<?php } ?>
+							<?php 
+								if($entry->stick == 0){
+									$addStick = true;
+								}
+								else{
+									$addStick = false;
+								}
+							?>
+							<?php if(Zend_Auth::getInstance()->getStorage()->read()->rankId == 1){?>
+								<div style="float:right;padding-right:25px;">
+									<a style="color:#363636;" href="<? echo $this->url(array(
+										'controller'=>'index', 
+										'action'=>'addstick', 
+										'id'=>$this->escape($entry->newsId),
+										'page'=>$this->page,
+										'addStick'=>$addStick),
+										'default',true); ?>">
+										<img src="/images/pin.png" width="18" height="18" />
+									</a>
+								</div>
+							<?php } ?>
+						<?php } ?>
+						<div style="clear:both;"></div>
+					</div>
+					<?php if($entry->picture != ''){?>
+						<img class="node-image" src="<?php echo $this->escape($entry->picture)?>" />
+						<div class="postContent" style="padding:0px 10px 10px 10px;line-height: inherit;">
+							<?php echo $detail ?>
+						</div>
+						<div style="clear:both;"></div>
+					<?php } 
+					else {?>
+						<div class="postContent" style="float:left;padding:0px 10px 10px 10px;width:720px;word-wrap:break-word;overflow:hidden;">
+							<?php echo $detail ?>
+						</div>
+					<?php } ?>
+					<div style="clear:both;"></div>
+					<hr style="margin: 20px 0px 0px 0px;color:#CCCCCC;"/>
+					<!-- show amount facebook comment
+					<span style="color:#63B8FF;padding-right:10px; display: inline;">
+						<fb:comments-count href=http://lendota.com/index/detail/id/<?=$entry->newsId;?> />0</fb:comments-count> Comments
+					</span>
+					 -->
+				</div>
+			</div>
+		<?php endforeach ?>
+		<?php echo $this->paginationControl(
+							$this->newsPaginator,
+		                    'Sliding',
+		                    '/template/paging_nav.phtml');
+		?>
+	</div>
+</div>

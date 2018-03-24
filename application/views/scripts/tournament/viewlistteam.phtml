@@ -1,0 +1,40 @@
+<script>
+	document.title = '<?=$this->translate('TOURNAMENT_DETAIL_VIEW_LIST_TEAM_EVENT').' '.$this->tournament->name?>';
+
+	function genTour(tournamentId){
+		//alert(tournamentId);return;
+		var r=confirm("แน่ใจว่าต้องการ gen tournament");
+		if (r==true){
+			window.location = '/tournament/gentour/tournamentId/'+tournamentId;
+		}
+	}
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_DETAIL_VIEW_LIST_TEAM_EVENT').' '.$this->tournament->name?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:0px 35px 0px 5px;color:#A7A7A7;width:850px;text-align:center;">
+	<?php if (Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin()){?>
+		<?php if($this->tournament->active == 0) {?>
+			<button class="greenBtn" style="margin:10px 20px 10px 0px;" onclick="genTour('<?=$this->tournament->tournamentId;?>')">Gen ตารางแข่ง</button>
+		<?php } ?>
+	<?php } ?>
+	<div class="RoundBlack" style="width:850px;margin:auto;">
+		<div style="font-size:18px;text-align:center;margin-top:5px;"><?=count($this->teams). ' Teams';?></div>
+		<?php foreach ($this->teams as $idxTeam => $team):?>
+			<div style="float:left;width:150px;margin:10px;height:150px;">
+				<div><a href="/tournament/profileteam/teamId/<?php echo $team->teamId;?>"><img src="<?=$team->logo; ?>" width="120" /></a></div>
+				<div>
+					<img style="margin-right:2px;" width="16" height="11" class="flag-<?=strtolower($team->countryCode);?>-png" src="/images/tournament/invisible.gif" alt="<?=Eaglet_Utils_Country::getCountryName($team->countryCode);?>">
+                	<a href="/tournament/profileteam/teamId/<?php echo $team->teamId;?>" style="text-decoration: none;">
+	                    <span style="font-weight: bold;color: #FFC300;">
+	                    	<?=$team->shortName?> (<?=$team->score;?>)
+	                    </span>
+                    </a>
+				</div>
+			</div>
+		<?php endforeach;?>
+		<div style="clear:both;"></div>
+	</div>
+</div>
+<div style="clear:both;"></div>

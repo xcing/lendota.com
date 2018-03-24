@@ -1,0 +1,280 @@
+<?
+	$this->headScript()->appendFile('/chat/chat.js');
+  	$this->headLink()->appendStylesheet('/chat/style.css');
+?>
+<script>
+		var xmlHttp;
+		var colorMember1;
+		var member1;
+		
+		function createXMLHttpRequest(){
+			if(window.ActiveXObject){
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			else if(window.XMLHttpRequest){
+				xmlHttp = new XMLHttpRequest();
+			}
+		}
+		function requestCheck(index){
+			createXMLHttpRequest();
+			
+			var sMember = document.getElementById("member"+index).value;
+			xmlHttp.open("POST","/user/checkuserclan/username/"+sMember+"/index/"+index,true);
+				xmlHttp.onreadystatechange = function(){
+					if(xmlHttp.readyState == 4){
+						if(xmlHttp.status == 200){
+							//displayInfo(xmlHttp.responseText);
+							document.getElementById("errorMessage"+index).innerHTML = xmlHttp.responseText;
+						}
+						else{
+							//displayInfo("error"+xmlHttp.statusText);
+							document.getElementById("errorMessage"+index).innerHTML = xmlHttp.statusText;
+						}
+					}
+				}
+				xmlHttp.send(null);
+		}
+		function checkValue(){
+			
+			colorMember1 = document.getElementById("user1").style.color;
+
+			member1 = document.getElementById("member1").value;
+
+			if(colorMember1 == 'red'){
+				alert('username เพื่อนคุณ ไม่ถูกต้อง');
+			}
+			else{
+				document.forms["inviteForm"].submit();
+			}
+		}
+		function editDes(){
+			document.getElementById('showDes').style.display = 'none';
+			document.getElementById('editDes').style.display = 'block';
+		}
+		function cancelEdit(){
+			document.getElementById('showDes').style.display = 'block';
+			document.getElementById('editDes').style.display = 'none';
+		}
+		function editImg(){
+			document.getElementById('editImg').style.display = 'block';
+		}
+		function cancelEditImg(){
+			document.getElementById('editImg').style.display = 'none';
+		}
+		function checkImage(){
+			icon = document.getElementById("icon").value;
+
+			if(icon == ''){
+				alert('กรุณาใส่ icon');
+			}
+			else{
+				document.forms["editImgForm"].submit();
+			}
+		}
+
+		////////////////////////////////////// chat zone ///////////////////////////////////////////
+		// ask user for name with popup prompt    
+        var name = '<?php echo $this->username;?>';
+
+    	// strip tags
+    	name = name.replace(/(<([^>]+)>)/ig,"");
+    	
+    	// display name on page
+    	$("#name-area").html("You are: <span>" + name + "</span>");
+    	
+    	// kick off chat
+        var chat =  new Chat('<?php echo Zend_Auth::getInstance()->getStorage()->read()->clanId; ?>');
+    	$(function() {
+    	
+    		 chat.getState(); 
+    		 
+    		 // watch textarea for key presses
+             $("#sendie").keydown(function(event) {  
+             
+                 var key = event.which;  
+           
+                 //all keys including return.  
+                 if (key >= 33) {
+                   
+                     var maxLength = $(this).attr("maxlength");  
+                     var length = this.value.length;  
+                     
+                     // don't allow new content if length is maxed out
+                     if (length >= maxLength) {  
+                         event.preventDefault();  
+                     }  
+                  }  
+    		 																																																});
+    		 // watch textarea for release of key press
+    		 $('#sendie').keyup(function(e) {	
+    		 					 
+    			  if (e.keyCode == 13) { 
+    			  
+                    var text = $(this).val();
+    				var maxLength = $(this).attr("maxlength");  
+                    var length = text.length; 
+                     
+                    // send 
+                    if (length <= maxLength + 1) { 
+                     
+    			        chat.send(text, name);	
+    			        $(this).val("");
+    			        
+                    } else {
+                    
+    					$(this).val(text.substring(0, maxLength));
+    					
+    				}	
+    				
+    				
+    			  }
+             });
+            
+    	});
+
+    	window.onload = setInterval('chat.update()', 1000);
+</script>
+<h1 class="header">
+	DotA Clan
+</h1>
+<div class="divLeft">
+	<div class="RoundBlack"> 
+		<div style="padding:10px 20px 20px 20px;">
+			<center>
+				<div><?php echo $this->escape($this->clanData->getClanName());?></div>
+				<?php if($this->clanData->getClanActive() == 1) {?>
+					<div style="margin:15px 0px 15px 0px;display:block;" id="showDes" name="showDes">
+						<?php echo $this->escape($this->clanData->getDescription());?>
+						<?php if($this->userRankClanId == 1){?>
+							<img src="/images/edit.png" alt="Edit" width="24" height="24"  style="margin-left:10px;cursor:pointer;" onclick="editDes();"/>
+						<?php } ?>
+					</div>
+					<div style="margin:15px 0px 15px 0px;display:none;" id="editDes" name="editDes">
+						<form method="POST" id="editForm">
+							<input type="hidden" id="mode" name="mode" value="updateDes"></input>
+							<textarea cols="50" rows="5" id="description" name="description" ><?php echo $this->escape($this->clanData->getDescription());?></textarea>
+							<div><input type="submit" value="update"></input><input type="button" value="cancel" onclick="cancelEdit();"></input></div>
+						</form>
+					</div>
+					<div style="margin-bottom:15px;">
+						<?php if($this->userRankClanId == 1){?>
+							<img src="<?php echo $this->escape($this->clanData->getClanImg());?>" alt="<?php echo $this->escape($this->clanData->getClanName());?>" onclick="editImg();" width="20" height="20" />
+						<?php } 
+						else{ ?>
+							<img src="<?php echo $this->escape($this->clanData->getClanImg());?>" alt="<?php echo $this->escape($this->clanData->getClanName());?>" width="20" height="20" />
+						<?php } ?>
+						&nbsp;<?php echo $this->escape($this->clanData->getClanTag());?>
+					</div>
+					<div style="margin-bottom:15px;display:none;" id="editImg" name="editImg">
+						<form method="POST" id="editImgForm" enctype = "multipart/form-data">
+							<input type="hidden" id="mode" name="mode" value="updateImg"></input>
+							<input type="file" id="icon" name="icon"></input>
+							<div><input type="button" value="update" onclick="checkImage();"></input><input type="button" value="cancel" onclick="cancelEditImg();"></input></div>
+						</form>
+					</div>
+					<table cellspacing="5">
+						<?php foreach($this->userData as $user){?>
+							<?php 
+								if($user->getRankClanId() == 1) {
+									$rank = 'Chieftain';
+									$image = '/images/clanChieftain.jpg';
+								}
+								else if($user->getRankClanId() == 2) {
+									$rank = 'Shaman';
+									$image = '/images/clanShaman.png';
+								}
+								else{
+									$rank = 'Orge';	
+									$image = '/images/clanOrge.gif';
+								}
+								if($this->userId == $user->getId()){
+									$color = '#FFC300';	
+								}
+								else{
+									$color = '#CCCCCC';
+								}
+							?>
+							<tr>
+								<td><img src="<?php echo $image;?>" alt="<?php echo $rank;?>" width="37" height="37"/></td>
+								<td width="150"><div style="margin-left:15px;color:<?php echo $color;?>;"><?php echo $this->escape($user->getUsername());?></div></td>
+								<?php if($this->userRankClanId == 1) {?>
+									<?php if($user->getRankClanId() == 2){?>
+										<td width="50">
+											<a href="<? echo $this->url(array('controller'=>'user', 'action'=>'myclan', 'userId'=>$user->getId(), 'mode'=>'demote'), 'default', true); ?>" onclick="return confirm('คุณต้องการ ลดระดับเพื่อนคุณให้เป็น orge?')">
+												<img src="/images/arrowDown.png" alt="Demote" width="24" height="24"/>
+											</a>
+										</td>
+										<td width="50">
+											<a href="<? echo $this->url(array('controller'=>'user', 'action'=>'myclan', 'userId'=>$user->getId(), 'mode'=>'changeChieftain'), 'default', true); ?>" onclick="return confirm('คุณต้องการ ให้เพื่อนคุณเป็น chieftain แทนคุณ?')">
+												<img src="/images/grow.gif" alt="Grow" width="24" height="24"/>
+											</a>
+										</td>
+									<?php } 
+									else if($user->getRankClanId() == 3){?>
+										<td width="50">
+											<a href="<? echo $this->url(array('controller'=>'user', 'action'=>'myclan', 'userId'=>$user->getId(), 'mode'=>'promote'), 'default', true); ?>" onclick="return confirm('คุณต้องการ เพิ่มระดับเพื่อนคุณให้เป็น shaman?')">
+												<img src="/images/arrowUp.png" alt="Promote" width="24" height="24"/>
+											</a>
+										</td>
+									<?php } ?>
+									<?php if($user->getRankClanId() != 1){?>
+										<td width="50">
+											<a href="<? echo $this->url(array('controller'=>'user', 'action'=>'myclan', 'userId'=>$user->getId(), 'mode'=>'delete'), 'default', true); ?>" onclick="return confirm('คุณต้องการ ไล่เพื่อนคุณออกจาก clan?')">
+												<img src="/images/close.gif" alt="Leave Clan" width="24" height="24"/>
+											</a>
+										</td>
+									<?php } ?>
+								<?php } ?>
+							</tr>
+						<?php } ?>
+					</table>
+					<hr/>
+					<?php if($this->userRankClanId == 1 || $this->userRankClanId == 2) {?>
+						<form method="POST" id="inviteForm">
+							<input type="hidden" id="mode" name="mode" value="invite"></input>
+							<div style="text-align:left;margin:15px 0px 15px 150px;">
+								<span>ชวนคนเข้า Clan: <input type="text" id="member1" name="member1" onblur="requestCheck('1');" maxlength="20"></input></span>
+								<span id="errorMessage1" name="errorMessage1" style="color:#DD3C10;"></span>
+							</div>
+							<div><input type="button" value="Invite" onclick="checkValue();"></input></div>
+						</form>
+					<?php } ?>
+					
+					<?php if($this->userRankClanId == 1) { ?>
+						<div style="text-align:right;text-decoration: none;">
+							<a href="<? echo $this->url(array('controller'=>'user', 'action'=>'closeclan'), 'default', true); ?>" style="text-decoration: none;" onclick="return confirm('คุณต้องการ ปิด clan?')">
+								<button>Close Clan</button>			
+							</a>
+						</div>
+					<?php } 
+					else{?>
+						<div style="text-align:right;">
+							<a href="<? echo $this->url(array('controller'=>'user', 'action'=>'leaveclan'), 'default', true); ?>" style="text-decoration: none;" onclick="return confirm('คุณต้องการ ออกจาก clan?')">
+								<button>Leave Clan</button>			
+							</a>
+						</div>
+					<?php } ?>
+				<?php } 
+				else{ ?>
+					<div style="font-size:18px;">
+						<div style="margin-top:20px;">Clan จะสามารถใช้งานได้เมื่อมีสมาชิกครบ 5 คน ขณะนี้มีสมาชิกอยู่ <?php echo $this->clanData->getAmount();?> คน</div>
+					</div>
+				<?php } ?>
+			</center>
+		</div>
+	</div>
+	<div id="page-wrap">
+    
+        <h2>Clan Chat</h2>
+        
+        <p id="name-area"></p>
+        
+        <div id="chat-wrap"><div id="chat-area"></div></div>
+        
+        <form id="send-message-area">
+            <p>Your message: </p>
+            <textarea id="sendie" maxlength = "100" ></textarea>
+        </form>
+    
+    </div>
+</div>

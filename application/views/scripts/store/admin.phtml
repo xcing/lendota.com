@@ -1,0 +1,108 @@
+<script>
+	document.title = '<?=$this->translate('STORE_CART_TITLE'); ?>';
+
+	$(document).ready(function() {
+		$(".status").each(function() {
+			var statusId = $(this).val();
+			$(this).change(function () {
+				changeStatus(statusId);
+			});
+		});	
+	});
+	function changeStatus(statusId){
+		window.location = '/store/admin/status/'+statusId;
+	}
+</script>
+<h1 class="header">
+	Admin Order
+</h1>
+<div>
+	<?php include("login.phtml")?>
+</div>
+<center>
+	<div style="margin:auto;font-size:18px;margin:20px 0px;">
+		<table>
+			<tr>
+				<td width="300"><input class="status" type="radio" name="status" value="1" <?php if($this->status == 1) echo 'checked';?>/> <?=Eaglet_Utils_Store::getStatus(1);?></td>
+				<td><input class="status" type="radio" name="status" value="2" <?php if($this->status == 2) echo 'checked';?>/> <?=Eaglet_Utils_Store::getStatus(2);?></td>
+			</tr>
+			<tr>
+				<td><input class="status" type="radio" name="status" value="3" <?php if($this->status == 3) echo 'checked';?>/> <?=Eaglet_Utils_Store::getStatus(3);?></td>
+				<td><input class="status" type="radio" name="status" value="4" <?php if($this->status == 4) echo 'checked';?>/> <?=Eaglet_Utils_Store::getStatus(4);?></td>
+			</tr>
+		</table>
+	</div>
+</center>
+<table class="cart_table" cellpadding="0" cellspacing="0" style="border:1px solid #5E5E5E;width:850px;margin:auto;text-align:center;">
+	<thead>
+		<tr>
+			<th width="30">ID</th>
+			<th width="96" style="text-align: center;">Order</th>
+			<th width="120">payment</th>
+			<th style="text-align: center;">note</th>
+			<th width="80">ราคา</th>
+			<th width="120">SteamName</th>
+			<th width="120">Action</th>
+			<th width="60">Submit</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php if($this->orders != '0'){?>
+			<?php $totalPrice = 0;?>
+			<?php foreach ($this->orders as $idxOrder => $order) {?>
+				<form method="POST" action="/store/adminchangestatus">
+					<input type="hidden" name="orderId" value="<?=$order->orderId;?>"/>
+					<input type="hidden" name="currentStatus" value="<?=$this->status;?>"/>
+					<tr style="color:#CCCCCC;">
+						<td style="text-align: center;"><?=$order->orderId;?></td>
+						<td>
+							<a href="/store/paymentinform/orderId/<?=$order->orderId;?>"><img width="100" src="<?=$this->detailorders[$idxOrder][0]->image;?>" /></a>
+						</td>
+						<?php if($order->bank != 0){?>
+							<td>
+								<?=Eaglet_Utils_Store::getBankName($order->bank);?><br />
+								<?=$order->transferDateTime;?>
+							</td>
+						<?php } 
+						else{ ?>
+							<td>
+								<div style="width:120px;word-wrap:break-word;"><?=substr(chunk_split($order->truemoney, 4, '-'), 0, -1);?></div>
+							</td>
+						<?php } ?>
+						<td><?=$order->note;?></td>
+						<td><?=$order->totalPrice;?></td>
+						<td><?=$order->steamName;?></td>
+						<td>
+							<select name="newstatus">
+								<option value="1" <?php if($order->status == 1) echo 'selected';?>>ยังไม่ยืนยัน</option>
+								<option value="2" style="color:#<?=Eaglet_Utils_Store::getStatusColor(2);?>" <?php if($order->status == 2) echo 'selected';?>>ยังไม่ชำระเงิน</option>
+								<option value="3" style="color:#<?=Eaglet_Utils_Store::getStatusColor(3);?>" <?php if($order->status == 3) echo 'selected';?>>ชำระแล้ว</option>
+								<option value="4" style="color:#<?=Eaglet_Utils_Store::getStatusColor(4);?>" <?php if($order->status == 4) echo 'selected';?>>เรียบร้อย</option>
+							</select>
+						</td>
+						<td><input class="submitBtn" type="submit" value="change" /></td>
+					</tr>
+				</form>
+				<?php $totalPrice += $order->totalPrice; ?>
+			<?php } ?>
+			<tr class="subtotal">
+				<td style="text-align: right" colspan="5">รายรับรวม :</td>
+				<td style="text-align: right" id="review_subtotal_value"><?=$totalPrice;?></td>
+				<td style="text-align: right" >กำไรรวม :</td>
+				<td style="text-align: right" id="review_subtotal_value"><?=Eaglet_Utils_Store::calculateProfit($totalPrice);?></td>
+			</tr>
+		<?php }
+		else {?>
+			<tr>
+				<td> </td>
+				<td>ไม่มีสินค้า</td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+			</tr>
+		<?php } ?>
+	</tbody>
+</table>

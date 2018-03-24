@@ -1,0 +1,78 @@
+<script>
+	document.title = '<?=$this->translate('STRATEGY_CHANGELOG_TITLE'); ?>';
+</script>
+<a name="top"></a>
+<h1 class="header">
+	Changelog By Map
+</h1>
+
+<div style="text-align:center;margin:10px;">
+	<input class="submitBtnStateNormal" type="button" value="by Hero" style="margin-right:20px;" onclick="document.location='<?=$this->url(array('controller'=>'strategy','action'=>'changelog'))?>'; return false;" />
+	<input class="submitBtnStateSelect" type="button" value="by Map" />
+</div>
+<div style="width:880px;margin:auto;border:1px solid gray;margin-top:30px;padding:20px;">
+	<div><font color="#298A08"><?php echo $this->translate('STRATEGY_GREEN_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_GREEN_DETAIL_TEXT');?></div>
+	<div><font color="#B40404"><?php echo $this->translate('STRATEGY_RED_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_RED_DETAIL_TEXT');?></div>
+	<div><font color="#3399FF"><?php echo $this->translate('STRATEGY_YELLOW_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_YELLOW_DETAIL_TEXT');?></div>
+	<div><font color="#AEB404"><?php echo $this->translate('STRATEGY_BLUE_TEXT').' ';?></font>: <?php echo ' '.$this->translate('STRATEGY_BLUE_DETAIL_TEXT');?></div>
+	<?php if(Eaglet_Utils_Bilingual::isThaiLang()){?>
+		<div style="margin-top:5px;"><?php echo $this->translate('STRATEGY_NOTE_TEXT');?></div>
+	<?php } ?>
+</div>
+<?php 
+	$heroId = 0;
+	$mapId = 0;
+?>
+<div style="width:920px;margin:auto;border:1px solid gray;">
+	<div style="float:left;width:848px;">
+		<?php for($i=0; $i<$this->sizeData; $i++){?>
+			<?php if($mapId != $this->data[$i]['mapId']){?>
+				<a name="<?php echo $this->data[$i]['mapName'];?>"></a>
+				<div style="text-align:center;margin:30px 0px 5px 0px;color:#FFC300;"><?php echo $this->data[$i]['mapName'];?></div>
+				<div style="border:1px solid gray;padding:20px; 10px;">
+			<?php } ?>
+			<?php $mapId = $this->data[$i]['mapId'];?>
+			<?php if($heroId != $this->data[$i]['heroId']){?>
+				<div style="margin-top:15px;">
+					<img style="margin-right:5px;width:32px;" src="<?php echo $this->data[$i]['picIcon'];?>" alt="<?php echo $this->data[$i]['name'];?>" />
+					<?php echo $this->data[$i]['name'].' the '.$this->data[$i]['lastname'];?>
+				</div>
+			<?php } ?>
+			<?php $heroId = $this->data[$i]['heroId'];?>
+			<div>
+				<?php
+					if($this->data[$i]['type'] == 1){
+						$color = '#298A08';
+					}
+					else if($this->data[$i]['type'] == 2){
+						$color = '#B40404';
+					}
+					else if($this->data[$i]['type'] == 3){
+						$color = '#3399FF';
+					}
+					else if($this->data[$i]['type'] == 4){
+						$color = '#AEB404';
+					}
+					else{
+						$color = 'white';
+					}
+				?>
+				<span style="color:<?php echo $color;?>;margin-left:20px;"><?php echo '- '.$this->data[$i]['detailEN'];?></span>
+			</div>
+			<?php if($i == $this->sizeData-1 || $mapId != $this->data[$i+1]['mapId']){ ?>
+					<div class="goToTop" style="text-align:center;padding:5px;color:black;margin-top:5px;">
+						<a href="#top" >Go To Top</a>
+					</div>
+				</div>
+			<?php } ?>
+		<?php } ?>
+	</div>
+	<div style="float:right;width:50px;margin:auto;border:1px solid gray;padding:5px 5px 5px 15px;">
+		<?php foreach($this->map as $map):?>
+			<a href="#<?php echo $map['mapName'];?>">
+				<div><?php echo $map['mapName'];?></div>
+			</a>
+		<?php endforeach?>
+	</div>
+	<div style="clear:both;"></div>
+</div>

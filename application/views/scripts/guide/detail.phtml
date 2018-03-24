@@ -1,0 +1,15 @@
+<script>
+	document.title = '<?php echo addslashes($this->data->topic); ?>';
+</script>
+<?php 
+	if(Eaglet_Utils_Bilingual::isThaiLang()){
+		$detail = $this->data->detail;
+	}
+	else{
+		$detail = $this->data->detailEN;
+	}
+?>
+<div style="margin:30px;">
+	
+	<?php echo $detail;?>
+</div>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE modification SYSTEM "http://www.simplemachines.org/xml/modification">
+<modification xmlns="http://www.simplemachines.org/xml/modification" xmlns:smf="http://www.simplemachines.org/">
+	<name>Aeva ~ Auto-Embed Video &amp; Audio</name>
+	<id>Nao:Aeva</id>
+	<homepage>http://aeva.noisen.com</homepage>
+
+	<!--// SMF 2.x Only Edits. //-->
+
+	<file name="$sourcedir/ManageSettings.php">
+		<!--// Adds our subaction //-->
+		<operation>
+			<search position="after"><![CDATA[		// Mod authors, once again, if you have a whole section to add do it AFTER this line, and keep a comma at the end.]]></search>
+			<add><![CDATA[		'aeva' => 'ModifyAevaSettings',
+		'aevasites' => 'ModifyAevaSettings',
+]]></add>
+		</operation>
+		<!--// Adds our tab //-->
+		<operation>
+			<search position="before"><![CDATA[		'description' => $txt['modification_settings_desc'],
+		'tabs' => array(
+			'general' => array(
+			),]]></search>
+			<add><![CDATA[
+			'aeva' => array(
+				// Loads our language file if it hasn't been loaded already
+				'label' => !isset($txt['aeva']) ? (loadlanguage('Aeva') == false ? (loadLanguage('Aeva', 'english') == false ? 'Aeva' : $txt['aeva']) : $txt['aeva']) : $txt['aeva'],
+				'description' => $txt['aeva_desc'],
+			),
+			'aevasites' => array(
+				'label' => !isset($txt['aeva_sites']) ? 'Aeva Sites' : $txt['aeva_sites'],
+				'description' => $txt['aeva_desc'],
+			),]]></add>
+		</operation>
+		<operation>
+			<search position="end" />
+			<add><![CDATA[
+
+// Aeva - START
+function ModifyAevaSettings($return_config = false)
+{
+	global $sourcedir;
+	@require_once($sourcedir .'/Subs-Aeva-Admin.php');
+	return aeva_admin_manager($return_config, isset($_GET['sa']) ? $_GET['sa'] : '');
+}
+// Aeva - END
+]]></add>
+		</operation>
+	</file>
+
+	<file name="$sourcedir/Admin.php">
+		<!--// Adds our item to the Javascript admin menu //-->
+		<operation>
+			<search position="after"><![CDATA[						// Mod Authors for a "ADD AFTER" on this line. Ensure you end your change with a comma. For example:]]></search>
+			<add><![CDATA[						// Aeva - START
+						'aeva' => array(loadlanguage('Aeva') == false ? 'Aeva' : $txt['aeva']),
+						'aevasites' => array(!isset($txt['aeva_sites']) ? 'Aeva Sites' : $txt['aeva_sites']),
+						// Aeva - END
+]]></add>
+		</operation>
+		<!--// Ensures the settings can be searched //-->
+		<operation>
+			<search position="before"><![CDATA[// Mod authors if you want to be "real freaking good" then add any setting pages for your mod BELOW this line!]]></search>
+			<add><![CDATA[
+		array('ModifyAevaSettings', 'area=modsettings;sa=aeva'),]]></add>
+		</operation>
+	</file>
+</modification>

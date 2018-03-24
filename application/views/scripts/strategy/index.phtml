@@ -1,0 +1,121 @@
+<?php 
+	$i = 0;
+	
+	$mapText = 'วิเคราะห์แผนที่อย่างละเอียด';
+	$gankText = 'ศิลปะการ Gank';
+	
+	$this->headLink()->appendStylesheet('/css/jqueryui/jquery-ui.css');
+	
+	$this->headScript()->appendFile('/js/jqueryui/jquery-ui.min.js')
+					   ->appendFile('/js/themeroller/app.js')
+					   ->appendFile('/js/themeroller/ui_demos.js'); 
+?>
+<script>
+	document.title = '<?=$this->translate('STRATEGY_INDEX_TITLE'); ?>';
+
+	var tab = '<?php echo $this->tab;?>';
+
+	window.onload = function(){
+		$('#tabs').tabs("select", '#tabs-'+tab);
+	}
+</script>
+<h1 class="header">
+	Replay Strategy
+</h1>
+<center>
+	<div id="tabs">
+		<ul>
+			<li><a href="#tabs-1"><?php echo $this->translate('STRATEGY_REPLAY_RECOMMEND_TEXT');?></a></li>
+			<li><a href="#tabs-2"><?php echo $this->translate('STRATEGY_REPLAY_ANALYSIS_TEXT');?></a></li>
+		</ul>
+		<div id="tabs-1">
+			<?php foreach ($this->replayRecommendPaginator as $entry):?>
+				<div class="divNews" style="width:95%;">
+					<div class = "topicNews">
+						<a style="color:white;margin-left:5px;" href="/replay/view/replayId/<?=$entry->replayId;?>">
+							<?php echo $this->escape($entry->topic); ?>
+						</a>
+					</div>
+					<div class = "bodyNews">
+						<div style="margin-bottom:10px;">
+							<div class="RoundBy" style="float:left;">
+								<div style="margin:3px 5px 3px 5px;">
+									by : <span style="color:#FFC300;"><?php echo $this->escape($entry->username)?></span> &nbsp; <?php echo $this->escape($entry->date)?>
+								</div>
+							</div>
+							<div style="clear:both;"></div>
+						</div>
+						<div style="float:left;width:250px;">
+							<?php echo $this->listHero[$i]; ?>
+						</div>
+						<div style="float:left;padding:0px 10px 10px 10px;width:590px;text-align:left;">
+							<?php echo $this->detail[$i]; ?>
+						</div>
+						<div style="clear:both;"></div>
+					</div>
+				</div>
+				<?php $i++;?>
+			<?php endforeach ?>
+			<?php echo $this->paginationControl(
+								$this->replayRecommendPaginator,
+			                    'Sliding',
+			                    '/template/paging_nav.phtml',
+								array('pageParam' => 'rrPage', 'tab' => 1));
+			?>
+		</div>
+
+		<div id="tabs-2">
+			<?php foreach ($this->replayAnalysisPaginator as $entry):?>
+				<?php 
+					if(Eaglet_Utils_Bilingual::isThaiLang()){
+						$topic = $this->escape($entry->topic);
+						$detail = $entry->detail;
+					}
+					else{
+						$topic = $this->escape($entry->topicEN);
+						$detail = $entry->detailEN;
+					}
+				?>
+				<div class="divNews" style="width:95%;">
+					<div class = "topicNews">
+						<a style="color:white;margin-left:5px;" href="/strategy/detail/newsId/<?php echo $entry->newsId . '/' . Eaglet_Utils_Url::convertToSlugUrl($entry->topic);?>">
+							<?php echo $topic; ?>
+						</a>
+					</div>
+					<div class = "bodyNews">
+						<div style="margin-bottom:10px;">
+							<div class="RoundBy" style="float:left;">
+								<div style="margin:3px 5px 3px 5px;">
+									by : <span style="color:#FFC300;"><?php echo $this->escape($entry->username)?></span> &nbsp; <?php echo $this->escape($entry->date)?>
+								</div>
+							</div>
+							<div style="clear:both;"></div>
+						</div>
+						<?php if($entry->picture != ''){?>
+							<img class="node-image" width="200"  height="150" src="<?php echo $this->escape($entry->picture)?>" />
+							<div class="postContent" style="padding:0px 10px 10px 10px;line-height: inherit;text-align:left;">
+								<?php echo $detail ?>
+							</div>
+							<div style="clear:both;"></div>
+						<?php } 
+						else {?>
+							<div class="postContent" style="float:left;padding:0px 10px 10px 10px;width:850px;word-wrap:break-word;overflow:hidden;text-align:left;">
+								<?php echo $detail ?>
+							</div>
+						<?php } ?>
+						<div style="clear:both;"></div>
+					</div>
+				</div>
+				<?php $i++;?>
+			<?php endforeach ?>
+			<?php echo $this->paginationControl(
+								$this->replayAnalysisPaginator,
+			                    'Sliding',
+			                    '/template/paging_nav.phtml',
+								array('pageParam' => 'raPage', 'tab' => 2));
+			?>
+		</div>
+		
+	</div>
+	
+</center>

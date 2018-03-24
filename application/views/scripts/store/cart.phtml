@@ -1,0 +1,166 @@
+<script>
+	document.title = '<?=$this->translate('STORE_CART_TITLE'); ?>';
+
+	var orderId = '<?=$this->detailorders[0]->orderId;?>';
+
+	$(document).ready(function() {
+		$(".cart_qty").each(function() {
+			$(this).change(function () {
+				var amount = $(this).val();
+				var detailorderId = $(this).attr("detailorderId");
+				if(amount == 0){
+					var r=confirm("คุณแน่ใจว่าต้องการลบสินค้าชิ้นนี้");
+					if (r==true){
+						window.location = '/store/changeamount/detailorderId/'+detailorderId+'/amount/'+amount;
+					}
+				}
+				else{
+					window.location = '/store/changeamount/detailorderId/'+detailorderId+'/amount/'+amount;
+				}
+			});
+		});
+		$("#checkout").click(function() {
+			var totalPrice = $(this).attr("name");
+			var totalPriceTruemoney = $(this).attr("truemoney");
+			window.location = '/store/checkout/orderId/'+orderId+'/totalPrice/'+totalPrice+'/totalPriceTruemoney/'+totalPriceTruemoney;
+		});	
+	});
+	function deleledetailorder(orderId, detailorderId){
+		var r=confirm("คุณแน่ใจว่าต้องการลบสินค้าชิ้นนี้");
+		if (r==true){
+			window.location = '/store/delfromcart/orderId/'+orderId+'/detailorderId/'+detailorderId;
+		}
+	}
+</script>
+<h1 class="header">
+	ตะกร้าสินค้าของท่าน
+</h1>
+<div>
+	<?php include("login.phtml")?>
+</div>
+<div id="review_tab" class="checkout_tab">
+  <div id="Cart">
+     <div class="checkout_content">
+          <h2 class="approvetxn_header">ตะกร้าสินค้าของท่าน
+				<div class="NoSelect GenericGreenButton ContinueShoppingButton" onclick="window.location='/store/index'">
+					<div class="LeftCap"></div>
+					<div class="RightCap"></div>
+					<span>กลับไปเลือกสินค้าเพิ่ม</span>
+				</div>
+          </h2>       	    
+     </div>
+                    <div class="approvetxn_lineitem_container">
+						<div class="bg"></div>
+						
+						<table class="cart_table" cellpadding="0" cellspacing="0">
+							<thead>
+								<tr>
+									<th width="96">สินค้า</th>
+									<th></th>
+									<th width="55"></th>
+									<th style="text-align: center;" width="55">จำนวน</th>
+									<th width="80">ราคา</th>
+									<th width="80">Truemoney</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php $totalPrice = 0; $totalPriceTruemoney = 0;?>
+								<?php if($this->orderId != '0' && $this->detailorders != '0'){?>
+								<?php foreach ($this->detailorders as $detailorder) {?>
+									<tr>
+										<td>
+											<a class="approvetxn_lineitem_description" href="/store/detail/equipmentId/<?=$detailorder->equipmentId;?>">
+												<img width="100" src="<?=$detailorder->image;?>" alt="<?=$detailorder->name;?>">
+											</a>
+										</td>
+										<td>
+											<a class="approvetxn_lineitem_description" href="/store/detail/equipmentId/<?=$detailorder->equipmentId;?>"><?=$detailorder->name;?></a>
+										</td>
+										<td>
+											<a class="CartLink" tabindex="9999" onclick="deleledetailorder('<?=$detailorder->orderId;?>', '<?=$detailorder->detailorderId;?>');" >ลบออก</a>
+										</td>
+										<td>
+											<div>
+												<input class="cart_qty" maxlength="2" size="2" value="<?=$detailorder->amount;?>" detailorderId="<?=$detailorder->detailorderId;?>" type="text">
+											</div>
+										</td>
+										<td>
+											<?php 
+												if($detailorder->priceSale != 0) { 
+													echo Eaglet_Utils_Store::getPrice($detailorder->priceSale)*$detailorder->amount;
+												}
+												else{
+													echo Eaglet_Utils_Store::getPrice($detailorder->price)*$detailorder->amount;
+												}
+											?>
+										</td>
+										<td>
+											<?php 
+												if($detailorder->priceSale != 0) { 
+													echo Eaglet_Utils_Store::getPriceTruemoney($detailorder->priceSale)*$detailorder->amount;
+												}
+												else{
+													echo Eaglet_Utils_Store::getPriceTruemoney($detailorder->price)*$detailorder->amount;
+												}
+											?>
+										</td>
+										<?php 
+											if($detailorder->priceSale != 0) { 
+												$totalPrice += Eaglet_Utils_Store::getPrice($detailorder->priceSale)*$detailorder->amount;
+												$totalPriceTruemoney += Eaglet_Utils_Store::getPriceTruemoney($detailorder->priceSale)*$detailorder->amount;
+											}
+											else{
+												$totalPrice += Eaglet_Utils_Store::getPrice($detailorder->price)*$detailorder->amount;
+												$totalPriceTruemoney += Eaglet_Utils_Store::getPriceTruemoney($detailorder->price)*$detailorder->amount;
+											}
+										?>
+									</tr>
+								<?php } ?>			
+								<tr class="subtotal">
+									<td style="text-align: right" colspan="4">ราคารวม :</td>
+									<td style="text-align: right" id="review_subtotal_value"><?=$totalPrice;?></td>
+									<td> </td>
+								</tr>
+								<tr class="subtotal">
+									<td style="text-align: right" colspan="5">ราคารวม Truemoney :</td>
+									<td style="text-align: right" id="review_subtotal_value"><?=$totalPriceTruemoney;?></td>
+								</tr>
+								<?php }
+								else {?>
+									<tr>
+										<td>
+											ไม่มีสินค้า
+										</td>
+										<td>
+											
+										</td>
+										<td>
+											
+										</td>
+										<td>
+											<div>
+												<input class="cart_qty" maxlength="2" size="2" value="0"  type="text">
+											</div>
+										</td>
+										<td>0</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+						<div style="text-align:right;margin:10px 0px -10px 0px;" id="review_subtotal_value">* เลือกจ่ายอย่างใดอย่างหนึ่งระหว่างโอนเงิน หรือใช้บัตร Truemoney</div>
+                    </div>
+                    
+					<?php if($this->orderId != '0' && $this->detailorders != '0'){?>
+						<div class="CheckoutButtonContainer">
+							<div id="CheckoutButton" class="NoSelect GenericGreenButton Checkout">
+								<div class="GenericGreenButton CheckoutButton" id="checkout" name="<?=$totalPrice;?>" truemoney="<?=$totalPriceTruemoney;?>">
+									<div class="LeftCap"></div>
+									<div class="RightCap"></div>
+									<span>เสร็จสิ้น</span>
+								</div>
+							</div>
+							<div id="CheckoutSpinner"></div>
+						</div>
+					<?php } ?>
+  </div>
+</div>

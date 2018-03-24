@@ -1,0 +1,38 @@
+<script>
+	document.title = '<?=$this->translate('TOURNAMENT_LOGINTEAM_TITLE'); ?>';
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_LOGINTEAM_HEADER'); ?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:30px 35px 0px 185px;">
+	<form method="POST">
+		<input type="hidden" id="mode" name="mode" value="login" />
+		<table cellspacing="10">
+			<tr>
+				<td><?=$this->translate('TOURNAMENT_CREATE_TEAM_SHORT_NAME'); ?> : </td>
+				<td><input type="text" id="username" name="username" value="<?=$this->username;?>" /></td>
+			</tr>
+			<tr>
+				<td>password : </td>
+				<td><input type="password" id="password" name="password" value="<?=$this->password;?>" /></td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align:center;"><input type="checkbox" id="rememberMe" name="rememberMe" />&nbsp;<?=$this->translate('TOURNAMENT_LOGIN_KEEPME_LOGIN'); ?></td>
+			</tr>
+			<?php if (isset($this->errorMessage)) { ?>
+				<tr>
+					<td colspan="2" style="text-align:center;">
+						<div class="errorMsg" style="margin:5px;">
+						    <?php echo $this->errorMessage;?>
+						</div>
+					</td>
+				</tr>
+			<?php } ?>
+			<tr>
+				<td colspan="2" style="text-align:center;"><input class="submitBtn" type="submit" value="Login" /></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div style="clear:both;"></div>

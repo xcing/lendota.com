@@ -1,0 +1,231 @@
+?# Thai
+PLEASE;โปรด
+FIRST;ก่อน
+LAYOUT_KEYWORD_TEXT;DotA, Defense Of the Ancient, DotA Replay, ข่าว DotA, การแข่งขัน DotA, DotA Guide, DotA Hero, DotA Item, DotA Program, DotA Map, วิเคราะห์แผนและการเล่น DotA, DotA Wallpaper, DotA Picture, DotA Tournament
+LAYOUT_DESCRIPTION_TEXT;DotA : Defense of the Ancient News, Replay and Guide
+GUIDE_INDEX_TITLE;DotA Hero ฮีโร่
+GUIDE_ITEM_TITLE;DotA Item ไอเท็ม ออกของ
+GUIDE_TECHNIC_TITLE;Technique DotA เทคนิค
+REPLAY_INDEX_TITLE;Replay แข่งขัน DotA ต่างประเทศ ในประเทศ
+REPLAY_INDEX2_TITLE;Replay แข่งขัน Dota 2 ต่างประเทศ ในประเทศ
+STRATEGY_INDEX_TITLE;DotA Strategy
+STRATEGY_CHANGELOG_TITLE;DotA Change Log
+STRATEGY_GANK_TITLE;ศิลปะการ Gank
+STRATEGY_MAP_TITLE;วิเคราะห์แผนที่อย่างละเอียด
+DOWNLOAD_PROGRAM_TITLE;Program DotA TCGNetwork Warcraft3TFT W3DR DR Delay Reduce WC3Setup DotaReplayManager Switcher Patch
+DOWNLOAD_WALLPAPER_TITLE;Wallpaper DotA พื้นหลัง DotA
+DOWNLOAD_FANART_TITLE;Fan Art DotA Picture Image ภาพ รูป
+LASTEST_MAP;6.74c
+STABLE_MAP;6.74c
+AI_MAP;6.74c AI
+DOWNLOAD_MAP;Download Map
+DOWNLOAD;ดาวน์โหลด
+WEBBOARD_INDEX_TITLE;Webboard DotA
+GUIDE_HERO_SUFFIX;guide วิธีอัพสกิล ออกของ ออกไอเท็ม upskill
+REPLAY_SLUG_URL_TEMPLATE;replay-รายการ-${tournament}-ทีม-${team1}-vs-${team2}
+GUIDE_SKILL_SLUG_URL_TEMPLATE;รายละเอียดสกิล-hero-${heroName}-${heroLastname}
+INDEX_CREDIT_TEXT;ที่มา
+INDEX_RELATENEWS_TEXT;ข่าวที่เกี่ยวข้อง
+GUIDE_TYPE_TEXT;สาย
+GUIDE_TITLE_TEXT;guide รายละเอียดสกิล แนวทางการเล่น ประวัติ skill
+GUIDE_DETAIL_SKILL_ITEM_TEXT;รายละเอียดสกิล & วิธีการอัพสกิล & ออกไอเท็ม
+GUIDE_DETAIL_SKILL_TEXT;รายละเอียด Skill
+GUIDE_INTRODUCTION_TEXT;ความเป็นมา
+GUIDE_UPSKILL_TEXT;ลำดับการอัพสกิล
+GUIDE_BUYITEM_TEXT;ลำดับการออกไอเท็ม
+GUIDE_NOTE_TEXT;หมายเหตุ :
+GUIDE_NOTEDETAIL_TEXT;การอัพสกิลและการออก item นี้เป็นการแนะนำคร่าว ๆ  สามารถปรับเปลี่ยนการอัพสกิลและออก item ได้ตามสถานการณ์
+GUIDE_HEROCOMBO_TEXT;Hero คู่หู
+GUIDE_HEROWEAK_TEXT;Hero ที่ไม่ชอบหน้า
+GUIDE_DETAIL_TEXT;วิธีการเล่น
+GUIDE_REPLAY_TEXT;Replay ตัวอย่าง
+REPLAY_CHANGE_VERSION_WARCRAFT_TEXT;วิธีเปลี่ยน Patch Warcraft III สำหรับดู Replay Version เก่า
+REPLAY_EVENT_TEXT;รายการ
+REPLAY_DATE_TEXT;วันที่
+REPLAY_NOTFOUND_TEXT;ไม่พบ Replay ที่ค้นหา
+REPLAY_TEAMNAME_TEXT;ชื่อทีม
+REPLAY_EVENTNAME_TEXT;ชื่อรายการ
+REPLAY_HERONAME_TEXT;ชื่อ Hero
+REPLAY_NOTE_TEXT;(คลิกที่รูป hero ด้านล่าง)
+REPLAY_VIEWSCORE;กดเพื่อดู Score
+REPLAY_HIDESCORE;กดเพื่อซ่อน Score
+REPLAY_TUTORIAL_VIEW_REPLAY_BUTTON;วิธีการดูรีเพลย์
+TOURNAMENT_AWARD;รางวัล
+TOURNAMENT_WON;ชนะ
+TOURNAMENT_TIME;ครั้ง
+TOURNAMENT_MENU_HOME;Tournament
+TOURNAMENT_MENU_CREATE_TEAM;สร้างทีมใหม่
+TOURNAMENT_MENU_LOGIN_TEAM;Login
+TOURNAMENT_MENU_PROFILE;ข้อมูลทีม
+TOURNAMENT_MENU_SCHEDULE;ตารางการแข่งขัน
+TOURNAMENT_MENU_RULE;กฏการแข่ง
+TOURNAMENT_MENU_FAQ;คำถามที่พบบ่อย
+TOURNAMENT_DETAIL_START_DATE;เริ่มแข่งขันวันที่
+TOURNAMENT_DETAIL_DEADLINE_DATE;ปิดรับสมัครวันที่
+TOURNAMENT_DETAIL_REGISTER;สมัครแข่ง
+TOURNAMENT_DETAIL_VIEW_LIST_TEAM;ดูรายชื่อผู้สมัคร
+TOURNAMENT_DETAIL_VIEW_LIST_TEAM_EVENT;ดูรายชื่อผู้สมัครรายการ
+TOURNAMENT_DETAIL_SCHEDULE;ตารางแข่ง
+TOURNAMENT_REGISTER;สมัครเรียบร้อย คุณสามารถดูรายชื่อทีมที่สมัครได้โดยการกดปุ่ม ดูรายชื่อผู้สมัคร
+TOURNAMENT_REGISTER_SUCCESS;สมัครเสร็จเรียบร้อย
+TOURNAMENT_CANCEL;ยกเลิกการสมัคร
+TOURNAMENT_CONFIRM_CANCEL;คุณแน่ใจว่าต้องการยกเลิกการสมัคร
+TOURNAMENT_VALIDATE_PLEASE_INPUT;โปรดใส่
+TOURNAMENT_VALIDATE_AT_LEAST;อย่างน้อย
+TOURNAMENT_VALIDATE_MAXIMUM;ไม่เกิน
+TOURNAMENT_VALIDATE_CHARACTER;ตัวอักษร
+TOURNAMENT_VALIDATE_FORMAT_EMAIL;email ให้ถูกต้อง
+TOURNAMENT_VALIDATE_TEL;เบอร์โทรศัพท์
+TOURNAMENT_VALIDATE_UNDISCLOSED;ไม่เปิดเผย
+TOURNAMENT_VALIDATE_CORRECT_CAPTHA;รหัสป้องกัน ให้ถูกต้อง
+TOURNAMENT_VALIDATE_PASSWORD_AND_CONFIRM_PASSWORD_NOT_MATCHED;password และ confirm password ไม่ตรงกัน
+TOURNAMENT_VALIDATE_SHORTNAME_ALREADY_EXISTED;ขออภัย ชื่อย่อทีมนี้ มีคนใช้แล้ว
+TOURNAMENT_VALIDATE_EMAIL_ALREADY_EXISTED;ขออภัย email นี้ถูกใช้แล้ว
+TOURNAMENT_VALIDATE_LOGIN_PLEASE_INPUT_USERNAME;โปรดใส่ชื่อย่อทีม
+TOURNAMENT_VALIDATE_LOGIN_PLEASE_INPUT_PASSWORD;โปรดใส่พาสเวิด
+TOURNAMENT_VALIDATE_LOGIN_WRONG_USERNAME;ชื่อย่อทีมนี้ไม่มีอยู่ในระบบ
+TOURNAMENT_VALIDATE_LOGIN_WRONG_PASSWORD;พาสเวิดไม่ถูกต้อง
+TOURNAMENT_VALIDATE_NOT_CHANGE_PASSWORD;ถ้าไม่ต้องการเปลี่ยน password ให้เว้นช่อง Old Password, New Password และ Confirm Password ไว้
+TOURNAMENT_LOGIN_KEEPME_LOGIN;ให้ฉันอยู่ในระบบต่อไป
+TOURNAMENT_PROFILE_LIST_MEMBER;รายชื่อสมาชิกในทีม
+TOURNAMENT_PROFILE_EDIT;แก้ไขข้อมูลทีม
+TOURNAMENT_PROFILE_STAT;สถิติการเจอกัน
+TOURNAMENT_CREATE_TEAM_NAME;ชื่อทีม
+TOURNAMENT_CREATE_TEAM_SHORT_NAME;ชื่อย่อทีม 
+TOURNAMENT_CREATE_TEAM_FOR_LOGIN;(ใช้สำหรับ login)
+TOURNAMENT_CREATE_MEMBER;สมาชิกคนที่
+TOURNAMENT_INDEX_TITLE;Thailand Tournament DotA
+TOURNAMENT_INDEX_HEADER;DotA Tournament
+TOURNAMENT_CREATETEAM_TITLE;สร้างทีมใหม่
+TOURNAMENT_CREATETEAM_HEADER;สร้างทีมใหม่
+TOURNAMENT_LOGINTEAM_TITLE;Login Team
+TOURNAMENT_LOGINTEAM_HEADER;Login Team
+TOURNAMENT_LOGINTEAM_FORGET_PASSWORD;ลืมพาสเวิด
+TOURNAMENT_PROFILETEAM_TITLE;Profile Team
+TOURNAMENT_PROFILETEAM_HEADER;Profile Team
+TOURNAMENT_SCHEDULE_BACK;ย้อนกลับไปทัวนาเม้นต์
+TOURNAMENT_MATCH_HEADER;รายละเอียดการแข่ง
+TOURNAMENT_MATCH_BACK;ย้อนกลับไปตารางแข่ง
+TOURNAMENT_MATCH_DATE_RACE;วันที่แข่ง
+TOURNAMENT_MATCH_RESULT;แจ้งผลการแข่งขัน
+TOURNAMENT_MATCH_RESULT_MANY_GAME;แจ้งผลการแข่งขัน เกมที่
+TOURNAMENT_MATCH_RESULT_WON_BYE;ชนะบาย (ติ้กถ้าชนะบาย)
+TOURNAMENT_MATCH_RESULT_LOSE_BOTH;แพ้บาย ทั้ง 2 ทีม
+TOURNAMENT_MATCH_RESULT_PICTURE;ภาพจบ
+TOURNAMENT_MATCH_EDIT_RESULT;แก้ไขภาพจบ
+TOURNAMENT_MATCH_LINK_REPLAY;ลิ้งค์ดาวโหลดรีเพลย์
+TOURNAMENT_MATCH_TUTORIAL_UPLOAD_REPLAY;วิธีการ upload replay
+TOURNAMENT_MATCH_RESULT_NOT_REQUIRE;(ไม่ต้องลงก็ได้ แต่ถ้าลงไว้อาจได้รับเลือกไป re-cap)
+TOURNAMENT_MATCH_PLEASE_READ;โปรดอ่าน : กฏการแข่ง และวิธีการแจ้งผล 
+TOURNAMENT_MATCH_MAKE_APPOINTMENT;โพสนัดแนะการแข่ง
+TOURNAMENT_MATCH_SORRY;ขอภัย สามารถโพสได้เฉพาะทีม ที่แข่งกันเท่านั้น
+TOURNAMENT_MATCHRESULT_HEADER;แจ้งผลการแข่งขัน
+TOURNAMENT_MATCHRESULT_VALIDATE_WIN;กรุณาเลือก Team Win ด้วยครับ
+TOURNAMENT_MATCHRESULT_VALIDATE_SS;กรุณาใส่ ภาพจบ ด้วยครับ
+TOURNAMENT_EDITUSERTEAM_TITLE;แก้ไขข้อมูลทีม
+TOURNAMENT_EDITUSERTEAM_HEADER;แก้ไขข้อมูลทีม
+TOURNAMENT_RULE_TITLE;lendota tournament rule
+TOURNAMENT_RULE_HEADER;กฏการแข่งขัน
+TOURNAMENT_RULE_DETAILS;รูปแบบการแข่งขัน
+TOURNAMENT_RULE_FORMAT;รูปแบบการแข่งขัน: Single Elimination 1 วัน/1 รอบ
+TOURNAMENT_RULE_FORMAT_DOUBLE;รูปแบบการแข่งขัน: Double Elimination 1 วัน/1 รอบ
+TOURNAMENT_RULE_SERVER;Server: Singapore หรือ server อื่นถ้าทั้ง 2 ทีมเห็นชอบตรงกัน
+TOURNAMENT_RULE_PLAYER;จำนวนผู้เข้าแข่งขันต่อทีม 7 คน (ตัวจริง 5 คน ตัวสำรอง 2 คน)
+TOURNAMENT_RULE_MODE;Gamemode: -cm (Captain Draft)
+TOURNAMENT_RULE_CONDITIONS;กติกาก่อนการแข่งขัน
+TOURNAMENT_RULE_MATCH_BEGIN;เริ่มการแข่งขันเวลา 20.00 น. สายได้ไม่เกิน 30 นาที แข่งให้ เสร็จก่อนเวลา 24.00 น.
+TOURNAMENT_RULE_SIDE;ดูว่าอยู่ฝั่งไหนดังภาพ (ระบบจะแรนดอมฝั่งให้ทุกเกม)
+TOURNAMENT_RULE_CREATE_ROOM;ให้สร้างห้อง private แล้วโพสบอกรหัส ที่หน้ารายละเอียดของคู่ตัวเอง ดังภาพ
+TOURNAMENT_RULE_PRIVATE_ROOM;สร้างห้อง private แบบมีผู้เข้าชมได้  (ทั่วไปแล้ว ผู้เข้าชมจะเห็นภาพช้ากว่าของจริงประมาณ 2นาที เพื่อป้องกันการโกง)
+TOURNAMENT_RULE_POSTPOND;การเลื่อนการแข่งขัน ต้องได้รับการยอมรับจากทั้ง 2 ทีม และต้องแข่งให้เสร็จก่อนเวลา 18.00น ของวันรุ่งขึ้น
+TOURNAMENT_RULE_PLAYER_NAME;ชื่อผู้เล่น ให้ใช้ชื่อเดียวกับที่ได้ลงทะเบียนไว้มาแข่งขัน
+TOURNAMENT_RULE_RULES;กติการะหว่างการแข่งขัน
+TOURNAMENT_RULE_DISCONNECT;กรณีที่มีคนหลุดให้ pause game รอจนกว่าผู้เล่นคนนั้นจะมา โดยให้รอแค่ 10นาที เท่านั้น ถ้าเกิน10นาที แล้วผู้เล่นคนนั้นยังไม่มา ให้ unpause แล้วเล่นต่อได้เลย
+TOURNAMENT_RULE_SOFT_RULE;มารยาทในการแข่งขัน Tournament
+TOURNAMENT_RULE_HARM;การตั้งชื่อไม่สุภาพ ไม่สามารถลงแข่ง Tournament ได้
+TOURNAMENT_RULE_TRASH_TALK;การเยาะเย้ย ถากถาง ไม่สุภาพ ทั้งวาจาและการกระทำ ต่อทีมเข้าแข่งขัน
+TOURNAMENT_SCHEDULE_HEADER;ตารางการแข่งขัน
+TOURNAMENT_SCHEDULE_TITLE;ตารางการแข่งขัน
+TOURNAMENT_FAQ_TITLE;lendota tournament FAQ
+TOURNAMENT_FAQ_HEADER;คำถามที่พบบ่อย
+TOURNAMENT_FAQ_HOWTO_PARTICIPATE;สมัครแข่งยังไง
+TOURNAMENT_FAQ_MUST_BE;ต้องทำการ
+TOURNAMENT_FAQ_LOGIN;Login
+TOURNAMENT_FAQ_FIRST_OR;ก่อน หรือถ้ายังไม่เคยสมัครก็สามารถ
+TOURNAMENT_FAQ_CREATE_NEW_TEAM;สร้างทีมใหม่
+TOURNAMENT_FAQ_THEN_LOGIN;และเมื่อทำการ login แล้วก็ไปที่หน้า
+TOURNAMENT_FAQ_SCEDULE;สมัครแข่งขัน
+TOURNAMENT_FAQ_REGISTER;แล้วกดปุุ่ม สมัครแข่งขันได้เลย
+TOURNAMENT_FAQ_HOWTO_REPORT_RESULT;แจ้งผลการแข่งขันยังไง
+TOURNAMENT_FAQ_HOWTO_REPORT_1;ไปที่หน้าตารางการแข่งขัน แล้วคลิกที่คู่การแข่งของตัวเอง ดังภาพ
+TOURNAMENT_FAQ_HOWTO_REPORT_2;กดที่ แจ้งผลการแข่งขัน ดังภาพ
+TOURNAMENT_FAQ_HOWTO_REPORT_3;เลือกผู้ชนะ
+TOURNAMENT_FAQ_HOWTO_REPORT_4;ใส่ภาพจบ
+TOURNAMENT_FAQ_DISCONNECT;มีคนหลุด จะทำยังไง
+TOURNAMENT_FAQ_PAUSE_GAME;ให้ pause game รอจนกว่าผู้เล่นคนนั้นจะมา โดยให้รอแค่ 10นาที เท่านั้น ถ้าเกิน10นาที แล้วผู้เล่นคนนั้นยังไม่มา ให้ unpause แล้วเล่นต่อได้เลย
+TOURNAMENT_RANKING_STAT;สถิติ
+TOURNAMENT_HOWTO_UPLOAD;วิธีการอัพโหลดรีเพลย์
+TOURNAMENT_HOWTO_UPLOAD_1;หลังจากแข่งเสร็จแล้วให้เข้าไปดู History เกมที่ตัวเองเล่นแล้ว Download Replay มาเก็บไว้ก่อน ดังภาพ
+TOURNAMENT_HOWTO_UPLOAD_2;จำเลข Match Id เอาไว้ ดังภาพ
+TOURNAMENT_HOWTO_UPLOAD_3;เข้าไปใน folder C:\Steam\steamapps\common\dota 2 beta\dota\replays (กรณีที่โปรแกรม steam อยู่ที่ drive C) จะเห็น file replay ที่เป็นชื่อ 100895203.dem (ชื่อไฟล์เป็นเลขเดียวกับ Match Id)
+TOURNAMENT_HOWTO_UPLOAD_4;นำไฟล์นั้นไป upload บนเว็บไซต์ต่างๆที่ให้บริการเช่น mediafile, 4share, dropbox แล้วนำ link download มาโพส
+TOURNAMENT_HOWTO_VIEW_REPLAY;วิธีดูรีเพลย์ย้อนหลังจากไฟล์ Replay
+TOURNAMENT_HOWTO_VIEW_REPLAY_TOPIC;นำไฟล์ Replay ที่โหลดมาไปไว้ใน folder steam/steamapps/common/dota2 beta/dota/replays
+TOURNAMENT_HOWTO_VIEW_REPLAY_1;คลิกขวาที่เกม Dota 2 ใน steam แล้วเลือก Properties
+TOURNAMENT_HOWTO_VIEW_REPLAY_2;คลิกที่ปุ่ม SET LAUNCH OPTIONS
+TOURNAMENT_HOWTO_VIEW_REPLAY_3;พิมพ์ -console เข้าไปในช่องว่าง
+TOURNAMENT_HOWTO_VIEW_REPLAY_4;กดปุ่ม OK
+TOURNAMENT_HOWTO_VIEW_REPLAY_5;หลังจากนั้นให้เข้าเกมตามปกติ จะเจอหน้าต่าง console ขึ้นมา ให้พิมพ์คำสั่ง playdemo "replays/ชื่อไฟล์ replay.dem" เช่น ไฟล์ replay ชื่อ lendota001.dem ให้พิมพ์ ไปว่า playdemo "replays/lendota001.dem"
+STRATEGY_REPLAY_RECOMMEND_TEXT;Replay แนะนำ
+STRATEGY_REPLAY_ANALYSIS_TEXT;Replay วิเคราะห์
+STRATEGY_GREEN_TEXT;สีเขียว
+STRATEGY_RED_TEXT;สีแดง
+STRATEGY_BLUE_TEXT;สีเหลือง
+STRATEGY_YELLOW_TEXT;สีน้ำเงิน
+STRATEGY_GREEN_DETAIL_TEXT;การปรับเพิ่มเพียงอย่างเดียว เช่นเพิ่มค่าสถานะ ลดคูลดาวน์ ลดค่ามานาที่ใช้ และอื่น ๆ
+STRATEGY_RED_DETAIL_TEXT;การปรับลดเพียงอย่างเดียว ตรงข้ามกับการปรับเพิ่ม
+STRATEGY_BLUE_DETAIL_TEXT;การเปลี่ยนแปลงที่ไม่ใช่ปรับเพิ่มหรือปรับลดเพียงอย่างเดียว
+STRATEGY_YELLOW_DETAIL_TEXT;การเปลี่ยนแปลงที่ไม่ส่งผลอะไรมากนัก หรือการแก้บั๊ก
+STRATEGY_NOTE_TEXT;ปล.เดี๋ยวจะค่อย ๆ แปลเป็นไทยนะครับ
+STORE_INDEX_TITLE;ขายของ Dota 2
+STORE_CART_TITLE;ตะกร้าสินค้าของท่าน
+DOWNLOAD_TCGNETWORK_TEXT;ระบบ Network System ของ Thaicybergames ทำให้คุณสามารถเล่น Dota Online กับคนอื่นได้
+DOWNLOAD_WARCRAFT_TFT_TEXT;File update Warcraft III ให้เป็น Version 126a
+DOWNLOAD_W3DR_TEXT;โปรแกรมช่วยลด Delay ในการเล่น DotA
+DOWNLOAD_W3CSETUP_TEXT;Run แล้วเลือก Frozen Throne.exe เพื่อทำการ Set Path ของเกม Warcraft III ให้ถูกต้อง
+DOWNLOAD_REPLAY_MANAGER_TEXT;โปรแกรมดูรายละเอียดต่างๆของ Replay ใน Map DotA
+DOWNLOAD_SWITCHER_PATCH_TEXT;โปรแกรมสลับ version Warcraft สำหรับดู replay version เก่า
+DOWNLOAD_PATCH24_TEXT;Patch 1.24 สำหรับดู Replay เก่า ๆ
+DOWNLOAD_PATCH24B_TEXT;Patch 1.24b สำหรับดู Replay เก่า ๆ
+DOWNLOAD_PATCH24E_TEXT;Patch 1.24e สำหรับดู Replay เก่า ๆ
+DOWNLOAD_PATCH25B_TEXT;Patch 1.25b สำหรับดู Replay เก่า ๆ
+DOWNLOAD_PATCH26A_TEXT;Patch 1.26a สำหรับดู Replay เก่า ๆ
+DOWNLOAD_W3GMASTER_TEXT;โปรแกรมดูรายละเอียดต่างๆของผู้เล่นใน Replay
+DOWNLOAD_THAIFONT_TEXT;Font ภาษาไทยของเกม Warcraft III
+DOWNLOAD_W3MUX_TEXT;โปรแกรมเปลี่ยนเพลงในเกม
+SUPPORT_ADVER_ME_TEXT;โฆษณากับเรา
+SUPPORT_POSITION_BANNER_TEXT;ตำแหน่ง banner โฆษณา จะมีอยู่ 4 ตำแหน่งดังภาพ
+SUPPORT_POSITION_TEXT;ตำแหน่งที่
+SUPPORT_WEEK_TEXT;สัปดาห์
+SUPPORT_MONTH_TEXT;เดือน
+SUPPORT_BATH_TEXT;บาท
+SUPPORT_UIP_TEXT;อัตราค่าบริการ จะปรับไปตามจำนวน UIP ที่เพิ่มขึ้นมา ในกรณีที่มีการชำระล่วงหน้าก่อนปรับราคาจะยังคงยึดตามราคาเดิมจนกว่าจะหมดสัญญา
+SUPPORT_PRICE_TEXT;ขอสงวนสิทธิ์ในการเปลี่ยนแปลงเงื่อนไข และรายละเอียดได้โดยไม่ต้องแจ้งให้ทราบล่วงหน้า
+SUPPORT_GUIDE_TEXT;ขั้นตอนและวิธีการสนับสนุน
+SUPPORT_SEND_EMAIL_TEXT;ส่ง Email มาที่ admin@lendota.com เพื่อแจ้งความประสงค์
+SUPPORT_LINK_TEXT;ที่นี่
+SUPPORT_NAME_TEXT;หลังจากนั้นก็ทำการโอนเงินมาที่ ชื่อบัญชี นายปวันวิทย์ สุวัฒนภักดี
+SUPPORT_BANK_TEXT;ธนาคารกสิกรไทย สาขาเซนทรัลพระราม 3 เลขบัญชี 748-2-48830-1
+SUPPORT_SIZE_TEXT;แล้วอีเมลหลักฐานการชำระเงินพร้อมไฟล์ภาพ (ขนาด 700x90 หรือ 275×100) และลิงก์ปลายทางที่ต้องการมาเพื่อนำขึ้นแสดงต่อไปครับ
+SUPPORT_NOTE_TEXT;หมายเหตุ :
+SUPPORT_NOTE_DETAIL1_TEXT;เราขอไม่รับโฆษณาธุรกิจที่ผิดกฎหมายหรือขายตรง และสื่อลามกอนาจาร
+SUPPORT_NOTE_DETAIL2_TEXT;กรุณาชำระเงินก่อนลงโฆษณา ไม่รับติดค้างเครดิตครับ
+SUPPORT_WHY_WITH_US_HEADER;ทำไมต้องลงโฆษณากับเรา?
+SUPPORT_WHY_WITH_US_CONTENT;เวปไซต์ของเรามีอัตราการเติบโตอย่างต่อเนื่อง โดยสามารถดูสถิติเปรียบเทียบระหว่างปี 2011 และ 2012 ได้ด้านล่าง<br /><br />เวปไซต์ของเรานำเสนอข่าวสารสำคัญต่างๆ ในวงการ DotA และมีการอัพเดทข่าวสารใหม่ๆ อยู่เสมอ<br />โดยปัจจุบันนี้เรายังมีการจัดแข่งขัน Tournament อย่างต่อเนื่องซึ่งได้รับความสนใจจากทั้งทีมไทยและทีมจากต่างประเทศ เช่น ฟิลิปปินส์ สิงคโปร์ อินโดนีเซีย และมาเลเซีย<br /><br />จุดเด่นอีกอย่างของเวปเราคือระบบ Replay ซึ่งได้รับความสนใจอย่างมากจากผู้เล่นที่ต้องการศึกษาเทคนิคและกลยุทธ์ของทีมชั้นนำต่างๆ ทั่วโลก<br />
+SUPPORT_STAT_HEADER;ข้อมูลสถิติของ lendota.com
+SUPPORT_STAT_CONTENT;สถิติของปี 2012 ที่ผ่านมา
+SUPPORT_STAT_MORE_DETAIL;* ดูรายละเอียดเพิ่มเติมได้ที่
+SUPPORT_BENEFIT_TOPIC;ข้อดีของการลงโฆษณากับเรา
+SUPPORT_BENEFIT_DETAIL;นอกเหนือจากการที่ผู้เข้าชมเว็บจะได้เห็นแบนเนอร์ของท่านแล้ว ยังมีผลดีต่อการขึ้นอันดับของ google เทคนิคนี้เรียกว่า "backlink" คือการฝากลิ้งของเว็บไว้กับเว็บที่มีจำนวนผู้เข้าใช้เยอะก็มีผลทำให้อันดับใน google สูงขึ้นอีกเช่นกัน
+SUPPORT_ADS_DETAIL_HEADER;รายละเอียดการโฆษณา
+USER_TOP5REPLAY_TEXT;5 Replay สุดมันส์เดือนล่าสุด

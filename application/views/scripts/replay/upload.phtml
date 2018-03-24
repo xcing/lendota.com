@@ -1,0 +1,101 @@
+<div class="wrapper" style="margin-top: 30px;">
+	<div class="replay">
+	<h2 class="replay_h2">Upload Replay</h2> 
+	<?php if (isset($this->uploadErrorMsg)):?>
+	    <div class="uploadReplayError" >
+		    <?php echo $this->uploadErrorMsg;?>
+		</div>
+	<?php elseif (isset($this->uploadSuccessMsg)):?>
+	    <div class="uploadReplaySuccess" >
+		    <?php echo $this->uploadSuccessMsg;?>
+		</div>
+	<?php endif;?>
+	<?php if (!isset($this->printReplayInfo)):?>
+		<div class="replayContent" style="width: 99%;">
+			<form enctype="multipart/form-data" method="post">
+				<table class="uploadReplayForm">
+					<tbody>
+						<tr>
+							<td style="padding-right: 10px; display:block; width:128px;"><span class="label">การแข่งขันรายการ</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="matchContest" id="matchContest" value="<?php Eaglet_Utils_Form::getOldValue('matchContest');?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ชื่อ Sentinel ทีม</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="sentinelTeamName" id="sentinelTeamName" value="<?php Eaglet_Utils_Form::getOldValue('sentinelTeamName');?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ชื่อ Scourge ทีม</span><span class="mandatory"> *</span></td>
+							<td>
+								<span class="label">: </span>
+								<input type="text" name="scourgeTeamName" id="scourgeTeamName" value="<?php Eaglet_Utils_Form::getOldValue('scourgeTeamName');?>" />
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ทีมชนะ</span></td>
+							<td><span class="label">: </span>
+								<select name="replay_winner" id="replay_winner">
+									<option value="Automatic">Unknown</option>
+									<option value="Sentinel">Sentinel</option>
+									<option value="Scourge">Scourge</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">ระดับความมัน</span></td>
+							<td><span class="label">: </span>
+								<select name="rate" id="rate">
+									<option value="0">ธรรมดา</option>
+									<option value="1">มันมาก</option>
+									<option value="2">มันสัดสัด</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="replayDescription"><span class="label">รายละเอียด</span></td>
+							<td>
+								<span class="replayDescription label">: </span>
+								<textarea name="replay_text" id="replay_text" cols="50" rows="4"><?php Eaglet_Utils_Form::getOldValue('replay_text');?></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td><span class="label">Replay file</span><span class="mandatory"> *</span></td>
+							<td><span class="label">: </span><input name="replay_file" id="replay_file" type="file" /> </td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="replayUploadButton"><input class="submitBtn" type="submit" value="Upload" name="uploadReplay" /></div>
+			</form>
+		</div>
+	<?php else :?>
+		<div class="replayContent" style="padding-left: 0px;">
+			<div>
+				<h2 class="replay_h2"> <?php echo $this->title;?></h2>
+			    <div class="replayUploadDetail">
+					<?php echo $this->replay->print_team_heroes(0);?>
+					<div>
+						<span class="label">
+							<a href="/replay/download/f/<?php echo $this->replayFile;?>/fc/<?php echo $this->replay->extra['original_filename'];?>" style="display: inline;"> &raquo; Download &laquo; </a>
+						</span>
+							or
+						<span class="label">
+							<a href="/replay/view/file/<?php echo $this->replayFile;?>" target="_blank" style="display: inline;"> &raquo; View Replay &laquo; </a>    
+						</span>
+					</div>
+					<?php echo $this->replay->print_team_heroes(1);?> 
+				</div>                             
+			</div>
+        </div>
+	<?php endif;?>    
+	</div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$('#matchContest').focus();
+	});
+</script>

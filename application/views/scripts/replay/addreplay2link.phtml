@@ -1,0 +1,15 @@
+<div class="wrapper" style="margin-top: 30px;">
+	<div class="replay">
+		<h2 class="replay_h2">Upload Replay</h2> 
+		<div class="replayContent" style="width: 99%; height: 80px;">
+			<form method="post">
+                <span class="label">Url : </span>
+                <input type="text" name="replayLink" style="width: 350px;" value="<?php Eaglet_Utils_Form::getOldValue('replayLink');?>" />
+                <input class="submitBtn" type="submit" value="Add" name="uploadReplay" />
+                <br />
+                <br />
+                <span style="color: orange;"><?php echo $this->message; ?></span>
+			</form>
+		</div>
+	</div>
+</div>

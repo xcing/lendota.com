@@ -1,0 +1,20 @@
+<?php 
+	if(Eaglet_Utils_Bilingual::isThaiLang()){
+		$topic = $this->data[0]->topic;
+		$detail = $this->data[0]->detail;
+	}
+	else{
+		$topic = $this->data[0]->topicEN;
+		$detail = $this->data[0]->detailEN;
+	}
+?>
+<script>
+	document.title = '<?=$topic; ?>';
+</script>
+
+<h1 class="header">
+	<?=$topic; ?>
+</h1>
+<div style="margin:20px 30px;color:#A7A7A7;" class="postContent">
+	<?php echo $detail;?>
+</div>

@@ -1,0 +1,24 @@
+<?php 
+	$header = $this->translate('TOURNAMENT_MATCH_RESULT');
+?>
+<h1 class="header">
+	<?=$header; ?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:0px 35px 0px 5px;">
+	<div class="RoundBlack" style="width: 550px;padding:20px;">
+		<form method="POST" id="matchResultForm">
+			<input type="hidden" id="matchId" name="matchResultId" value="<?=$this->matchResultId;?>"/>
+			<table>
+				<tr height="30px" id="replayBlock">
+					<td><?=$this->translate('TOURNAMENT_MATCH_RESULT_PICTURE')?> : </td>
+					<td><input type="text" id="screenshot" name="screenshot" style="width:450px;" value="<?=$this->match->screenshot;?>" /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input type="submit" class="submitBtn" value="submit" style="margin-left:80px;"/></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<div style="clear:both;"></div>

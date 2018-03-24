@@ -1,0 +1,165 @@
+<? $this->headScript()->appendFile('/resources/modal/jquery.simplemodal.1.4.2.min.js')
+                      ->appendFile('/js/replay/addReplay2.js');
+?>
+<script>
+	var xmlHttp;
+
+	function createXMLHttpRequest(){
+		if(window.ActiveXObject){
+			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		else if(window.XMLHttpRequest){
+			xmlHttp = new XMLHttpRequest();
+		}
+	}
+	function changeHero(heroId){
+		createXMLHttpRequest();
+		
+		xmlHttp.open("POST","/store/changehero/heroId/"+heroId,true);
+		xmlHttp.onreadystatechange = function(){
+			if(xmlHttp.readyState == 4){
+				if(xmlHttp.status == 200){
+					document.getElementById("bundleSpace").innerHTML = xmlHttp.responseText;
+				}
+				else{
+					document.getElementById("bundleSpace").innerHTML = "";
+				}
+			}
+		}
+		xmlHttp.send(null);
+	}
+</script>
+<h1 class="header">
+	Edit Item
+</h1>
+<div class="RoundBlack" style="margin:auto;width: 550px;padding:15px;">
+	<form method="POST" action="/store/update" enctype = "multipart/form-data">
+		<input type="hidden" name="categoryId" value="<?=$this->categoryId;?>"/>
+		<input type="hidden" name="data[equipmentId]" value="<?=$this->equipment->equipmentId;?>" />
+		<div style="margin:10px;">Name : <input type="text" name="data[name]" value="<?=$this->equipment->name;?>" /></div>
+		<div style="margin:10px;">Image : <input type="file" name="data[image]" /></div>
+		<div style="margin:10px;">Price : <input type="text" name="data[price]" value="<?=$this->equipment->price;?>" /></div>
+		<div style="margin:10px;">PriceSale : <input type="text" name="data[priceSale]" value="<?=$this->equipment->priceSale;?>" /></div>
+		<div style="margin:10px;">
+			Hero : <input id="heroId" name="data[heroId]" type="hidden" value="<?=$this->equipment->heroId;?>" />
+			<img id="heroImg" width="80" src="<?=$this->heros[$this->equipment->heroId-1]['picIcon2'];?>" />
+			<input id="heroBtn" type="button" value=" hero " />
+		</div>
+		<div style="margin:10px;">BundleId :  
+			<span id="bundleSpace">
+				<select name="data[bundleId]">
+					<option value="0">N/A</option>
+					<?php foreach ($this->bundles as $bundle){?>
+						<option value="<?=$bundle->equipmentId;?>" <?php if($this->equipment->bundleId == $bundle->equipmentId) { echo 'selected';}?>><?=$bundle->name;?></option>
+					<?php } ?>
+				</select>
+			</span>
+		</div>
+		<div style="margin:10px;">ChestId : 
+			<select name="data[chestId]">
+				<option value="0">N/A</option>
+				<?php foreach ($this->chests as $chest) {?>
+					<option value="<?=$chest->equipmentId;?>" <?php if($this->equipment->chestId == $chest->equipmentId) { echo 'selected';}?>><?=$chest->name;?></option>
+				<?php } ?>
+			</select>
+		</div>
+		<div style="margin:10px;">Rarity : 
+			<select name="data[rarity]">
+				<option value="0" <?php if($this->equipment->rarity == 0) echo 'selected';?> >Common</option>
+				<option value="1" <?php if($this->equipment->rarity == 1) echo 'selected';?> >Uncommon</option>
+				<option value="2" <?php if($this->equipment->rarity == 2) echo 'selected';?> >Rare</option>
+				<option value="3" <?php if($this->equipment->rarity == 3) echo 'selected';?> >Mythical</option>
+				<option value="4" <?php if($this->equipment->rarity == 4) echo 'selected';?> >Legendary</option>
+				<option value="5" <?php if($this->equipment->rarity == 5) echo 'selected';?> >Arcana</option>
+			</select>
+		</div>
+		<div style="margin:10px;">Slot : 
+			<select name="data[slot]">
+				<?php foreach ($this->slots as $idxSlot => $slot) {?>
+					<option value="<?=$idxSlot;?>" <?php if($this->equipment->slot == $idxSlot) echo 'selected';?> ><?=$slot;?></option>
+				<?php } ?>
+			</select>
+		</div>
+		<div style="margin:10px;">Category : 
+			<select name="data[category]">
+				<option value="0" <?php if($this->equipment->category == 0) echo 'selected';?> >Bundles</option>
+				<option value="1" <?php if($this->equipment->category == 1) echo 'selected';?> >Equipment</option>
+				<option value="2" <?php if($this->equipment->category == 2) echo 'selected';?> >Tools</option>
+				<option value="3" <?php if($this->equipment->category == 3) echo 'selected';?> >Couriers</option>
+				<option value="4" <?php if($this->equipment->category == 4) echo 'selected';?> >Announcers</option>
+				<option value="5" <?php if($this->equipment->category == 5) echo 'selected';?> >Tournaments</option>
+				<option value="6" <?php if($this->equipment->category == 6) echo 'selected';?> >Teams</option>
+			</select>
+		</div>
+		<div style="margin:10px;">Type : 
+			<select name="data[type]">
+				<option value="0" <?php if($this->equipment->type == 0) echo 'selected';?> >normal</option>
+				<option value="1" <?php if($this->equipment->type == 1) echo 'selected';?> >bundle</option>
+				<option value="2" <?php if($this->equipment->type == 2) echo 'selected';?> >chest</option>
+			</select>
+		</div>
+		<div style="margin:10px;">Is New : 
+			<input type="radio" name="data[isNew]" value="0"  <?php if($this->equipment->isNew == 0) echo 'checked';?> /> old
+			<input type="radio" name="data[isNew]" value="1"  <?php if($this->equipment->isNew == 1) echo 'checked';?> /> new
+		</div>
+		<div style="margin:10px;">Active : 
+			<input type="radio" name="data[active]" value="0" <?php if($this->equipment->active == 0) echo 'checked';?> /> yes
+			<input type="radio" name="data[active]" value="1" <?php if($this->equipment->active == 1) echo 'checked';?> /> no
+		</div>
+		<div><input type="submit" value="Save" class="submitBtn"/></div>
+	</form>
+</div>
+<div id="modalContainer">
+    <div id="heroModal">
+        <div>
+        	<?php $type = 0; $j = 1;?>
+            <div class="dota2ModalContent">
+            	<?php for($i=0; $i<$this->sizeHeroData; $i++){?>
+                	<?php if($type != $this->entries[$i]->type){?>
+                    	<?php 
+                        	 $type = $this->entries[$i]->type; 
+                             switch($j){
+                                 case 1:
+                                     $imageNameHome = 'RADIANT STRENGTH';
+                                     break;
+                                 case 2:
+                                     $imageNameHome = 'RADIANT AGILITY';
+                                     break;
+                                 case 3:
+                                     $imageNameHome = 'RADIANT INTELLIGENCE';
+                                     break;
+                                 case 4:
+                                     $imageNameHome = 'DIRE STRENGTH';
+                                     break;
+                                 case 5:
+                                     $imageNameHome = 'DIRE AGILITY';
+                                     break;
+                                 case 6:
+                                     $imageNameHome = 'DIRE INTELLIGENCE';
+                                     break;
+                          	}
+                         ?>
+                         <div style="width:175px;float:left;text-align:center;margin:0px 5px;">
+                         	<?=$imageNameHome?>
+                            <ul style="list-style-type: none !important;">
+                     <?php } ?>
+                     <?php if($this->entries[$i]->picIcon2 != ''){ ?>
+                            <li style="float:left;width:50px;margin:4px;">
+                                <a href="#" class="simplemodal-close" title="<?php echo $this->entries[$i]->name2;?>" onclick="setHeroValueImg(<?=$this->entries[$i]->id;?>,'<?=$this->entries[$i]->picIcon2;?>'); changeHero(<?=$this->entries[$i]->id;?>); return false;">
+                                     <img style="width:50px;" src="<?php echo $this->entries[$i]->picIcon2;?>" />
+                                </a>
+                            </li>
+                     <?php } ?>
+                     <?php 
+                          if($i == $this->sizeHeroData-1 || $type != $this->entries[$i+1]->type){?>
+                               </ul>
+                               <div style="clear:both;"></div>
+                          </div>
+                          <?php $j++;?>
+                	<?php } ?>
+            	<?php }?>
+            </div>
+            <div style="clear:both;"></div>   
+        </div>
+    </div>
+</div>

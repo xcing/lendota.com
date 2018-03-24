@@ -1,0 +1,168 @@
+<script>
+	document.title = '<?=$this->translate('REPLAY_INDEX2_TITLE'); ?>';
+</script>
+<h1 class="header">
+	Dota 2 Replay
+</h1>
+<div style="text-align:center;margin:10px 0px;">
+	<a href="<?=$this->url(array('controller'=>'replay','action'=>'index'))?>" style="margin-right:40px;" class="iconDota"></a>
+	<div class="iconDota2Normal"></div>
+</div>
+<!-- 
+<div class="replayTip">
+	<a href="<?=$this->url(array('controller'=>'replay', 'action'=>'tutorialviewreplay', 'default', true))?>">
+		<?=$this->translate('REPLAY_TUTORIAL_VIEW_REPLAY_BUTTON');?>
+	</a>
+</div>
+ -->
+<?php if (Zend_Auth::getInstance()->hasIdentity() && Eaglet_Utils_Auth::isAdmin()):?>
+<div class="uploadReplayBtn">
+	<input class="submitBtn" type="button" value="Upload Replay" onclick="document.location='<?=$this->url(array('controller'=>'replay','action'=>'addreplay2'))?>'; return false;" />
+    <a class="submitBtn" href="/replay/addreplay2link">Upload Replay By Url</a>
+	<?php if ($this->admin == 3) { ?>
+		<input class="submitBtn" type="button" value="Normal" onclick="document.location='<?=$this->url(array('controller'=>'replay','action'=>'index2', 'admin'=> '1'))?>'; return false;" />
+	<?php }
+	else{ ?>
+		<input class="submitBtn" type="button" value="View Stat" 
+								onclick="document.location='<?=$this->url(array('controller'=>'replay',
+																				'action'=>'index2', 
+																				'admin'=> '3', 
+																				'heroId' => $this->heroId, 
+																				'heroType' => $this->heroType, 
+																				'searchHero' => $this->searchHero,
+																				'searchTeam' => $this->searchTeam, 
+																				'searchMatch' => $this->searchMatch, 
+																				'searchHero' =>$this->searchHero))?>'; 
+																				return false;" />
+	<?php } ?>
+</div>
+<?php endif;?>
+<?php if($this->admin == 3) {?>
+	<div class="replayListContainerAdmin replay2Container">
+<?php } 
+else{ ?>
+	<div class="replayListContainer replay2Container">
+<?php } ?>
+	<div class="replayList">
+		<ul class="replayHead">
+			<li class="replayRate">&nbsp;</li>
+			<li class="matchContest"><?php echo $this->translate('REPLAY_EVENT_TEXT');?></li>
+			<li class="sentinelTeam">Sentinel</li>
+			<li class="sentinelTeamName">&nbsp;</li>
+			<li class="versus">VS</li>
+			<li class="scourgeTeamName">&nbsp;</li>
+			<li class="scourgeTeam">Scourge</li>
+			<li class="uploadDate"><?php echo $this->translate('REPLAY_DATE_TEXT');?></li>
+			<?php if($this->admin == 3) {?>
+				<li class="totalView">View</li>
+				<li class="totalComment">Comment</li>
+				<li class="replayId">id</li>
+			<?php } ?>
+		</ul>
+	<?php 
+	function getReplayRateIcon($rate) {
+		$imgRate = '<img src="/images/replay/${rate_icon}" alt="DotA" />';
+		if ($rate == 0) {
+			$rateResult = '&nbsp';
+		} elseif ($rate == 1) {
+			$rateResult = str_replace('${rate_icon}', 'silver.png', $imgRate);
+		} elseif ($rate == 2) {
+			$rateResult = str_replace('${rate_icon}', 'gold.png', $imgRate);;
+		}
+		return $rateResult;
+	}
+	foreach ($this->replayPaginator as $replay): ?>
+	<a href="/replay/view2/replay2Id/<?=$replay['replay2Id'] . '/' . Eaglet_Utils_Url::getReplaySlugUrl(
+                                                    				     $replay['matchContest'],
+                                                    				     $replay['team1'],
+                                                    				     $replay['team2']
+                                                    			     );?>">
+		<ul class="replayItem">
+			<li class="replayRate"><?=getReplayRateIcon($replay['rate']);?></li>
+			<li class="matchContest"><?=$replay['matchContest'];?></li>
+			<li class="sentinelTeam">
+				<?php 
+				$heroChosenIds = explode(",", $replay['chosenTeam1']);
+				foreach($heroChosenIds as $heroChosenId):?><img class="sentinelBanHero" src="<?=$this->heroData[$heroChosenId-1]['picIcon2'];?>" /><?php endforeach;?>
+			</li>
+			<li class="sentinelTeamName"><?=$replay['team1'];?></li>
+			<li class="versus">vs</li>
+			<li class="scourgeTeamName"><?=$replay['team2'];?></li>
+			<li class="scourgeTeam">
+				<?php 
+				$heroChosenIds = explode(",", $replay['chosenTeam2']);
+				foreach($heroChosenIds as $heroChosenId):?><img class="sentinelBanHero" src="<?=$this->heroData[$heroChosenId-1]['picIcon2'];?>" /><?php endforeach;?>
+			</li>
+			<li class="uploadDate"><?=Eaglet_Utils_Date::formatDateString($replay['uploadedDate']);?><div id="fb-root"></div></li>
+			<?php if($this->admin == 3) {?>
+				<li class="totalView"><?=$replay['totalView'];?></li>
+				<li class="totalComment"><fb:comments-count href=http://lendota.com/replay/view2/replay2Id/<?=$replay['replay2Id'];?> />0</fb:comments-count></li>
+				<li class="replayId"><?=$replay['replay2Id'];?></li>
+			<?php } ?>
+		</ul>
+	</a>
+	<?php endforeach;?>
+	<?php if ($this->replayPaginator->getCurrentItemCount() == 0):?>
+		<div class="noData"><?php echo $this->translate('REPLAY_NOTFOUND_TEXT');?></div>
+	<?php endif;?>
+	</div>
+	<?php 
+		echo $this->paginationControl(
+						$this->replayPaginator,
+	                    'Sliding',
+	                    '/template/paging_nav.phtml',
+						array('search' => $this->search));
+	?>
+</div>
+<?php if($this->admin != 3) {?>
+	<div class="searchReplay replay2Search">
+		<span class="searchTitle">Search Replay</span>
+		<form id="searchForm" method="get">
+			<div class="searchField"><span class="label replaySearchLabel"><?php echo $this->translate('REPLAY_TEAMNAME_TEXT').' ';?> : </span><input type="text" name="searchTeam" value="<?=$this->searchTeam;?>" /></div>
+			<div class="searchField"><span class="label replaySearchLabel"><?php echo $this->translate('REPLAY_EVENTNAME_TEXT').' ';?> : </span><input type="text" name="searchMatch" value="<?=$this->searchMatch;?>" /></div>
+			<div class="searchField"><span class="label replaySearchLabel"><?php echo $this->translate('REPLAY_HERONAME_TEXT').' ';?> : </span><input type="text" id="searchHero" name="searchHero" value="<?=$this->searchHero?>" disabled="disabled" /></div>
+			<div class="searchField"><span class="label heroSearchTip"><?php echo $this->translate('REPLAY_NOTE_TEXT');?></span></div>
+			<div class="heroTypeMenu">
+				<ul class="heroType">
+					<li id="strHeroType" class="<?=$this->strClass?>" onclick="displayHeroesType(1);">STR</li>
+					<li id="agiHeroType" class="<?=$this->agiClass?>" onclick="displayHeroesType(2);">AGI</li>
+					<li id="intHeroType" class="<?=$this->intClass?>" onclick="displayHeroesType(3);">INT</li>
+				</ul>
+			</div>
+			<div class="searchHeroList2">
+				<ul id="strHeroes" style="<?=($this->heroType != 1) ? 'display: none;' : ''?>">
+					<?php foreach ($this->strHeroes as $hero):?>
+						<li>
+							<img src="<?=$hero->getPicIcon2();?>" alt="<?=$hero->getName2();?>" title="<?=$hero->getName2();?>" onclick="setHeroIdAndName(<?=$hero->getId();?>, '<?=str_replace("'", "\'", $hero->getName2());?>');" />
+						</li>	
+					<?php endforeach;?>
+				</ul>
+				<ul id="agiHeroes" style="<?=($this->heroType != 2) ? 'display: none;' : ''?>">
+					<?php foreach ($this->agiHeroes as $hero):?>
+						<li>
+							<img src="<?=$hero->getPicIcon2();?>" alt="<?=$hero->getName2();?>" title="<?=$hero->getName2();?>" onclick="setHeroIdAndName(<?=$hero->getId();?>, '<?=str_replace("'", "\'", $hero->getName2());?>');" />
+						</li>	
+					<?php endforeach;?>
+				</ul>
+				<ul id="intHeroes" style="<?=($this->heroType != 3) ? 'display: none;' : ''?>">
+					<?php foreach ($this->intHeroes as $hero):?>
+						<li>
+							<img src="<?=$hero->getPicIcon2();?>" alt="<?=$hero->getName2();?>" title="<?=$hero->getName2();?>" onclick="setHeroIdAndName(<?=$hero->getId();?>, '<?=str_replace("'", "\'", $hero->getName2());?>');" />
+						</li>	
+					<?php endforeach;?>
+				</ul>
+			</div>
+			<input type="hidden" id="heroId" name="heroId" value="<?=$this->heroId;?>" />
+			<input type="hidden" id="heroType" name="heroType" value="<?=$this->heroType;?>" />
+			<input type="hidden" id="heroName" name="searchHero" value="<?=$this->searchHero;?>" />
+			<input type="hidden" id="page" name="page" value="1" />
+			<div class="searchField replaySearchBtn">
+				<input type="submit" name="search" value="Search" class="submitBtn" />
+				<input type="button" value="Clear" class="submitBtn" onclick="$(':input','#searchForm').not(':button, :submit, :reset').val('')" />
+			</div>
+		</form>
+	</div>
+<?php } ?>
+<div class="clear"></div>
+<? $this->headScript()->appendFile('/js/replay/replay.js');?>
+<script src="http://connect.facebook.net/en_US/all.js#appId=282308108446651&amp;xfbml=1"></script>

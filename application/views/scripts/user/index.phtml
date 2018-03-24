@@ -1,0 +1,183 @@
+<?php $this->headScript()->appendFile('/js/slide/slides.min.jquery.js');
+	  $this->headLink()->appendStylesheet('/css/slide/global.css')?>
+<script>
+	var divSlide = [];
+	var position = 1;
+	var size = '<?=count($this->bundles);?>';
+	
+	function login(){
+		var username = document.getElementById('username').value;
+		var password = document.getElementById('password').value;
+		if(username == ''){
+			alert('กรุณาใส่ username');
+		}
+		else if(password == ''){
+			alert('กรุณาใส่ password');
+		}
+		else{
+			document.forms["loginForm"].submit();
+		}
+	}
+	window.onload=function() {
+		for(var i=0; i<size; i++){
+			divImage = document.getElementById('store'+i);
+			divSlide[i] = $(divImage);
+		}
+		divSlide[0].fadeIn("slow");
+		setTimeout(swapImage,3000); 
+	}
+	function swapImage(){
+		if(position < size){
+			if(position > 0){
+				divSlide[position-1].fadeOut("slow");
+			}
+			setTimeout(swapFadeIn,650);
+		}
+		else{
+			divSlide[size-1].fadeOut("slow");
+			setTimeout(swapFadeInLast,650);
+			position = 0;
+		}
+		setTimeout(swapImage,3000); 
+	}
+	function swapFadeIn(){
+		divSlide[position].fadeIn("slow");
+		position++;
+	}
+	function swapFadeInLast(){
+		divSlide[0].fadeIn("slow");
+	}
+</script>
+<div class="divRight">
+	<?php if (isset($this->flashMessages) && !empty($this->flashMessages)) {?>
+		<div class="message">
+		<?php 
+			foreach ($this->flashMessages as $message) {
+				echo $message . '<br />';
+		    }
+		?>
+		</div>
+	<?php }?>
+	<?php if (Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1) {?>
+		<div class ="divLogin">
+			<div style="padding: 5px 5px 5px 5px;">
+				<div class="roundGray" style="float:left;margin:5px 0px 5px 10px;font-weight:bold;padding:3px 9px;"><?php echo Zend_Auth::getInstance()->getStorage()->read()->steamName; ?></div>
+				<div style="float:right;font-size:16px;margin:5px 7px 5px 0px;">
+					<form method="post" id="logoutForm" action="/user/logout">
+						<input type="hidden" name="referredUri" value="<?php echo $_SERVER['REQUEST_URI'];?>" />
+						<input class="submitBtn" type="submit" value="Log out" />
+					</form>
+				</div>
+				<div style="clear:both;"></div>
+				<li style="margin: 5px 0px 0px 20px;font-size:12px;">
+					<a href="<?=$this->url(array('controller'=>'index','action'=>'writenews'))?>">เขียนข่าวใหม่</a>
+				</li>
+				<?php if(Zend_Auth::getInstance()->getStorage()->read()->rankId != 2){?>
+					<li style="margin: 5px 0px 0px 20px;font-size:12px;">
+						<a href="<?=$this->url(array('controller'=>'index','action'=>'index', 'admin'=>'2'))?>">normal</a>
+					</li>
+					<li style="margin: 5px 0px 0px 20px;font-size:12px;">
+						<a href="<?=$this->url(array('controller'=>'index','action'=>'index', 'admin'=>'1'))?>">admin</a>
+					</li>
+				<?php } ?>
+			</div>
+		</div>
+	<?php } ?>
+	
+	<div style="text-align:center;">
+		<!-- tournament -->
+		<?php if($this->advertisesTour->active == 1){?>
+			<?php if(Zend_Auth::getInstance()->hasIdentity() && (Zend_Auth::getInstance()->getStorage()->read()->rankId == 1)) {?>
+				<a href="/user/editadvertise/advertiseId/<?=$this->advertisesTour->advertiseId;?>">Edit</a>
+			<?php } ?>
+			<a href="/user/counteradvertise/advertiseId/<?=$this->advertisesTour->advertiseId;?>">
+				<div style="margin: 10px 0px 10px 0px;"><embed src="<?php echo $this->advertisesTour->image;?>" width="270" height="120"></embed></div>
+				<div style="margin: 10px 0px 10px 0px;color:#CCCCCC;"><? if($this->language == 'TH') echo $this->advertisesTour->detail; else echo $this->advertisesTour->detailEN;?></div>
+			</a>
+		<?php } ?>
+		<!-- store -->
+		<?php if($this->language == 'TH'){ ?>
+			<?php if(Zend_Auth::getInstance()->hasIdentity() && (Zend_Auth::getInstance()->getStorage()->read()->rankId == 1)) {?>
+				<a href="/user/editadvertise/advertiseId/<?=$this->advertisesStore->advertiseId;?>">Edit</a>
+			<?php } ?>
+			<a href="/user/counteradvertise/advertiseId/<?=$this->advertisesStore->advertiseId;?>">
+				<div style="margin: 10px 0px 10px 0px;height:120px;">
+					<?php foreach ($this->bundles as $idxBundle => $bundle) {?>
+						<img src="<?=$bundle->image;?>" id="store<?=$idxBundle;?>" style="display:none;width:270px;height:120px;"/>
+					<?php } ?>
+				</div>
+				<div style="margin: 10px 0px 10px 0px;color:#CCCCCC;"><?=$this->advertisesStore->detail;?></div>
+			</a>
+		<?php } ?>
+	</div>
+	
+	<?php /*if(count($this->streams) > 0) {?>
+		<div style="text-align:center;font-size:22px;color:#FFC300;font-weight:bold;">Live Stream</div>
+		<?php foreach ($this->streams as $stream) {?>
+			<?php if(Zend_Auth::getInstance()->hasIdentity() && (Zend_Auth::getInstance()->getStorage()->read()->rankId == 1 || Zend_Auth::getInstance()->getStorage()->read()->userId == $stream->ownerId)) {?>
+				<a href="/user/editstream/streamId/<?=$stream->streamId;?>">Edit</a>
+			<?php } ?>
+			<a href="/user/counterstream/streamId/<?=$stream->streamId;?>" target="_blank">
+				<div style="border:1px solid gray;margin-left:5px;width:280px;padding:5px;color:#A7A7A7;">
+					<div style="float:left;margin-right:5px;"><img src="<?=$stream->image;?>" width="100" height="100"/></div>
+					<div style="float:left;width:165px;">
+						<div style="font-weight:bold;"><?=$stream->program;?></div>
+						<?php if($stream->team1 != '' && $stream->team2 != ''){?>
+							<div><span style="color:#FFC300;"><?=$stream->team1;?></span> <span style="color:white;">vs</span> <span style="color:#FFC300;"><?=$stream->team2;?></span></div>
+						<?php } ?>
+						<?php if(Zend_Auth::getInstance()->hasIdentity() && (Zend_Auth::getInstance()->getStorage()->read()->rankId == 1 || Zend_Auth::getInstance()->getStorage()->read()->userId == $stream->ownerId) && $stream->live == 1) {?>
+							<div style="color:red;text-align:center;">LIVE !!</div>
+						<?php } ?>
+					</div>
+					<div style="clear:both;"></div>
+				</div>
+			</a>
+			
+		<?php } ?>
+	<?php } */?>
+	<!-- 
+	<div id="slides" style="margin:0 5px 10px 5px;width:290px;height:300px;overflow:hidden;">
+		<div class="slides_container">
+			<?php foreach ($this->banners as $banner){?>
+				<img src="<?=$banner;?>" width="290" height="300" />
+			<?php } ?>
+		</div>
+	</div>
+	
+	<div style="margin:0 5px 10px 5px;border: 1px gray solid; overflow: hidden;">
+		<div style="text-align:center;font-size:18px;color:#FFC300;margin:5px;"><?php echo $this->translate('USER_TOP5REPLAY_TEXT');?></div>
+		<div style="margin:10px 0px 10px 30px;">
+			<ol style="list-style: decimal;">
+    			<?php foreach ($this->replays as $replay): ?>
+    				<li>
+    					<a href="/replay/view/replayId/<?= $replay->getId() . '/' . 
+    					        Eaglet_Utils_Url::getReplaySlugUrl(
+                				     $replay->getMatchContest(),
+                				     $replay->getSentinelTeamName(),
+                				     $replay->getScourgeTeamName()
+        			            );?>"
+        			     >
+        					<span class="text-bold"><?= $replay->getSentinelTeamName();?></span>
+        					-
+        					<span class="text-bold"><?= $replay->getScourgeTeamName();?></span>
+    					</a>
+    				</li>
+    			<?php endforeach;?>
+			</ol>
+		</div>
+	</div>
+	 -->	
+	<div style="margin:0 5px 10px 5px;">
+		<div id="fb-root"></div><fb:like-box href="http://www.facebook.com/pages/lendotacom/166237966775877" width="292" colorscheme="dark" show_faces="true" border_color="gray" stream="false" header="false"></fb:like-box>
+	</div>
+	<div style="text-align:center;">
+		<?php foreach($this->advertisesBR as $advertiseBR):?>
+			<?php if(Zend_Auth::getInstance()->hasIdentity() && (Zend_Auth::getInstance()->getStorage()->read()->rankId == 1)) {?>
+				<a href="/user/editadvertise/advertiseId/<?=$advertiseBR->advertiseId;?>">Edit</a>
+			<?php } ?>
+			<div style="margin: 10px 0px 10px 0px;"><a href="/user/counteradvertise/advertiseId/<?=$advertiseBR->advertiseId;?>"><img src="<?php echo $advertiseBR->image;?>" width="270" height="100" /></a></div>
+		<?php endforeach ?>
+	</div>
+</div>
+<div style="clear:both;"></div>
+<script src="http://connect.facebook.net/en_US/all.js#appId=282308108446651&amp;xfbml=1"></script>

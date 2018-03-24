@@ -1,0 +1,49 @@
+﻿<script>
+	document.title = '<?=$this->translate('TOURNAMENT_SCHEDULE_TITLE') . ' ' . $this->tourData->getName(); ?>';
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_SCHEDULE_HEADER'); ?>
+	<div style="padding-top: 5px;"></div>
+	<?= $this->tourData->getName(); ?>
+</h1>
+<?php if ($this->tournament->active == 1 && Eaglet_Utils_Auth::isAdmin()) { ?>
+	<button class="greenBtn" style="margin:10px 20px;" onclick="showTour('<?=$this->tournament->tournamentId;?>');">โชว์ตารางแข่ง</button>
+<?php } ?>
+<div style="margin:0px 0px -15px 10px;"><a href="/tournament" style="text-decoration:none;"><button class="blueBtn"><?=$this->translate('TOURNAMENT_SCHEDULE_BACK'); ?></button></a></div>
+<div id="tournamentContainer">
+	<?php if ($this->roundSchedules): ?>
+	<div id="tournamentRoundHeader">
+		<ul>
+			<?php foreach ($this->roundSchedules as $round): ?>
+				<li <?php if ($round->getRound() > 1) { echo 'class="nextRound"'; } ?>>
+					<?php if($round->getDate() && $round->getDate() != '0000-00-00 00:00:00'): ?>
+						<span class="scheduleRound">Round <?= $round->getRound(); ?></span>
+						<span class="scheduleDate"><?= date('d/m/Y', strtotime($round->getDate())); ?></span>
+						<br />
+						<span class="scheduleDate"><?= date('g:i A', strtotime($round->getDate())); ?></span>
+					<?php endif; ?>
+				</li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<?php endif; ?>
+	<div id="tournamentBracket"></div>
+</div>
+<script>
+	var tourData = {
+		teams : <?= json_encode($this->tourData->getTeams()); ?>,
+		results : <?= json_encode($this->tourData->getResults()); ?>
+	}
+	$('#tournamentBracket').bracket({
+		init: tourData,
+		gameAmount: <?= $this->tourData->getGameAmount(); ?>,
+		finalGameAmount: <?= $this->tourData->getFinalGameAmount(); ?>,
+		showThirdPlace: <?= $this->tourData->hasThirdPlace(); ?>
+	});
+	
+	function showTour(tournamentId) {
+		if (confirm('show ตารางแข่ง?')) {
+			window.location = '/tournament/showschedule/tournamentId/' + tournamentId;
+		}
+	}
+</script>

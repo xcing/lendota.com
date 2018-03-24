@@ -1,0 +1,154 @@
+<?php $action = Zend_Controller_Front::getInstance()->getRequest()->getActionName();?>
+
+<div style="width:180px;margin: 20px 0px 20px 20px;float:left;">
+
+	<div class ="divLogin">
+		<div style="padding: 5px 5px 5px 5px;">
+			<?php if(Application_Service_TeamService::getInstance()->hasIdentity()){ ?>
+				<?php if (isset($this->errorMessage)) { ?>
+					<tr>
+						<td colspan="2" style="text-align:center;">
+							<div class="errorMsg" style="margin:5px;">
+							    <?php echo $this->errorMessage;?>
+							</div>
+						</td>
+					</tr>
+				<?php } ?>
+				<div style="float:left;">
+					<img src="<?=Application_Service_TeamService::getInstance()->getIdentity()->logo;?>" width="40" height="40" />
+				</div>
+				<div class="roundGray" style="float:left;margin:5px 0px 5px 10px;font-weight:bold;padding:3px 9px;"><?=Application_Service_TeamService::getInstance()->getIdentity()->shortName; ?></div>
+				<div style="text-align:center;font-size:16px;margin:5px 7px 5px 0px;">
+					<form method="post" id="logoutForm" action="/tournament/logoutteam">
+						<input type="hidden" name="referredUri" value="<?php echo $_SERVER['REQUEST_URI'];?>" />
+						<input class="submitBtn" type="submit" value="Log out" />
+					</form>
+				</div>
+				<div style="clear:both;"></div>
+				<li style="margin: 5px 0px 0px 20px;font-size:12px;">
+					<a href="<?=$this->url(array(
+							'controller'=> 'tournament', 
+							'action'=>'profileteam',
+							'teamId'=>Application_Service_TeamService::getInstance()->getIdentity()->id,
+							'default', 
+							true)); ?>" style="text-decoration: none;">
+						<?=$this->translate('TOURNAMENT_MENU_PROFILE'); ?>
+					</a>
+				</li>
+			<?php }
+			else{ ?>
+				<form method="post" id="logoutForm" action="/tournament/loginteam" style="margin-bottom:10px;">
+					<input type="hidden" name="referredUri" value="<?php echo $_SERVER['REQUEST_URI'];?>" />
+					<div><?=$this->translate('TOURNAMENT_CREATE_TEAM_SHORT_NAME');?> :<br /><input type="text" id="username" name="username" style="width: 160px;" /></div>
+					<div>Password :<br /><input type="password" id="password" name="password" style="width: 160px;" /></div>
+					<div style="text-align:center;"><input type="checkbox" id="rememberMe" name="rememberMe" />&nbsp;<?=$this->translate('TOURNAMENT_LOGIN_KEEPME_LOGIN'); ?></div>
+					<?php if (isset($this->errorMessage)) { ?>
+						<tr>
+							<td colspan="2" style="text-align:center;">
+								<div class="errorMsg" style="margin:5px;">
+								    <?php echo $this->errorMessage;?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
+					<div style="text-align:center;"><input class="submitBtn" type="submit" value="Login" /></div>
+				</form>
+				<li style="margin: 5px 0px 0px 20px;font-size:12px;">
+					<a href="<?=$this->url(array('controller'=>'tournament','action'=>'createteam'))?>" style="text-decoration: none;"><?=$this->translate('TOURNAMENT_CREATETEAM_HEADER');?></a>
+				</li>
+				<!-- 
+				<li style="margin: 5px 0px 0px 20px;font-size:12px;">
+					<a href="<?=$this->url(array('controller'=>'tournament','action'=>'createteam'))?>" style="text-decoration: none;"><?=$this->translate('TOURNAMENT_LOGINTEAM_FORGET_PASSWORD');?></a>
+				</li>
+				 -->
+			<?php } ?>
+		</div>
+	</div>
+
+	<div style="margin-bottom: 20px;">
+		<?php if($action == 'index'){ ?>
+			<div class="buttonLeftSideSelect"><?=$this->translate('TOURNAMENT_MENU_HOME'); ?></div>
+		<?php }
+		else{ ?>
+			<a href="<? echo $this->url(array(
+						'controller'=> 'tournament', 
+						'action'=>'index',
+						'default', 
+						true)); ?>" style="text-decoration: none;">
+				<div class="buttonLeftSide"><?=$this->translate('TOURNAMENT_MENU_HOME'); ?></div>
+			</a>
+		<?php } ?>
+	</div>
+	<div style="margin-bottom: 20px;">
+		<?php if($action == 'ranking'){ ?>
+			<div class="buttonLeftSideSelect">Ranking</div>
+		<?php }
+		else{ ?>
+			<a href="<? echo $this->url(array(
+						'controller'=> 'tournament', 
+						'action'=>'ranking',
+						'default', 
+						true)); ?>" style="text-decoration: none;">
+				<div class="buttonLeftSide">Ranking</div>
+			</a>
+		<?php } ?>
+	</div>
+	<div style="margin-bottom: 20px;">
+		<?php if($action == 'rule'){ ?>
+			<div class="buttonLeftSideSelect"><?=$this->translate('TOURNAMENT_MENU_RULE'); ?></div>
+		<?php }
+		else{ ?>
+			<a href="<? echo $this->url(array(
+						'controller'=> 'tournament', 
+						'action'=>'rule',
+						'default', 
+						true)); ?>" style="text-decoration: none;">
+				<div class="buttonLeftSide"><?=$this->translate('TOURNAMENT_MENU_RULE'); ?></div>
+			</a>
+		<?php } ?>
+	</div>
+	<div style="margin-bottom: 20px;">
+		<?php if($action == 'faq'){ ?>
+			<div class="buttonLeftSideSelect"><?=$this->translate('TOURNAMENT_MENU_FAQ'); ?></div>
+		<?php }
+		else{ ?>
+			<a href="<? echo $this->url(array(
+						'controller'=> 'tournament', 
+						'action'=>'faq',
+						'default', 
+						true)); ?>" style="text-decoration: none;">
+				<div class="buttonLeftSide"><?=$this->translate('TOURNAMENT_MENU_FAQ'); ?></div>
+			</a>
+		<?php } ?>
+	</div>
+	<!-- 
+	<div style="margin-bottom: 20px;">
+		<?php if($action == 'howtouploadreplay'){ ?>
+			<div class="buttonLeftSideSelect"><?=$this->translate('TOURNAMENT_HOWTO_UPLOAD'); ?></div>
+		<?php }
+		else{ ?>
+			<a href="<? echo $this->url(array(
+						'controller'=> 'tournament', 
+						'action'=>'howtouploadreplay',
+						'default', 
+						true)); ?>" style="text-decoration: none;">
+				<div class="buttonLeftSide"><?=$this->translate('TOURNAMENT_HOWTO_UPLOAD'); ?></div>
+			</a>
+		<?php } ?>
+	</div>
+	<div style="margin-bottom: 20px;">
+		<?php if($action == 'howtoviewreplay'){ ?>
+			<div class="buttonLeftSideSelect"><?=$this->translate('TOURNAMENT_HOWTO_VIEW_REPLAY'); ?></div>
+		<?php }
+		else{ ?>
+			<a href="<? echo $this->url(array(
+						'controller'=> 'tournament', 
+						'action'=>'howtoviewreplay',
+						'default', 
+						true)); ?>" style="text-decoration: none;">
+				<div class="buttonLeftSide"><?=$this->translate('TOURNAMENT_HOWTO_VIEW_REPLAY'); ?></div>
+			</a>
+		<?php } ?>
+	</div>
+	 -->
+</div>

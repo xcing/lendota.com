@@ -1,0 +1,82 @@
+<?php 
+	if($this->amount > 1){
+		$header = $this->translate('TOURNAMENT_MATCH_RESULT_MANY_GAME'). ' game '.$this->game;
+	}
+	else{
+		$header = $this->translate('TOURNAMENT_MATCH_RESULT');
+	}
+?>
+<script type="text/javascript">
+	function checkValue(){
+		var result = $('input:radio[name="result"]:checked').val();
+		var wonBye = $('#wonBye').is(':checked');
+		var screenshot = $('input[name="screenshot"]').val();
+		
+		if(result != 1 && result != 2){
+			alert('<?=$this->translate('TOURNAMENT_MATCHRESULT_VALIDATE_WIN'); ?>');
+		}
+		else if(wonBye == false && screenshot == ''){
+			alert('<?=$this->translate('TOURNAMENT_MATCHRESULT_VALIDATE_SS'); ?>');
+		}
+		else{
+			document.forms["matchResultForm"].submit();
+		}
+	}
+	$(document).ready(function() {
+		$("#wonBye").change(function () {
+			var wonBye = $('#wonBye').is(':checked');
+			if(wonBye){
+				$('#ssBlock').hide();
+				$('#replayBlock').hide();
+			}
+			else{
+				$('#ssBlock').show();
+				$('#replayBlock').show();
+			}
+		});
+	});
+</script>
+<h1 class="header">
+	<?=$header; ?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:0px 35px 0px 5px;">
+	<div class="RoundBlack" style="width: 550px;padding:20px;">
+		<form method="POST" id="matchResultForm" enctype="multipart/form-data">
+			<input type="hidden" id="matchId" name="matchId" value="<?=$this->matchId;?>"/>
+			<input type="hidden" id="game" name="game" value="<?=$this->game;?>"/>
+			<input type="hidden" id="isFinalRound" name="isFinalRound" value="<?=$this->isFinalRound;?>"/>
+			<table>
+				<tr height="30px">
+					<td width="150">Team Win : </td>
+					<td>
+						<input type="radio" name="result" value="1"/><img src="<?=$this->team1->logo?>" width="25" height="25" style="margin:0px 5px;" /><?=$this->team1->shortName?>
+						<input type="radio" name="result" value="2" style="margin-left:15px;" /><img src="<?=$this->team2->logo?>" width="25" height="25" style="margin:0px 5px;" /><?=$this->team2->shortName?>
+					</td>
+				</tr>
+				<tr height="50px">
+					<td>&nbsp;</td>
+					<td style="vertical-align:middle;"><input type="checkbox" id="wonBye" name="wonBye" />&nbsp;<?=$this->translate('TOURNAMENT_MATCH_RESULT_WON_BYE')?></td>
+				</tr>
+				<tr height="30px" id="ssBlock">
+					<td><?=$this->translate('TOURNAMENT_MATCH_RESULT_PICTURE')?> : </td>
+					<td><input type="text" id="screenshot" name="screenshot" style="width:300px;" /></td>
+				</tr>
+				<!-- 
+				<tr height="30px" id="replayBlock">
+					<td><?=$this->translate('TOURNAMENT_MATCH_LINK_REPLAY')?> : </td>
+					<td>
+						<input type="text" id="replay" name="replay" style="width:350px;"/><br />
+						<a href="/tournament/howtouploadreplay" target="_blank"><?=$this->translate('TOURNAMENT_MATCH_TUTORIAL_UPLOAD_REPLAY')?></a><br />
+						<?=$this->translate('TOURNAMENT_MATCH_RESULT_NOT_REQUIRE')?>
+					</td>
+				</tr>
+				 -->
+				<tr>
+					<td colspan="2"><input type="button" class="submitBtn" value="submit" onclick="checkValue();" style="margin-left:80px;"/></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<div style="clear:both;"></div>

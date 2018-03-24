@@ -1,0 +1,96 @@
+<script>
+	document.title = '<?=$this->translate('GUIDE_TECHNIC_TITLE'); ?>';
+</script>
+<h1 class="header">
+	DotA Technique
+</h1>
+<div style="margin:20px 0px 0px 20px;text-align:left;">
+	<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1) { ?>
+		<div style="margin:10px;">
+			<a style="margin-right:15px;" href="/guide/writenew"><input class="submitBtn" type="button" value="Write new topic" /></a>
+			<?php if (Zend_Auth::getInstance()->getStorage()->read()->adminMode == 0) { ?>
+				<a href="/guide/technic/admin/1"><input class="submitBtn" type="button" value="Admin Mode" /></a>
+			<?php }
+			else{ ?>
+				<a href="/guide/technic/admin/2"><input class="submitBtn" type="button" value="Normal Mode" /></a>
+			<?php } ?>
+		</div>
+	<?php } ?>
+	<div class="RoundBlack" style="width:950px;">
+		<div style="margin:20px 20px 20px 20px;">
+			<?php for ($i=0; $i<$this->size; $i++) {?>
+				<?php 
+					if($i == 0){ 
+						$top = $this->size-1;
+						$bottom = $i+1;	
+					}
+					else if($i == $this->size-1){
+						$top = $i-1;
+						$bottom = 0;		
+					}
+					else{
+						$top = $i-1;
+						$bottom = $i+1;		
+					}
+					if(Eaglet_Utils_Bilingual::isThaiLang()){
+						$topic = $this->data[$i]->topic;
+					}
+					else{
+						$topic = $this->data[$i]->topicEN;
+					}
+				?>
+				<div style="margin:10px 0px 10px 0px;">
+					<?php if($this->data[$i]->icon != '') {?>
+						<img width="44" height="44" src="<?echo $this->data[$i]->icon; ?>" />
+					<?php } ?>
+					<a style="color:white;" href="/guide/detail/id/<?=$this->data[$i]->id . '/' . Eaglet_Utils_Url::convertToSlugUrl($this->data[$i]->topic);?>">
+						<?php echo $topic;?></a>
+					<?php if(Zend_Auth::getInstance()->hasIdentity() && Zend_Auth::getInstance()->getStorage()->read()->rankId == 1) { ?>
+						<a href="<? echo $this->url(array(
+								'controller'=>'guide', 
+								'action'=>'technic', 
+								'id'=>$this->data[$i]->id, 
+								'moveId'=>$this->data[$bottom]->id, 
+								'mode' => 'move'), 
+								'default', 
+								true); ?>">
+							<img style="margin:0px 10px 0px 15px;" width="20" height="20" src="/images/arrowDown.png" />
+						</a>
+						<a href="<? echo $this->url(array(
+								'controller'=>'guide', 
+								'action'=>'editnews', 
+								'id'=>$this->data[$i]->id),
+								'default', 
+								true); ?>">
+							<img style="margin:0px 10px 0px 0px;" width="20" height="20" src="/images/edit.png" />
+						</a>
+						<a href="<? echo $this->url(array(
+								'controller'=>'guide', 
+								'action'=>'technic', 
+								'id'=>$this->data[$i]->id, 
+								'moveId'=>$this->data[$top]->id, 
+								'mode' => 'move'), 
+								'default', 
+								true); ?>">
+							<img style="margin:0px 10px 0px 0px;" width="20" height="20" src="/images/arrowUp.png" />
+						</a>
+						<?php if (Zend_Auth::getInstance()->getStorage()->read()->adminMode == 1) { ?>
+							<a href="/guide/technic/mode/online/id/<?php echo $this->data[$i]->id;?>">Online</a>
+						<?php }
+						else{ ?>
+							<a href="/guide/technic/mode/offine/id/<?php echo $this->data[$i]->id;?>">Offine</a>
+						<?php } ?>
+						<a onclick="return confirm('คุณต้องการ ลบหัวข้อนี้?')" href="<? echo $this->url(array(
+								'controller'=>'guide', 
+								'action'=>'deletenews', 
+								'id'=>$this->data[$i]->id),
+								'default', 
+								true); ?>">
+							<img style="margin:0px 10px 0px 0px;" width="20" height="20" src="/images/close.gif" />
+						</a>
+					<?php } ?>
+				</div>
+			<?php } ?>
+		</div>
+	</div>
+</div>

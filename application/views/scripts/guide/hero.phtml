@@ -1,0 +1,260 @@
+<?php 
+	if($this->escape($this->entries[0]->id == 100)){
+		$start = 0;
+		$end = 7;
+		$isInvoke = true;
+		$j = 0;
+	}
+	else{
+		$start = 0;
+		$end = 4;
+		$isInvoke = false;
+	}
+	if(Eaglet_Utils_Bilingual::isThaiLang()){
+		$title = $this->escape($this->entries[0]->title);
+	}
+	else{
+		$title = $this->escape($this->entries[0]->titleEN);
+	}
+?>
+<script>
+	document.title = '<?php echo addslashes($this->entries[0]->name) .' '. addslashes($this->entries[0]->lastname) .' '. $this->translate('GUIDE_TITLE_TEXT');?>';
+</script>
+<h1 class="header" style="color:#FFC300;">
+	<?php echo $this->entries[0]->name .' '. $this->entries[0]->lastname;?>
+</h1>
+<div style="text-align:center;margin:10px 0px;">
+	<div class="iconDotaNormal" style="margin-right:40px;"></div>
+	<?php if($this->entries[0]->picIcon2 != ''){ ?>
+		<a href="<?=$this->url(array('controller'=>'guide','action'=>'herodota2', 'heroId' => $this->entries[0]->id))?>" class="iconDota2"></a>
+	<?php } ?>
+</div>
+<div style="margin:20px 5px 0px 5px;">
+	<div style="margin-bottom:15px;color:#898989;">
+		<a href="/guide/index">Hero DotA</a> > <?php echo $this->escape($this->entries[0]->name)?>
+	</div>
+	<div style="float:left;">
+		<div style="float:left;padding:0px 5px 0px 5px;"><img src="<?php echo $this->escape($this->entries[0]->picIcon)?>" width="64" height="64" /></div>
+		<div style="float:left;">
+			<div style="color:#FFC300;padding-left:5px;" align="left"><?php echo $this->escape($this->entries[0]->name)?></div>
+			<div style="color:#82BDFF;padding-left:5px;" align="left"><?php echo $this->escape($this->entries[0]->lastname)?></div>
+		</div>
+		<div style="float:left;margin:-10px 0px 0px 5px;">
+			<img src="<?php echo $this->escape($this->entries[0]->picTitle) ?>" />
+		</div>
+		<div style="clear:both;"></div>
+		
+		<table>
+			<tr>
+				<td align="center" style="color:#FFC300;">Str</td>
+				<td align="center" style="color:#FFC300;">Agi</td>
+				<td align="center" style="color:#FFC300;">Int</td>
+			</tr>
+			<tr>
+				<?php if($this->escape($this->entries[0]->type) == 1) {?>
+					<td align="center"><img src="/images/guide/strength-c.jpg" /></td>
+				<?php } 
+				else {?>
+					<td align="center"><img src="/images/guide/strength.jpg" /></td>
+				<?php } ?>
+				<?php if($this->escape($this->entries[0]->type) == 2) {?>
+					<td align="center"><img src="/images/guide/agility-c.jpg" /></td>
+				<?php } 
+				else {?>
+					<td align="center"><img src="/images/guide/agility.jpg" /></td>
+				<?php } ?>
+				<?php if($this->escape($this->entries[0]->type) == 3) {?>
+					<td align="center"><img src="/images/guide/intelligence-c.jpg" /></td>
+				<?php } 
+				else {?>
+					<td align="center"><img src="/images/guide/intelligence.jpg" /></td>
+				<?php } ?>
+			</tr>
+			<tr>
+				<td align="center" width="75"><?php echo $this->escape($this->entries[0]->str)?></td>
+				<td align="center" width="75"><?php echo $this->escape($this->entries[0]->agi)?></td>
+				<td align="center" width="75"><?php echo $this->escape($this->entries[0]->int)?></td>
+			</tr>
+		</table>
+	</div>
+	<div style="float:left;margin-left:20px;">
+		<table>
+			<tr>
+				<td style="color:#82BDFF;">Hp :</td>
+				<td><?php echo $this->escape($this->entries[0]->hp)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Mp :</td>
+				<td><?php echo $this->escape($this->entries[0]->mp)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Atk :</td>
+				<td><?php echo $this->escape($this->entries[0]->atk)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Armor :</td>
+				<td><?php echo $this->escape($this->entries[0]->armor)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Movespeed :&nbsp;</td>
+				<td><?php echo $this->escape($this->entries[0]->movespeed)?></td>
+			</tr>
+			<tr>
+				<td style="color:#82BDFF;">Atk Range :</td>
+				<td><?php echo $this->escape($this->entries[0]->range)?></td>
+			</tr>
+		</table>
+	</div>
+	<?php if(sizeof($this->entriesGuideHero) != 0) {?>
+		<div style="float:left;margin-left:150px;" >
+			<div style="margin:0px 0px 10px 10px;color:#82BDFF;"><?php echo $this->translate('GUIDE_DETAIL_SKILL_ITEM_TEXT'); ?></div>
+			<div class="RoundBlack" style="width:260px;padding:10px 10px 15px 10px;">
+				<ul class="circle">
+					<li style="margin:5px 0px 0px 10px;">
+						<?php echo $this->translate('GUIDE_DETAIL_SKILL_TEXT');?>
+					</li>
+					<?php foreach($this->entriesGuideHero as $guidehero):?>
+						<li style="margin:5px 0px 0px 10px;">
+							<?php if($this->guideHeroId == $guidehero['guideHeroId']){?>
+								<?php echo $this->translate('GUIDE_TYPE_TEXT').' '.$guidehero['name'];?>
+							<?php }
+							else{ ?>
+								<a href="/guide/guidehero/heroId/<?= $this->heroId . '/guideHeroId/' . 
+								        $guidehero['guideHeroId'] . '/' . 
+								        Eaglet_Utils_Url::getGuideHeroSlugUrl($this->entries[0]->name, $this->entries[0]->lastname);?>">
+									<?php echo $this->translate('GUIDE_TYPE_TEXT').' '.$guidehero['name'];?>
+								</a>
+							<?php } ?>
+						</li>
+					<?php endforeach?>
+				</ul>
+			</div>
+		</div>
+	<?php } ?>
+	<div style="clear:both;"></div>
+	
+	<center><div style="margin:10px 0px 10px 0px;font-size:20px;color:#FFC300;"><?php echo $this->translate('GUIDE_INTRODUCTION_TEXT');?></div></center>
+	<div style="color:#898989;"><?php echo $title;?></div>
+	
+	<center><div style="margin:10px 0px 10px 0px;font-size:20px;color:#FFC300;"><?php echo $this->translate('GUIDE_DETAIL_SKILL_TEXT');?></div></center>
+	
+	<?php foreach ($this->entriesSkill as $entry): ?>
+		<?php 
+			if(Eaglet_Utils_Bilingual::isThaiLang()){
+				$detail = $this->escape($entry->detail);
+				$note = $entry->note;
+			}
+			else{
+				$detail = $this->escape($entry->detailEN);
+				$note = $entry->noteEN;
+			}
+		?>
+		<div style="color:#64A8E5;margin:10px 0px 10px 0px;"><?php echo $this->escape($entry->name)?></div>
+		<div style="float:left;">
+			<div>
+				<img src="<?php echo $this->escape($entry->picture)?>" />
+			</div>
+		</div>
+		<div style="float:left;margin-left:20px;">
+			<div style="color:#64A8E5;">Ability Type: <font color="white"><?php echo $this->escape($entry->abilityType)?></font></div>
+			<div style="color:#64A8E5;">Target Type: <font color="white"><?php echo $this->escape($entry->targetType)?></font></div>
+			<div style="color:#64A8E5;">Hotkey: <font color="white"><?php echo $this->escape($entry->hotkey)?></font></div>
+		</div>
+		<div style="float:left;margin-left:30px;width:700px;">
+			<div style="color:#898989;"><?php echo $detail;?></div>
+		</div>
+		<div style="clear:both;"></div>
+		
+		<table width="100%" style="margin:10px 0px 20px 0px;">
+			<tr align="center" style="color:#64A8E5;">
+				<td width="60">Level</td>
+				<td width="60">Mana</td>
+				<td width="80">Cooldown</td>
+				<td width="70">Cast Range</td>
+				<td width="140">Area of Effect</td>
+				<td width="60">Duration</td>
+				<td width="140">Allow Target</td>
+				<td width="230">Effect</td>
+			</tr>
+			<?php for($i=$start; $i<$end; $i++) {?>
+				<tr align="center" style="color:#B6B6B6;">
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->level) ?></td>
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->mana) ?></td>
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->cooldown) ?></td>
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->castingRange) ?></td>
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->aoe) ?></td>
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->duration) ?></td>
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->target) ?></td>
+					<td><?php echo $this->escape($this->entriesSkillDetail[$i]->effect) ?></td>
+				</tr>
+			<?php } ?>
+		</table>
+		<div style="margin:0px 25px 15px 25px;color:#CCCCCC;"><?php echo $note?></div>
+		<?php 
+			if($isInvoke){
+				$start = $start + 7;
+				$end = $end + 7;
+				if($end == '28') $end = $end-3;
+			}
+			else{
+				$start = $start + 4;
+				$end = $end + 4;
+				if($end == '16') $end--;
+			}
+		?>
+	<?php endforeach ?>
+	<?php if($isInvoke){?>
+		<div style="margin-left: 25px;">
+			<?php foreach ($this->entriesSkillInvoke as $entry): ?>
+				<?php 
+					if(Eaglet_Utils_Bilingual::isThaiLang()){
+						$detail = $this->escape($entry->detail);
+						$note = $entry->note;
+					}
+					else{
+						$detail = $this->escape($entry->detailEN);
+						$note = $entry->noteEN;
+					}
+				?>
+				<div style="color:#64A8E5;margin:10px 0px 10px 0px;"><?php echo $this->escape($entry->name)?></div>
+				<div style="float:left;">
+					<div><img src="<?php echo $this->escape($entry->picture)?>" /></div>
+				</div>
+				<div style="float:left;margin-left:20px;">
+					<div style="color:#64A8E5;">Ability Type: <font color="white"><?php echo $this->escape($entry->abilityType)?></font></div>
+					<div style="color:#64A8E5;">Target Type: <font color="white"><?php echo $this->escape($entry->targetType)?></font></div>
+					<div style="color:#64A8E5;">Hotkey: <font color="white"><?php echo $this->escape($entry->hotkey)?></font></div>
+				</div>
+				<div style="float:left;margin-left:30px;width:700px;">
+					<div style="color:#898989;"><?php echo $detail;?></div>
+				</div>
+				<div style="clear:both;"></div>
+				
+				<table width="100%" style="margin:10px 0px 20px 0px;">
+					<tr align="center" style="color:#64A8E5;">
+						<td width="60">Mana</td>
+						<td width="80">Cooldown</td>
+						<td width="70">Cast Range</td>
+						<td width="140">Area of Effect</td>
+						<td width="60">Duration</td>
+						<td width="140">Allow Target</td>
+						<td width="230">Effect</td>
+					</tr>
+					<tr align="center" style="color:#B6B6B6;">
+						<td><?php echo $this->escape($this->entriesSkillDetailInvoke[$j]->mana) ?></td>
+						<td><?php echo $this->escape($this->entriesSkillDetailInvoke[$j]->cooldown) ?></td>
+						<td><?php echo $this->escape($this->entriesSkillDetailInvoke[$j]->castingRange) ?></td>
+						<td><?php echo $this->escape($this->entriesSkillDetailInvoke[$j]->aoe) ?></td>
+						<td><?php echo $this->escape($this->entriesSkillDetailInvoke[$j]->duration) ?></td>
+						<td><?php echo $this->escape($this->entriesSkillDetailInvoke[$j]->target) ?></td>
+						<td><?php echo $this->escape($this->entriesSkillDetailInvoke[$j]->effect) ?></td>
+					</tr>
+				</table>
+				<div style="margin:5px 25px 15px 25px;color:#CCCCCC;"><?php echo $note;?></div>
+				<?php 
+					$j++;
+				?>
+			<?php endforeach ?>
+		</div>
+	<?php } ?>
+</div>

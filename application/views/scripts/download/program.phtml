@@ -1,0 +1,36 @@
+<script>
+	document.title = '<?=$this->translate('DOWNLOAD_PROGRAM_TITLE'); ?>';
+
+	function download(file){
+		//alert('file = '+file);
+		document.getElementById('filename').value = file;
+		document.forms["uploadForm"].submit();
+	}
+</script>
+
+
+<h1 class="header">
+	DotA Program
+</h1>
+<form method="POST" action="/download/load" id="uploadForm">
+	<input type="hidden" id="loadKey" name="loadKey" value="@llcen.com"></input>
+	<input type="hidden" id="filename" name="filename" value"" ></input>
+	<div style="margin: 20px 20px 20px 20px;color:#CCCCCC;font-size: 16px;">
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/TCGNetwork_0_43_5_0_install.zip')" style="color:#85BCFF;cursor:pointer;">TCG Network </span>- <?php echo $this->translate('DOWNLOAD_TCGNETWORK_TEXT');?> </div>
+		<!-- <div style="margin:10px 0px;"><span onclick="download('/upload/program/Warcraft3TFT_126a_English.zip')" style="color:#85BCFF;cursor:pointer;">Warcraft3TFT_126a_English.exe  </span>- <?php echo $this->translate('DOWNLOAD_WARCRAFT_TFT_TEXT');?></div> -->
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/W3DRv1.26.zip')" style="color:#85BCFF;cursor:pointer;">W3DR </span>- <?php echo $this->translate('DOWNLOAD_W3DR_TEXT');?></div>
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/WC3Setup.zip')" style="color:#85BCFF;cursor:pointer;">WC3Setup.exe </span>- <?php echo $this->translate('DOWNLOAD_W3CSETUP_TEXT');?></div>
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/dotareplaymanager.zip')" style="color:#85BCFF;cursor:pointer;">DotA Replay Manager  </span> - <?php echo $this->translate('DOWNLOAD_REPLAY_MANAGER_TEXT');?></div>
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/switcher_patch.zip')" style="color:#85BCFF;cursor:pointer;">Switcher Patch </span> - <?php echo $this->translate('DOWNLOAD_SWITCHER_PATCH_TEXT');?> </div>
+		<!-- <ul class="circle" style="margin:10px 0px;">
+			<li style="margin-left:30px;"><div><span onclick="download('/upload/program/TFT_Version_1.24.zip')" style="color:#85BCFF;cursor:pointer;">Patch Version 1.24</span> - <?php echo $this->translate('DOWNLOAD_PATCH24_TEXT');?> </div></li>
+			<li style="margin-left:30px;"><div><span onclick="download('/upload/program/TFT_Version_1.24b.zip')" style="color:#85BCFF;cursor:pointer;">Patch Version 1.24b</span> - <?php echo $this->translate('DOWNLOAD_PATCH24B_TEXT');?> </div></li>
+			<li style="margin-left:30px;"><div><span onclick="download('/upload/program/TFT_Version_1.24e.zip')" style="color:#85BCFF;cursor:pointer;">Patch Version 1.24e</span> - <?php echo $this->translate('DOWNLOAD_PATCH24E_TEXT');?> </div></li>
+			<li style="margin-left:30px;"><div><span onclick="download('/upload/program/TFT_Version_1.25b.zip')" style="color:#85BCFF;cursor:pointer;">Patch Version 1.25b</span> - <?php echo $this->translate('DOWNLOAD_PATCH25B_TEXT');?> </div></li>
+			<li style="margin-left:30px;"><div><span onclick="download('/upload/program/TFT_Version_1.26a.zip')" style="color:#85BCFF;cursor:pointer;">Patch Version 1.26a</span> - <?php echo $this->translate('DOWNLOAD_PATCH26A_TEXT');?> </div></li>
+		</ul> -->
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/W3GMaster.zip')" style="color:#85BCFF;cursor:pointer;">W3GMaster.exe </span> - <?php echo $this->translate('DOWNLOAD_W3GMASTER_TEXT');?> </div>
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/WC3ThaiFont.zip')" style="color:#85BCFF;cursor:pointer;">WC3ThaiFont.zip  </span> -- <?php echo $this->translate('DOWNLOAD_THAIFONT_TEXT');?></div>
+		<div style="margin:10px 0px;"><span onclick="download('/upload/program/w3muxbeta.zip')" style="color:#85BCFF;cursor:pointer;">w3muxbeta.zip  </span> -- <?php echo $this->translate('DOWNLOAD_W3MUX_TEXT');?></div>
+	</div>
+</form>

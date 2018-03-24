@@ -1,0 +1,41 @@
+<script>
+	document.title = '<?=$this->translate('TOURNAMENT_FAQ_TITLE'); ?>';
+</script>
+<h1 class="header">
+	<?=$this->translate('TOURNAMENT_FAQ_HEADER'); ?>
+</h1>
+<?php include("leftSide.phtml")?>
+<div style="float:left;margin:0px 35px 0px 5px;color:#A7A7A7;width:850px;">
+	<h2 class="tour_rule_h2"><?=$this->translate('TOURNAMENT_FAQ_HOWTO_PARTICIPATE'); ?></h2>
+	<div style="margin-left:20px;"><?=$this->translate('TOURNAMENT_FAQ_MUST_BE'); ?> 
+		<?=$this->translate('TOURNAMENT_FAQ_LOGIN'); ?>
+		<?=$this->translate('TOURNAMENT_FAQ_FIRST_OR'); ?> 
+		<a href="<? echo $this->url(array(
+					'controller'=> 'tournament', 
+					'action'=>'createteam',
+					'default', 
+					true)); ?>">
+			<?=$this->translate('TOURNAMENT_FAQ_CREATE_NEW_TEAM'); ?> 
+		</a>
+		<?=$this->translate('TOURNAMENT_FAQ_THEN_LOGIN'); ?>  
+		<a href="<? echo $this->url(array(
+					'controller'=> 'tournament', 
+					'action'=>'index',
+					'default', 
+					true)); ?>">
+			<?=$this->translate('TOURNAMENT_FAQ_SCEDULE'); ?> 
+		</a>
+		<?=$this->translate('TOURNAMENT_FAQ_REGISTER'); ?> 
+	</div>
+	<h2 class="tour_rule_h2"><?=$this->translate('TOURNAMENT_FAQ_HOWTO_REPORT_RESULT'); ?></h2>
+	<ol class="number">
+		<li><?=$this->translate('TOURNAMENT_FAQ_HOWTO_REPORT_1'); ?><img src="/images/tournament/report_tutorial_1.png" /></li>
+		<li><?=$this->translate('TOURNAMENT_FAQ_HOWTO_REPORT_2'); ?><img src="/images/tournament/report_tutorial_2.png" width="750"/></li>
+		<li><?=$this->translate('TOURNAMENT_FAQ_HOWTO_REPORT_3'); ?></li>
+		<li><?=$this->translate('TOURNAMENT_FAQ_HOWTO_REPORT_4'); ?></li>
+	</ol>
+	
+	<h2 class="tour_rule_h2"><?=$this->translate('TOURNAMENT_FAQ_DISCONNECT'); ?></h2>
+	<div style="margin-left:20px;"><?=$this->translate('TOURNAMENT_FAQ_PAUSE_GAME'); ?></div>
+</div>
+<div style="clear:both;"></div>
